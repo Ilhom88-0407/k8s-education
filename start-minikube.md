@@ -1,9 +1,10 @@
 ##
-minikube start  ##-->> zapusk minikube 
-minikube help   ##-->> pokazivayt komandi vozmojniy
+## minikube start  ##-->> zapusk minikube 
+## minikube help   ##-->> pokazivayt komandi vozmojniy
 
 ### Создания Аалиаса ####
 ## dlya sozdaniya aliasa v terminale nabiramy komandu
+```bash
 > alias k=kubectl
 > k kluster-info ##> pokajit informasiyu
 
