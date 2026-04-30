@@ -40,8 +40,9 @@ Server001:> kubectl ssh ### qilsak bir terminalga kiramiz va shu terminalda ping
 minikube:~$ ping 10.244.0.3
 PING successful
 ```
-```
+
 Agar biz ssh qilib kirib burl qilsak
+```
 minikube:~$ curl http://10.244.0.3 ## qilsak nginx serveridan javob olamiz
 ``` 
 
