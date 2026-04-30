@@ -7,6 +7,7 @@ my-nginx-pod   1/1     Running   0          5m
 ```
 Bu buyruq orqali barcha podlarni ko'rish mumkin. `READY` ustuni konteynerlarning tayyorligini ko'rsatadi, `STATUS` esa podning hozirgi holatini bildiradi.
 ![alt text](image.png)
+```bash
 Server001:> kubectl describe pod my-nginx-pod
 Name:         my-nginx-pod  
 Namespace:    default  
@@ -29,11 +30,12 @@ Containers:
       Started:      Wed, 01 Jan 2020 00:01:00 +0000
     Ready:          True
     Restart Count:  0
+```
 Agar biz ping 10.244.0.3 ga ping bersak, ping muvofaqiyatsiz bo'ladi, chunki bu IP podning ichki IP manzili hisoblanadi va faqat klaster ichida ko'rinadi.
-```
 
-```
-Server001:> kubctl ssh ### qilsak bir terminalga kiramiz va shu terminalda ping berishimiz mumkin
+
+```bash
+Server001:> kubectl ssh ### qilsak bir terminalga kiramiz va shu terminalda ping berishimiz mumkin
 minikube:~$ ping 10.244.0.3
 PING successful
 ```
