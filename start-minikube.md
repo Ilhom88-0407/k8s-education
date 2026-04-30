@@ -13,7 +13,8 @@
 > kubectl get --namespaces=kube-system  ##> pokajit pod vnutri namspase kube-system
 
 > kubectl get pods ----namespaces=kube-system  ##> kube-system ni ichidagi podlarni ko'rish uchun
- 
+```
+
 ####   17 dars   #####
 ##___ podlarni yaratish ___##
 
