@@ -35,10 +35,11 @@ Containers:
 Agar biz ping 10.244.0.3 ga ping bersak, ping muvofaqiyatsiz bo'ladi, chunki bu IP podning ichki IP manzili hisoblanadi va faqat klaster ichida ko'rinadi.
 
 
-```bash
+```
 Server001:> kubectl ssh ### qilsak bir terminalga kiramiz va shu terminalda ping berishimiz mumkin
 minikube:~$ ping 10.244.0.3
 PING successful
+```
 ```
 Agar biz ssh qilib kirib burl qilsak
 minikube:~$ curl http://10.244.0.3 ## qilsak nginx serveridan javob olamiz
