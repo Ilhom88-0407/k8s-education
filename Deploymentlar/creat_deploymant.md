@@ -8,6 +8,10 @@ kubectl apply -f <deploymant-definition.yaml>
 yoki 
 ``` 
 kubectl create deployment <deploymant-name> --image=<image-name> -n <namespace>
+
+misol uchun nginx imidjidan foydalanib, nginx-deploy nomli yangi deploymant yaratish uchun quyidagi buyruqni ishlatamiz:
+
+server001:> kubectl create deployment nginx-deploy --image=nginx -n default
 ```
 Bu buyruqlar yordamida siz yangi deploymantlarni yaratishingiz mumkin. Bu, masalan, yangi ilovani sinash yoki mavjud ilovaning yangi versiyasini ishga tushirish uchun foydalidir.
 ### Deploymantni ko'rish uchun quyidagi buyruqlarni ishlatishingiz mumkin:
@@ -58,3 +62,24 @@ nginx-deploy-5c689d4b9f-7k9l0   1/1     Running   0          2m
 Bu yerda `nginx-deploy-5c689d4b9f-5l6j8`, `nginx-deploy-5c689d4b9f-6h8j9` va `nginx-deploy-5c689d4b9f-7k9l0` 
 nomli uchta po'dni ko'rib turibsiz, ularning 'nginx-deploy-5c689d4b9f' qismi deploymant nomidan kelib chiqqan va '-5l6j8', '-6h8j9' va '-7k9l0' qismlari esa podning noyob identifikatorlari. Har bir podning holati 'Running' bo'lib, bu ularning muvaffaqiyatli ishga tushganligini ko'rsatadi. 'READY' ustuni 1/1 bo'lib, bu har bir podda bitta konteyner borligini va u konteynerning hammasi ishga tushganligini bildiradi. 'RESTARTS' ustuni 0 bo'lib, bu podlarda hech qanday qayta ishga tushirishlar sodir bo'lmaganligini ko'rsatadi. 'AGE' ustuni 2m bo'lib, bu podlarning 2 daqiqadan beri ishga tushganligini bildiradi.
 
+deploymantda PODlar aloxida metkalar bilan ajiratilgan bo'ladi, bu metkalar yordamida siz deploymant tomonidan boshqarilayotgan podlarni osongina aniqlay olasiz. Masalan, agar siz `kubectl get pods -n default --selector=app=nginx` komandasini ishlatsangiz, siz faqat `app=nginx` metkasiga ega bo'lgan podlarni ko'rishingiz mumkin. Bu, masalan, deploymantning hozirgi holatini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rish uchun foydalidir.
+
+Agar siz PODni:
+```
+Server001:> kubectl describe pod nginx-deploy-5c689d4b9f-5l6j8 -n default
+```
+qilib tekshirsangiz ichida:
+```
+Labels:         app=nginx       ## bu yerda app=nginx deployment bilan boylangan metkani ko'rishingiz mumkin 
+                pod-template-hash=5c689d4b9f ## by yerda pod-template-hash=5c689d4b9f deployment tomonidan berilgan ID
+Conrolled By:  ReplicaSet/nginx-deploy-5c689d4b9f ## bu yerda ReplicaSet/nginx-deploy-5c689d4b9f deployment tomonidan boshqarilayotgan ReplicaSet nomi ko'rishingiz mumkin
+Events:        ## pod qanday ishga tushganligini ko'rsa bo'ladi
+    Type    Reason     Age   From               Message
+    ----    ------     ----  ----               -------
+    Normal  Scheduled  2m    default-scheduler  Successfully assigned default/nginx-deploy-5c689d4b9f-5l6j8 to test-server-k8s-1
+    Normal  Pulling    2m    kubelet            Pulling image "nginx:latest"
+    Normal  Pulled     2m    kubelet            Successfully pulled image "nginx:latest" in 1.23456789s
+    Normal  Created    2m    kubelet            Created container nginx
+    Normal  Started    2m    kubelet            Started container nginx
+```
+larni ko'rishingiz mumkin.
