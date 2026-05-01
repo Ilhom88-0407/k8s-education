@@ -44,7 +44,8 @@ Bu yerda `nginx-deploy-5c689d4b9f-5l6j8`, `nginx-deploy-5c689d4b9f-6h8j9` va `ng
 ### Deploymantnidebug qilish uchun quyidagi buyruqni ishlatishingiz mumkin:
 ```
 kubectl describe deployment <deploymant-name> -n <namespace>
-_______________________________________________________________________________
+server001:> kubectl describe deployment nginx-deploy -n default
+____________________________________________________________________________
 NaME:                   nginx-deploy
 Namespace:              default
 CreationTimestamp:      2024-06-01T12:00:00Z
