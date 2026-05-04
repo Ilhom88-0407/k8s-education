@@ -23,3 +23,7 @@ server001:> kubectl exec -it nginx-deploy-5c689d4b9f-5l6j8 -n default -- /bin/ba
 ```
 Bu buyruq yordamida siz `nginx-deploy-5c689d4b9f-5l6j8` nomli podning ichiga kirishingiz mumkin. Bu, masalan, podning ichidagi fayllarni tekshirish yoki uning ishga tushganligini tekshirish uchun foydalidir.
 
+## PODlarning IP manzillar;
+PODlarning IP manziliga serverni ichidan kirib bo'lmaydi, chunki PODlar ichki tarmoqqa ega va ular faqat klaster ichida mavjud. Agar siz PODlarga tashqaridan kirishni xohlasangiz, siz Service yoki Ingress resurslarini yaratishingiz kerak bo'ladi. Bu, masalan, ilovangizni tashqaridan kirish uchun ochish yoki uning portlarini boshqarish uchun foydalidir.
+![POD IP addresses](image-4.png)
+
