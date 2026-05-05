@@ -38,7 +38,20 @@ NAME           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          132m
 nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   2s
 ```
-Bu yerda `nginx-deploy` servisi LoadBalancer turida yaratilganligini va tashqi dunyo orqali 31377 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
+Bu yerda `nginx-deploy` servisi LoadBalancer turida yaratilganligini va tashqi dunyo orqali 8080 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
+`nginx-deploy` xaqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
+```
+root@test-server-k8s-1:~# kubectl get service
+NAME           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          3h2m
+nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   49m
+
+```
+bu yesda siz <nginx-deploy> ning EXTERNAL-IP si <pending> ekanlogini ko'rishingiz mumkin. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. EXTERNAL-IP IP o'rniga tashqi IP manzili turishi kerak edi. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. Ikki yechim bor:
+- MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
+- Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 31377)
+Agar bizda EXTERNAL-IP bo'ganida brouzer orqali 45.71.15.25:8080 manziliga kirganimizda nginx serverining xush kelibsiz sahifasini ko'rishimiz mumkin bo'lardi. 
+![alt text](image-9.png)
 
 ![alt text](kubectl_expose_loadbalancer_flow-1.svg)
 
@@ -59,3 +72,10 @@ Muhim eslatma sizning klasteringiz uchun: Siz bare-metal serverda (cloud provide
 
 MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
 Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 30080)
+
+### Dicker Desktop Mac/Windows foydalanuvchilari uchun tunel qilish tavfsiya etiladi.
+
+```
+minikube tunnel  ### ushbu komanda ishga tushiriladi local kompyuterdan tekshirish uchun
+```
+![alt text](image-8.png)
