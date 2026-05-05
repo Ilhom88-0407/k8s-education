@@ -38,10 +38,11 @@ IP Family Policy:         SingleStack
 IP Families:              IPv4
 IP:                       10.105.45.44
 IPs:                      10.105.45.44
-Port:                     <unset>  80/TCP  ## Bu yesda servisning porti
+Port:                     <unset>  80/TCP  ## Bu yesda servisning porti. Tashqaridan bu port orqali servisga murojaat qilinadi.
 TargetPort:               80/TCP ## Bu yerda servis target porti, ya'ni u bog'langan podlarning porti
 Endpoints:                172.16.78.130:80,172.16.78.129:80,172.16.91.66:80 + 2 more... ## Bu yerda podlarning IP manzillari va po'rtlarini ko'rishingiz mumkin. Bu, masalan, servisning qaysi podlarga bog'langanligini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rsatadi.
 Session Affinity:         None
 Internal Traffic Policy:  Cluster
 Events:                   <none>
 ```
+Bu yerda `kubectl describe service nginx-deploy -n default` buyruq yordamida `nginx-deploy` servisining batafsil ma'lumotlarini ko'rishingiz mumkin. Bu, masalan, servisning turlarini tekshirish yoki uning qaysi podlarga bog'langanligini ko'rish uchun foydalidir. Bu yerda `Endpoints` qismida servisning bog'langan podlarning IP manzillari va po'rtlari ko'rsatilgan. Bu, masalan, servisning qaysi podlarga bog'langanligini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rsatadi.
