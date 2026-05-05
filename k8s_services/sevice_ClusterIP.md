@@ -5,7 +5,7 @@ root@test-server-k8s-1:~# kubectl expose deploy nginx-deploy --port=8080 --targe
 service/nginx-deploy exposed  ## yu servis to'g'ri yaratilganligini bildiradi.
 ```
 Ushbu buyruq bilan biz nginx-deploy deploymentini tashqi muxitdan 8080 porti orqali kelgan qabul qilib ichku muxudga (podlar tomon) 80 portga yo'naltirishni amalga oshiramiz. Bu, masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
-```
+
  Servis yaratgandan so'ng, uning holatini tekshirish uchun quyidagi buyruqni ishlatishingiz mumkin:
 ```
 root@test-server-k8s-1:~# kubectl get services -n default
