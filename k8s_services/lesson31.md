@@ -38,3 +38,19 @@ kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          132
 nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   2s
 ```
 Bu yerda `nginx-deploy` servisi LoadBalancer turida yaratilganligini va tashqi dunyo orqali 31377 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
+![alt text](image-7.png)
+
+![alt text](kubectl_expose_loadbalancer_flow-1.svg)
+
+Endi qadamma-qadam tushuntirib beraman:
+1-qadam — kubectl komandasining o'zi: kubectl bu shunchaki client dasturi. U sizning kompyuteringizda (yoki master nodaga SSH orqali kirgan bo'lsangiz, master nodada) ishga tushadi. Komanda ~/.kube/config faylini o'qib, master node manzilini topadi va o'sha yerga HTTPS REST so'rov yuboradi.
+2-qadam — Master node so'rovni qabul qiladi: kube-apiserver (master nodada port 6443'da ishlaydi) so'rovni qabul qiladi, autentifikatsiya/avtorizatsiyadan o'tkazadi va Service obyektini yaratadi.
+3-qadam — Service etcdga saqlanadi: Yangi Service obyekti master nodadagi etcd ma'lumotlar bazasiga yoziladi. Aynan shu daqiqada Service "yaratilgan" hisoblanadi.
+4-qadam — Controller manager LoadBalancer logikasini bajaradi: kube-controller-managerdagi service controller type: LoadBalancer ni ko'radi va cloud provider (yoki MetalLB) dan tashqi IP so'raydi. Shuningdek NodePort ham avtomatik ajratiladi.
+5-qadam — Hamma nodelarda kube-proxy yangilanadi: apiserver Service haqida xabarni hamma nodelardagi (1 ta master + 3 ta worker) kube-proxy'larga jo'natadi. Har bir kube-proxy iptables/ipvs qoidalarini yangilaydi — endi har qanday node IP'ga <NodePort>'ga kelgan trafik nginx pod'larga yo'naltiriladi.
+6-qadam — nginx pod'lar trafik qabul qiladi: Pod'lar worker nodelarda (Deployment scheduler joylashtirgan joyda) ishlaydi. kube-proxy trafikni shu pod'larga round-robin tarzida yuboradi.
+
+Muhim eslatma sizning klasteringiz uchun: Siz bare-metal serverda (cloud provider yo'q) klaster ishlatayotgan bo'lsangiz, kubectl get svc qilganda EXTERNAL-IP ustuni <pending> bo'lib turadi. Buning sababi — odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. Ikki yechim bor:
+
+MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
+Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 30080)
