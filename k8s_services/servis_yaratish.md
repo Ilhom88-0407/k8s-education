@@ -9,7 +9,7 @@ kubectl expose deployment <deploymant-name> --port=<port> --target-port=<target-
 misol uchun nginx-deploy deploymantini 80 portida ochish uchun quyidagi buyruqni ishlatamiz:
 kubectl expose deployment nginx-deploy --port=80 --target-port=80 -n default
 ```
-Bu buyruq yordamida siz `nginx-deploy` deploymantini 80 portida ochishingiz mumkin. Bu, masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun foydalaniladi.
+Bu buyruq yordamida siz `nginx-deploy` deploymantini 80 portida ochishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish mumkin.
 ```kubectl get services -n <namespace>
 kubectl get services -A
 ```
@@ -19,7 +19,7 @@ NAME           TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes     ClusterIP   10.96.0.1      <none>        443/TCP   17d
 nginx-deploy   ClusterIP   10.105.45.44   <none>        80/TCP    2m51s
 ```
-bu buyruq orqali biz 2 ta servisni ko'rishimiz mumkin: `kubernetes` va `nginx-deploy`. `kubernetes` servisi, klaster ichidagi API serverga kirish uchun ishlatiladi, va `nginx-deploy` servisi, `nginx-deploy` deploymantiga bog'langan servisdir. Bu, masalan, klasterdagi servislarning holatini tekshirish yoki ularning turlarini ko'rish uchun foydalidir. 
+bu buyruq orqali biz 2 ta servisni ko'rishimiz mumkin: `kubernetes` va `nginx-deploy`. `kubernetes` servisi, klaster ichidagi API serverga kirish uchun ishlatiladi, va `nginx-deploy` servisi, `nginx-deploy` deploymantiga bog'langan servisdir. Masalan, klasterdagi servislarning holatini tekshirish yoki ularning turlarini ko'rish uchun foydalaniladi. 
 
 ```
 kubectl describe service <service-name> -n <namespace>
