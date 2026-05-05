@@ -12,6 +12,7 @@ Kubernetesda servislarning 4 turi mavjud: ClusterIP, NodePort, LoadBalancer va E
 - LoadBalancer: Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali   kirish imkonini beradi va yuk balanslashni amalga oshiradi. LoadBalancer turidagi servis, klaster ichidagi barcha nodelarda yaratiladi va tashqi dunyo orqali kirish uchun port raqamini belgilaydi.
 - ExternalName: Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali   kirish imkonini beradi, lekin bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun DNS nomini belgilaydi. Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun DNS nomini belgilaydi va bu DNS nomi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun ishlatiladi.
 Bu yerda har bir servis turining ko'rinishini ko'rishingiz mumkin:
+
 ![alt text](image-5.png)
 
 LoadBalancer turdagi servisni yaratishdan oldin, NodePort turidagi servisni o'chirib tashlaymiz va yangi servis yaratamiz. Buning uchun quyidagi buyruqni ishlatamiz:
