@@ -10,3 +10,9 @@ yoki
 docker push <dockerhub_username>/k8s-web-hello --all-tags  
 ```
 
+ketma ketlikda o'zimni proyektimda:
+```bash
+docker build -t k8s-web-hello:1.0.2 .
+docker tag k8s-web-hello:1.0.2 mrpocker88/k8s-web-hello:1.0.2
+docker push mrpocker88/k8s-web-hello:1.0.2 
+```
