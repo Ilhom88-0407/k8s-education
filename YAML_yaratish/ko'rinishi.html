@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Simulyatori</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background: #f4f7f6; 
+            padding: 20px; 
+            color: #333;
+        }
+        .controls { 
+            margin-bottom: 20px; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            display: inline-block;
+        }
+        .node { 
+            padding: 15px 30px; 
+            margin: 10px auto; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            width: max-content; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .deployment { background: #326ce5; color: white; }
+        .replicaset { background: #00bfff; color: white; }
+        .arrow { font-size: 24px; margin: 5px 0; color: #555; }
+        
+        .pods-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 15px; 
+            max-width: 800px; 
+            margin: 20px auto; 
+            min-height: 120px; 
+            border: 2px dashed #999; 
+            padding: 20px; 
+            border-radius: 10px; 
+            background: white;
+        }
+        .pod { 
+            background: #4caf50; 
+            color: white; 
+            padding: 15px 25px; 
+            border-radius: 8px; 
+            animation: fadeIn 0.4s ease-out; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .pod.dying { 
+            animation: fadeOut 0.5s forwards; 
+            background: #f44336; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(-10px) scale(0.8); } 
+            to { opacity: 1; transform: translateY(0) scale(1); } 
+        }
+        @keyframes fadeOut { 
+            from { opacity: 1; transform: scale(1); } 
+            to { opacity: 0; transform: scale(0); } 
+        }
+        
+        input[type=range] { width: 200px; margin: 15px 0; }
+        button { 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            background: #f44336; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            margin-left: 15px; 
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        button:hover { background: #d32f2f; }
+        button:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <h2>🏛️ Kubernetes Arxitektura Simulyatori</h2>
+    <p>Desired State (Kutilayotgan holat) va Auto-healing (O'zini qayta tiklash) jarayoni</p>
+    
+    <div class="controls">
+        <label><b>Podlar soni (Replicas):</b> <span id="replicaCount" style="font-size: 18px; color: #326ce5;">5</span> ta</label><br>
+        <input type="range" id="replicaSlider" min="0" max="10" value="5" oninput="changeReplicas(this.value)">
+        <button onclick="killPod()">💥 Bitta Podni o'chirish (Simulyatsiya)</button>
+    </div>
+
+    <div class="node deployment">Deployment (k8s-web-hello)</div>
+    <div class="arrow">⬇️</div>
+    <div class="node replicaset">ReplicaSet (Nazoratchi Loop)</div>
+    <div class="arrow">⬇️</div>
+    
+    <div class="pods-container" id="podsContainer">
+        <!-- Podlar JavaScript orqali shu yerga qo'shiladi -->
+    </div>
+
+    <script>
+        let desiredReplicas = 5;
+        let currentPods = 0;
+        let podCounter = 1;
+        const container = document.getElementById('podsContainer');
+        const countLabel = document.getElementById('replicaCount');
+
+        function syncPods() {
+            // Yetishmayotgan podlarni qo'shish
+            while (currentPods < desiredReplicas) {
+                const pod = document.createElement('div');
+                pod.className = 'pod';
+                pod.id = 'pod-' + podCounter;
+                pod.innerText = 'Pod-' + podCounter;
+                container.appendChild(pod);
+                currentPods++;
+                podCounter++;
+            }
+            // Ortiqcha podlarni o'chirish (agar slayder kamaytirilsa)
+            while (currentPods > desiredReplicas) {
+                container.removeChild(container.lastChild);
+                currentPods--;
+            }
+        }
+
+        function changeReplicas(val) {
+            desiredReplicas = parseInt(val);
+            countLabel.innerText = desiredReplicas;
+            syncPods();
+        }
+
+        function killPod() {
+            if (currentPods > 0) {
+                // Tasodifiy bitta podni tanlab olish
+                const pods = container.getElementsByClassName('pod');
+                const podToKill = pods[Math.floor(Math.random() * pods.length)];
+                
+                if (podToKill && !podToKill.classList.contains('dying')) {
+                    podToKill.classList.add('dying');
+                    podToKill.innerText = 'O\'chmoqda...';
+                    currentPods--; 
+                    
+                    // Animatsiya tugagach DOMdan o'chirish
+                    setTimeout(() => {
+                        if (container.contains(podToKill)) {
+                            container.removeChild(podToKill);
+                        }
+                        
+                        // ReplicaSet yo'qolgan podni sezib, o'rniga yangisini yaratishini simulyatsiya qilish
+                        setTimeout(() => {
+                            syncPods(); 
+                        }, 600); // ReplicaSet'ning reaksiya vaqti
+                        
+                    }, 450); // CSS animatsiya tugash vaqti
+                }
+            } else {
+                alert("O'chirish uchun Pod yo'q! Slayderni ko'taring.");
+            }
+        }
+
+        // Dastur ishga tushganda dastlabki holatni yuklash
+        syncPods();
+    </script>
+
+</body>
+</html>
