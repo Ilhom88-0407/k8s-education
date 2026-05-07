@@ -38,32 +38,55 @@ bu yerda quidagi malimotlarni ko'rishimiz mumkin:
             - containerPort: 3000   
 ```
 DeploymentSpec Documentlari bilan ishlash:
+
 Selector (LabelSelector), required - bu majburiy bo'lib, Deployment qaysi Podlarni boshqarishini bildiradi.
+
 template (PodTemplateSpec), required - bu majburiy bo'lib, qaysi Pod yaratish uchun qolip.
+
 containers (Container[]), required - bu majburiy bo'lib, qaysi Docker image ishlatilishini ko'rsatadi.
+
 ports (ContainerPort[]), required - bu majburiy bo'lib, qaysi Docker image ishlatilishini ko'rsatadi.
+
 replicas (int32), bu Podlar sonini ko'rsatadi. majburiy emas.
+
 strategy (DeploymentStrategy), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
     strategy.type (string), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
     strategy.rollingUpdate (RollingUpdateDeployment), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
 strategy.rollingUpdate (RollingUpdateDeployment).maxUnavailable (intstr.IntOrString), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
 strategy.rollingUpdate (RollingUpdateDeployment).maxSurge (intstr.IntOrString), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
 
 Agar biz <spec> ni ichida nimalar bo'lishini bilmoqchimiz bo'lsak:
 ```
 kubectl get deployment k8s-web-hello -o yaml
 ```
 yoki dokumnetatsiyada ko'rsatilgan qiymatni ko'rib chiqishimiz mumkin.
+
 https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/#DeploymentSpec
+
 bu yerda bizga ko'proq kerak bo'ladigonini ko'rib chiqishimiz kerak.
+
 selector (LabelSelector), required - bu majburiy bo'lib, Deployment qaysi Podlarni boshqarishini bildiradi.
+
 template (PodTemplateSpec), required - bu majburiy bo'lib, qaysi Pod yaratish uchun qolip.
+
 replicas (int32), bu Podlar sonini ko'rsatadi. majburiy emas.
+
 minReadySeconds (int32), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
 strategy (DeploymentStrategy), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
     strategy.type (string), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
     strategy.rollingUpdate (RollingUpdateDeployment), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
             strategy.rollingUpdate.maxSurge (IntOrString), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+
             strategy.rollingUpdate.maxUnavailable (IntOrString), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
+            
 
 
