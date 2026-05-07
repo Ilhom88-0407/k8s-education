@@ -85,3 +85,4 @@ my-nginx-pod   1/1     Running   0          5m
 Bu buyruq orqali barcha podlarni ko'rish mumkin. `READY` ustuni konteynerlarning tayyorligini ko'rsatadi, `STATUS` esa podning hozirgi holatini bildiradi.
 
 ![alt text](image.png)
+

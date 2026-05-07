@@ -1,3 +1,6 @@
 {
-    "editor.inlineSuggest.experimental.showOnSuggestConflict": "whenSuggestListIsIncomplete"
+    "editor.inlineSuggest.experimental.showOnSuggestConflict": "whenSuggestListIsIncomplete",
+    "yaml.schemas": {
+        "kubernetes://schema/apps/v1@deployment": "file:///d%3A/project%20AI/k8s/YAML_yaratish/deployment.yaml"
+    }
 }
