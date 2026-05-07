@@ -6,6 +6,7 @@ Ushbu qo'llanma Kubernetes tizimida `Deployment` yaratishni, uning arxitekturasi
 <embed src="ko'rinishi.html" width="100%" height="600">
 <object data="ko'rinishi.html" type="text/html" width="100%" height="600"></object>
 <iframe src="ko'rinishi.html" width="100%" height="600"></iframe>
+
 ---
 
 # 🏗️ 1-QISM: Kubernetes Deployment Obyekti
