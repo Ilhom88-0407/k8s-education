@@ -18,6 +18,6 @@ spec:
         resources:
           limits:
             memory: "128Mi"
-            cpu: "250m"
+            cpu: "250m" ### yadroning chorak qismini ishlatishni bildiradi. Agar biz 500m qilsak yadrolarning yarmini ishlatishini bildiradi.
         ports:
         - containerPort: 3000

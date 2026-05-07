@@ -2,10 +2,6 @@
 # 📄 YAML Fayllarida Ma'lumot Turlari (Qisqacha Qo'llanma)
 
 Ushbu qo'llanma Kubernetes tizimida `Deployment` yaratishni, uning arxitekturasini va YAML fayllarini to'g'ri yozish qoidalarini o'rganishga mo'ljallangan.
-[Grafikani ochish](ko'rinishi.html)
-<embed src="ko'rinishi.html" width="100%" height="600">
-<object data="ko'rinishi.html" type="text/html" width="100%" height="600"></object>
-<iframe src="ko'rinishi.html" width="100%" height="600"></iframe>
 
 ---
 
@@ -47,6 +43,8 @@ spec:
           ports:
             - containerPort: 3000
 ```
+![deploymant](image.png)
+
 📖 Qatorlar bo'yicha lug'at
 apiVersion
 
@@ -59,9 +57,7 @@ Qanday turdagi resurs yaratilayotganini bildiradi.
 ```yaml
 kind: Deployment
 ```
-
 metadata
-
 Resurs haqida umumiy ma'lumotlar.
 metadata:
 ```yaml 
