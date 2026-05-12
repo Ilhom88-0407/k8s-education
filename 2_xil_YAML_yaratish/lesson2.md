@@ -113,3 +113,17 @@ Route’lar bilan ishlaydi
 Boshqa API’larga request yuboradi
 JSON va HTML response qaytaradi
 Docker/Nginx bilan ishlashga mos yozilgan
+
+### Endi bo'lsa yaratdan proyekni docker hub ga yuklaymiz:
+1. direktoriyaga o'tamiz
+```bash 
+cd .\k8s-web-to-nginx\
+```
+2. Docker Hub ga yuklash uchun quyidagi buyruqni bajarishimiz kerak:
+```bash
+docker build -t k8s-web-to-nginx .mrpocker88/k8s-web-to-nginx
+```
+3. Docker Hub ga yuklash uchun quyidagi buyruqni bajarishimiz kerak:
+```bash
+docker push k8s-web-to-nginx
+```
