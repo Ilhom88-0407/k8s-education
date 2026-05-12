@@ -70,6 +70,5 @@ k8s-web-hello-7c47cb8cd8-dvrt5   1/1     Running   0          86m   172.16.91.94
 k8s-web-hello-7c47cb8cd8-kftpv   1/1     Running   0          87m   172.16.91.93     test-server-k8s-3   <none>           <none>
 k8s-web-hello-7c47cb8cd8-n5xfh   1/1     Running   0          86m   172.16.138.250   test-server-k8s-1   <none>           <none>
 k8s-web-hello-7c47cb8cd8-rsdqq   1/1     Running   0          87m   172.16.78.161    test-server-k8s-2   <none>           <none>
-
 ```
 
