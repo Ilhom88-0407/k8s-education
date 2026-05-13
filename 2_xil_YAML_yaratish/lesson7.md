@@ -1,8 +1,8 @@
-## YAML malumotlarini yaratish bo'yicha yakuniy dars
+# YAML malumotlarini yaratish bo'yicha yakuniy dars
 
-# Bu darsda biz kichik bir `YAML` fayl yaratishni o'rganamiz.
-# `YAML` fayl yaratish uchun biz oddiy matn muharriridan foydalanamiz. Masalan, `Notepad` yoki `VS Code`.
-# Quyidagi `YAML` faylni yaratamiz:
+## Bu darsda biz kichik bir `YAML` fayl yaratishni o'rganamiz.
+## `YAML` fayl yaratish uchun biz oddiy matn muharriridan foydalanamiz. Masalan, `Notepad` yoki `VS Code`.
+## Quyidagi `YAML` faylni yaratamiz:
 
 ```yaml
 apiVersion: v1
@@ -16,17 +16,17 @@ spec:
       ports:
       - containerPort: 80   
 ``` 
-# Bu `YAML` fayl `Kubernetes` uchun `Pod` resursini yaratadi.
-# `apiVersion` - bu resursning API versiyasini ko'rsatadi.
-# `kind` - bu resursning tipini ko'rsatadi. 
-# `metadata` - bu resursning metadata qismini ko'rsatadi. Bu yerda biz `name` maydonini `my-pod` deb belgilaymiz.
-# `spec` - bu resursning spetsifikatsiyasini ko'rsatadi. Bu yerda biz `containers` maydonini belgilaymiz.
-# `containers` - bu resursning konteynerlarini ko'rsatadi. Bu yerda biz bitta konteyner yaratamiz.
-# `name` - bu konteynerning nomini ko'rsatadi. Bu yerda biz `my-container` deb belgilaymiz.
-# `image` - bu konteynerning image'ini ko'rsatadi. Bu yerda biz `nginx` image'ini ishlatamiz.
-# `ports` - bu konteynerning portlarini ko'rsatadi. Bu yerda biz `containerPort` maydonini `80` deb belgilaymiz.
-# Endi biz bu `YAML` faylni saqlaymiz. Masalan  `my-pod.yaml` nomi bilan saqlaymiz.
-# Endi biz  bu `YAML` faylni `Kubernetes` klasteriga qo'llaymiz. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu `YAML` fayl `Kubernetes` uchun `Pod` resursini yaratadi.
+## `apiVersion` - bu resursning API versiyasini ko'rsatadi.
+## `kind` - bu resursning tipini ko'rsatadi. 
+## `metadata` - bu resursning metadata qismini ko'rsatadi. Bu yerda biz `name` maydonini `my-pod` deb belgilaymiz.
+## `spec` - bu resursning spetsifikatsiyasini ko'rsatadi. Bu yerda biz `containers` maydonini belgilaymiz.
+## `containers` - bu resursning konteynerlarini ko'rsatadi. Bu yerda biz bitta konteyner yaratamiz.
+## `name` - bu konteynerning nomini ko'rsatadi. Bu yerda biz `my-container` deb belgilaymiz.
+## `image` - bu konteynerning image'ini ko'rsatadi. Bu yerda biz `nginx` image'ini ishlatamiz.
+## `ports` - bu konteynerning portlarini ko'rsatadi. Bu yerda biz `containerPort` maydonini `80` deb belgilaymiz.
+## Endi biz bu `YAML` faylni saqlaymiz. Masalan  `my-pod.yaml` nomi bilan saqlaymiz.
+## Endi biz  bu `YAML` faylni `Kubernetes` klasteriga qo'llaymiz. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl apply -f my-pod.yaml
