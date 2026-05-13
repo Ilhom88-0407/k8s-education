@@ -108,6 +108,7 @@ Bu yerda podni qanday ishga tushganini ko'rishimiz mumkin.
 
 Brouzerda http://194.107.115.75:30807/ kiritsangiz ekaranda : 
 ```Hello from the k8s-web-to-nginx-7b4dbf47f8-s5zwm``` yozuvini ko'rishingiz mumkin.
+
 Agarda http://194.107.115.75:30807/nginx kiritsangiz:
 ```html
 Welcome to nginx!
