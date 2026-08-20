@@ -54,6 +54,12 @@ graph TB
 | 251 | [Lab_251_Ingress_2.md](Lab_251_Ingress_2.md) | 🧪 Lab: Ingress 2 — controllerni noldan o'rnatish |
 | 252 | [252_Gateway_API.md](252_Gateway_API.md) | Gateway API (2025): GatewayClass, Gateway, HTTPRoute |
 
+### ➕ Qo'shimcha — NetworkPolicy
+
+| # | Fayl | Mavzu |
+|---|---|---|
+| ➕ | [Qoshimcha_NetworkPolicy_va_Flannel.md](Qoshimcha_NetworkPolicy_va_Flannel.md) | NetworkPolicy nima, nega Flannel uni qo'llamaydi va "Delete Flannel CNI" amaliy topshirig'ining yechimi |
+
 ## 💡 Qanday o'qish kerak
 
 1. Har darsni tartib bilan o'qing — keyingi dars oldingisiga tayanadi.
