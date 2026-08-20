@@ -2,11 +2,11 @@
 Deploymant - bu Kubernetes resursi bo'lib, u sizga ilovalarni boshqarish va ularni yangilash imkonini beradi. Deploymant yordamida siz ilovalaringizni avtomatik ravishda ko'paytirishingiz, yangilashingiz va kerak bo'lganda tiklashingiz mumkin. Deploymantlar, odatda, podlarni yaratish va boshqarish uchun ishlatiladi, shuning uchun ular ilovalarni ishga tushirish va ularni yangilash uchun qulay vositadir. 
 !["rasmda misol ko'rsatilgan"](image.png)
 ### Deploymant yaratish uchun quyidagi buyruqni ishlatamiz:
-```
+```bash
 kubectl apply -f <deploymant-definition.yaml>
 ```
 yoki 
-``` 
+```bash
 kubectl create deployment <deploymant-name> --image=<image-name> -n <namespace>
 
 misol uchun nginx imidjidan foydalanib, nginx-deploy nomli yangi deploymant yaratish uchun quyidagi buyruqni ishlatamiz:
