@@ -155,6 +155,46 @@ kubectl get nodes --sort-by=.status.capacity.cpu
 | `-o custom-columns` | Tayyor jadval, ustun sarlavhalari bilan, sodda | Faqat ustunli jadval formati |
 | `--sort-by` | Bir opsiya bilan saralash | Faqat tartibni o'zgartiradi, maydon tanlamaydi |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** JSONPath bilan barcha Pod nomlarini chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -o jsonpath='{.items[*].metadata.name}{"\n"}'
+```
+</details>
+
+**2-topshiriq · o'rta.** Node nomi va IP manzilini jadval ko'rinishida chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o custom-columns=NOM:.metadata.name,IP:.status.addresses[0].address
+```
+</details>
+
+**3-topshiriq · qiyin.** Faqat `Running` bo'lmagan Pod'larni toping. **Avval ayting:** JSONPath
+filtri qanday yoziladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+# JSONPath filtri
+kubectl get pods -A -o jsonpath=\
+  '{range .items[?(@.status.phase!="Running")]}{.metadata.name}{"\t"}{.status.phase}{"\n"}{end}'
+
+# Ko'pincha oddiyroq yo'l bor:
+kubectl get pods -A --field-selector=status.phase!=Running
+```
+
+`?()` — filtr ifodasi, `@` esa joriy elementni bildiradi.
+`range` va `end` esa ro'yxat bo'ylab aylanish uchun.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Nega `kubectl get nodes` chiqishida CPU soni, taint'lar, arxitektura ko'rinmaydi — apiserver ularni yubormayaptimi?

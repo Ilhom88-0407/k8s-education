@@ -100,6 +100,48 @@ graph TB
 | `--values` | `helm install ... --values custom-values.yaml` | Qiymatlar ko'p bo'lsa, ularni faylda tartibli saqlash |
 | values.yaml tahrirlash | `helm pull --untar` + tahrir + `helm install ./chart` | Chart'ni to'liq ko'rib chiqib, ichidan sozlash kerak bo'lsa |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `--set` bilan bitta qiymatni o'zgartirib o'rnating.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm install sinov ./mening-chartim --set replicaCount=3
+kubectl get deploy
+```
+</details>
+
+**2-topshiriq · o'rta.** Xuddi shu qiymatni alohida values faylida bering.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+echo 'replicaCount: 3' > mening-values.yaml
+helm upgrade sinov ./mening-chartim -f mening-values.yaml
+```
+</details>
+
+**3-topshiriq · qiyin.** `--set` va `-f` bir vaqtda berilsa, qaysi biri g'olib chiqadi?
+**Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**`--set` g'olib.** Ustuvorlik tartibi (pastdan yuqoriga kuchayadi):
+
+1. chart ichidagi `values.yaml`
+2. `-f` bilan berilgan fayl (bir nechtasi bo'lsa — oxirgisi)
+3. `--set`
+4. `--set-string`, `--set-file`
+
+```bash
+helm install sinov ./chart -f qiymatlar.yaml --set replicaCount=9
+helm get values sinov     # amalda qaysi qiymatlar ishlatilgan
+```
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Nega o'rnatish paytida values.yaml'ni to'g'ridan-to'g'ri tahrirlab bo'lmaydi?

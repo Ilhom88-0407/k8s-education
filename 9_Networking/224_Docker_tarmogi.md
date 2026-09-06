@@ -227,6 +227,42 @@ sequenceDiagram
 | Bitta portda 2 ta container | — | ❌ mumkin emas | ✅ mumkin (har xil host portlariga map qilinadi) |
 | Container'lar o'zaro aloqasi | ❌ | host orqali | ✅ docker0 orqali |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Docker'dagi tarmoqlar ro'yxatini chiqaring va uchta standart turini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+docker network ls
+```
+</details>
+
+**2-topshiriq · o'rta.** `bridge` tarmog'ining IP oralig'ini va gateway'ini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+docker network inspect bridge --format '{{range .IPAM.Config}}{{.Subnet}} {{.Gateway}}{{end}}'
+```
+</details>
+
+**3-topshiriq · qiyin.** `--network=host` bilan konteyner ishga tushiring. **Avval ayting:**
+uning IP manzili qanday bo'ladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+docker run --rm --network=host alpine:3.20 ip addr | head -20
+```
+
+**Host'niki bilan bir xil.** `host` rejimida konteyner o'z network
+namespace'ini olmaydi — u to'g'ridan-to'g'ri host'ning tarmog'ida ishlaydi.
+Shuning uchun port ziddiyati bo'lishi mumkin.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `docker network ls` da `bridge` deb ko'rinadigan tarmoq host'da qanday nomlanadi?

@@ -1,6 +1,17 @@
 {
-    "editor.inlineSuggest.experimental.showOnSuggestConflict": "whenSuggestListIsIncomplete",
+    "//": "k8s-education uchun VS Code sozlamalari. YAML fayllarga Kubernetes sxemasi biriktiriladi — bu avtoto'ldirish va xatolarni ta'kidlashni yoqadi.",
     "yaml.schemas": {
-        "kubernetes://schema/apps/v1@deployment": "file:///d%3A/project%20AI/k8s/YAML_yaratish/deployment.yaml"
-    }
+        "kubernetes://schema/apps/v1@deployment": [
+            "**/amaliyot/**/*deployment*.yaml"
+        ],
+        "kubernetes://schema/v1@service": [
+            "**/amaliyot/**/*service*.yaml"
+        ]
+    },
+    "files.associations": {
+        "*.yaml": "yaml"
+    },
+    "editor.rulers": [
+        100
+    ]
 }

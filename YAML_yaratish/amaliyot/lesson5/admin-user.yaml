@@ -1,0 +1,30 @@
+# Kubernetes Dashboard uchun administrator hisobi.
+#
+# ⚠️ XAVFSIZLIK OGOHLANTIRISHI
+# Bu manifest ServiceAccount'ga cluster-admin huquqini beradi — ya'ni
+# klasterdagi HAR QANDAY amalni bajarish huquqini. U faqat LOKAL
+# o'rganish muhiti (minikube, sinov klasteri) uchun.
+#
+# Ishlab chiqarishda hech qachon shunday qilmang. U yerda foydalanuvchiga
+# faqat kerakli huquqlarni beruvchi alohida Role va RoleBinding yoziladi.
+#
+# Qo'llash: kubectl apply -f admin-user.yaml
+# Token:    kubectl -n kubernetes-dashboard create token admin-user
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: admin-user
+    namespace: kubernetes-dashboard

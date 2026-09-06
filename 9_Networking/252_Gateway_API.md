@@ -343,6 +343,44 @@ Gateway API HTTP bilan cheklanmaydi — listener'da protokol va portni almashtir
 
 gRPC uchun esa HTTPRoute'da `method.service` va `method.method` bo'yicha matching qilinadi (masalan, `my.grpc.Service` / `GetData` → `grpc-service:50051`).
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizda Gateway API CRD'lari o'rnatilganmi — tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get crd | grep gateway
+```
+</details>
+
+**2-topshiriq · o'rta.** Mavjud GatewayClass'larni ro'yxatlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get gatewayclass
+```
+</details>
+
+**3-topshiriq · qiyin.** Ingress va Gateway API'ning rollar bo'yicha farqini ayting. **Avval
+ayting:** kim qaysi obyektni yozadi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+| Obyekt | Kim yozadi |
+|---|---|
+| `GatewayClass` | Infratuzilma provayderi |
+| `Gateway` | Klaster operatori — port, TLS, tinglovchi |
+| `HTTPRoute` | Ilova jamoasi — marshrutlash qoidalari |
+
+Ingress'da hammasi **bitta obyektda** edi, shuning uchun ilova jamoasi
+TLS sozlamalariga ham tegishi kerak edi. Gateway API shu javobgarlikni
+ajratadi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Ingress bor-ku, nima uchun Gateway API kerak?

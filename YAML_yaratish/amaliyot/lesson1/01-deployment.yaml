@@ -1,0 +1,39 @@
+# k8s-web-hello ilovasi uchun Deployment.
+#
+# Bu manifest darslikning "O'z image'ingizni yaratish" bo'limida qurilgan
+# NodeJS ilovasini klasterga joylashtiradi.
+#
+# Qo'llash:   kubectl apply -f 01-deployment.yaml
+# Tekshirish: kubectl get deploy,pods -l app=k8s-web-hello
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-hello
+  labels:
+    app: k8s-web-hello
+spec:
+  replicas: 5
+
+  selector:
+    matchLabels:
+      app: k8s-web-hello
+
+  template:
+    metadata:
+      labels:
+        app: k8s-web-hello
+    spec:
+      containers:
+        - name: k8s-web-hello
+          image: mrpocker88/k8s-web-hello:1.0.2
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: 64Mi
+              # 250m — bitta yadroning chorak qismi.
+              # 500m yarmini, 1000m (yoki 1) butun yadroni bildiradi.
+              cpu: 100m
+            limits:
+              memory: 128Mi
+              cpu: 250m

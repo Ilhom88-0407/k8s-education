@@ -126,6 +126,41 @@ Helm'dan farqli o'laroq, Kustomize **hech qanday template (shablon) tilidan foyd
 - Maxsus sintaksis, o'zgaruvchilar, qavslar yo'q — hammasi ochiq va o'qish oson
 - Murakkab Helm chartlar template sintaksisi tufayli o'qish qiyin bo'lib ketadi; Kustomize esa **soddalikni** birinchi o'ringa qo'yadi
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Bir xil ilovani uch muhitga joylashtirish uchun YAML'ni nusxalashning
+uchta kamchiligini ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize --help    # Kustomize kubectl ichida bor, o'rnatish shart emas
+```
+</details>
+
+**2-topshiriq · o'rta.** Kustomize'ning asosiy g'oyasini bir jumlada ayting: u qanday muammoni
+hal qiladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl version --client    # 1.14+ da kustomize ichida keladi
+```
+</details>
+
+**3-topshiriq · qiyin.** Kustomize va `sed` bilan YAML almashtirishning farqi nimada?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+`sed` **matnni** o'zgartiradi — u YAML tuzilishini bilmaydi, shuning uchun
+noto'g'ri joyni ham almashtirishi mumkin.
+
+Kustomize esa YAML'ni **obyekt sifatida** o'qiydi va aniq maydonga tegadi.
+Natijada `replicas` ni o'zgartirganda izohdagi "replicas" so'ziga tegmaydi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Har muhit uchun kataloglarga nusxalash yechimi ishlaydi-ku, nega u tavsiya etilmaydi?

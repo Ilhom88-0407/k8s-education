@@ -175,6 +175,49 @@ tcp6       0      0 :::10256                :::*                    LISTEN      
 | 7 | kube-proxy loglari | `kubectl logs <pod> -n kube-system` | Xato xabarlari |
 | 8 | kube-proxy jarayoni | `netstat -plan \| grep kube-proxy` | Portlarda tinglayaptimi |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Service'ning Endpoints ro'yxati bo'sh emasligini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get endpoints <servis-nomi>
+```
+</details>
+
+**2-topshiriq · o'rta.** Klaster DNS'i ishlayotganini vaqtinchalik Pod bilan sinang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl run t --rm -it --image=busybox:1.37 --restart=Never -- nslookup kubernetes
+```
+</details>
+
+**3-topshiriq · qiyin.** Ilova ishlamayapti, lekin Pod'lar `Running`. **Avval ayting:** tarmoq
+muammosini qanday tartibda qidirasiz?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Pastdan yuqoriga, har bosqichda bittasini istisno qilib:
+
+1. **Pod ishlayaptimi** — `kubectl exec <pod> -- wget -qO- localhost:<port>`
+   Ishlamasa — muammo ilovada, tarmoqda emas.
+2. **Pod IP orqali** — boshqa Pod'dan `wget <pod-IP>:<port>`
+   Ishlamasa — CNI muammosi.
+3. **Service Endpoints** — `kubectl get endpoints <svc>`
+   Bo'sh bo'lsa — selektor yoki readiness muammosi.
+4. **Service IP orqali** — `wget <cluster-IP>:<port>`
+   Ishlamasa — kube-proxy muammosi.
+5. **DNS nomi orqali** — `wget <svc-nomi>:<port>`
+   Ishlamasa — CoreDNS muammosi.
+
+Bu tartib muammoni beshta bosqichdan bittasiga qisqartiradi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" CoreDNS pod'lari `Pending` holatda qolib ketdi. Birinchi nimani tekshiramiz?

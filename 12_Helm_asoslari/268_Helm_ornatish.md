@@ -70,6 +70,48 @@ helm version
 
 💡 Operatsion tizimingiz versiyasi uchun har doim eng yangi ko'rsatmalarni [rasmiy hujjatlar sahifasidan](https://helm.sh/docs/intro/install/) olganingiz ma'qul — o'rnatish yo'llari vaqt o'tishi bilan yangilanib turadi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Helm'ni o'rnating va `helm version` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm version --short
+```
+</details>
+
+**2-topshiriq · o'rta.** Ommaviy chart repozitoriysini qo'shing va ro'yxatni yangilang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm repo list
+```
+</details>
+
+**3-topshiriq · qiyin.** Helm qaysi kubeconfig'ni ishlatadi? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**kubectl bilan bir xilini** — `~/.kube/config` yoki `$KUBECONFIG`.
+
+Helm'ning o'z serveri yo'q (Helm 3 dan beri): u to'g'ridan-to'g'ri
+apiserver bilan gaplashadi va joriy kontekstda ishlaydi.
+
+```bash
+helm --kube-context minikube list
+KUBECONFIG=~/.kube/boshqa helm list
+```
+
+⚠️ Shuning uchun `helm install` dan oldin **kontekstni tekshiring** —
+aks holda ilova noto'g'ri klasterga tushadi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Helm'ni o'rnatishdan oldin nimalar tayyor bo'lishi kerak?

@@ -51,6 +51,45 @@ Bulardan tashqari KodeKloud'da Udemy'da yo'q 40+ kurs bor, yil davomida yana 50+
 
 💡 KodeKloud obunasini sotib olayotganda **UDEMY10** kupon kodi qo'shimcha maxsus chegirma beradi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Kursda o'rgangan asosiy obyektlarni sanang: Pod'dan Ingress'gacha.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl api-resources --namespaced=true | head -20
+```
+</details>
+
+**2-topshiriq · o'rta.** O'z klasteringizda kurs davomida qolgan obyektlarni tozalang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get all -A | grep -v kube-system
+```
+</details>
+
+**3-topshiriq · qiyin.** Qaysi mavzuni eng zaif bilasiz? **Uni aniqlang va qaytaring.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+O'zingizni sinash uchun quyidagilarni **hujjatlarsiz** bajarib ko'ring:
+
+```bash
+# 1. 3 replikali deployment + NodePort servis
+# 2. ConfigMap dan muhit o'zgaruvchisi
+# 3. Pod uchun resurs limiti va liveness probe
+# 4. NetworkPolicy: faqat bitta namespace'dan kirish
+# 5. Buzuq Pod'ni topib tuzatish
+```
+
+Qaysi biri to'xtatib qo'ysa — o'sha bo'limga qayting.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Kursni tugatdim — imtihondan oldin yana qanday amaliyot qilsam bo'ladi?
@@ -75,3 +114,22 @@ Kursni tugatish — yarim yo'l. Imtihon oldidan mock imtihonlarni **vaqt o'lchab
 
 ---
 *Bu dars KodeKloud CKA kursining 327-videosi asosida tayyorlandi.*
+
+## 📖 Asosiy atamalar
+
+Kurs davomida uchragan eng muhim atamalar bir joyda:
+
+| Atama | Ma'nosi |
+|---|---|
+| **Pod** | Kubernetes yaratadigan eng kichik birlik |
+| **Deployment** | Pod'lar sonini va versiyasini boshqaruvchi obyekt |
+| **ReplicaSet** | Belgilangan sondagi Pod'ni saqlovchi obyekt |
+| **Service** | Pod'lar oldiga barqaror IP va DNS nom qo'yuvchi obyekt |
+| **Ingress** | HTTP trafikni domen va yo'l bo'yicha taqsimlovchi obyekt |
+| **Namespace** | Klaster ichidagi mantiqiy bo'lim |
+| **ConfigMap / Secret** | Konfiguratsiya va maxfiy ma'lumot saqlovchi obyektlar |
+| **CNI** | Pod tarmog'ini quruvchi plagin |
+| **kubelet** | Har node'da Pod'larni ko'taruvchi agent |
+| **etcd** | Klasterning butun holati saqlanadigan baza |
+| **Helm** | Kubernetes uchun paket menejeri |
+| **Kustomize** | YAML'ni nusxalamasdan muhitga moslash vositasi |

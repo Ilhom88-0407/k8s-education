@@ -152,6 +152,43 @@ graph TB
 > 1. https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#-installation
 > 2. https://github.com/weaveworks/weave/releases
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Node'da CNI plaginining conflist faylini o'qing va `type` maydonini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+cat /etc/cni/net.d/*.conflist | grep -A2 '"type"'
+```
+</details>
+
+**2-topshiriq · o'rta.** kubelet CNI'ni qayerdan qidirishini `--cni-conf-dir` sozlamasi bo'yicha aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ps aux | grep kubelet | tr ' ' '
+' | grep -i cni
+```
+</details>
+
+**3-topshiriq · qiyin.** Pod yaratilganda CNI qanday chaqirilishini kubelet loglaridan kuzating.
+**Avval ayting:** qaysi bosqichda chaqiriladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo journalctl -u kubelet -f | grep -i cni
+```
+
+CNI **konteyner yaratilgandan keyin, lekin ilova ishga tushishidan oldin**
+chaqiriladi: kubelet avval pause konteynerini ko'taradi, keyin CNI'ga
+"shu namespace'ga tarmoq ber" deydi, so'ng asosiy konteynerni ishga tushiradi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Kubernetes'da CNI plugin'ni qaysi komponent chaqiradi?

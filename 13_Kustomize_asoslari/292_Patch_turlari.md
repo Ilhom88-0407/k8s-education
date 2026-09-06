@@ -108,6 +108,42 @@ spec:
 
 💡 Ikkala usul ham to'g'ri ishlaydi. Patchlaringiz kam bo'lsa — inline yozavering. Patchlar ko'payib, `kustomization.yaml` o'qish qiyin bo'lib qolsa — ularni alohida fayllarga chiqaring.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Inline patch (kustomization.yaml ichida) yozing.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize .
+```
+</details>
+
+**2-topshiriq · o'rta.** Xuddi shu patchni alohida faylga chiqarib, `path:` orqali ulang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize .    # natija bir xil bo'lishi kerak
+```
+</details>
+
+**3-topshiriq · qiyin.** Qaysi holatda inline, qaysi holatda alohida fayl afzal?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Inline** — patch 3-4 qatordan oshmasa (`replicas: 5` kabi). Hamma narsa
+bitta faylda ko'rinadi.
+
+**Alohida fayl** — patch uzun bo'lsa, bir necha overlay'da qayta
+ishlatilsa yoki muharrir YAML sxemasi bo'yicha tekshirishi kerak bo'lsa.
+
+Amaliy qoida: `kustomization.yaml` 60 qatordan oshsa, patchlarni
+fayllarga chiqaring.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Inline va alohida fayl usullarining natijasi farq qiladimi?

@@ -100,6 +100,44 @@ CoreDNS'ning butun arxitekturasi **plugin'lar** ustiga qurilgan: `hosts`, `forwa
 
 💡 **Eng muhimi:** CoreDNS'ning `kubernetes` degan maxsus plugin'i bor — Kubernetes klasterida Service va Pod nomlarini resolve qilish aynan shu plugin orqali ishlaydi. Uni keyingi bo'limlarda, "DNS in Kubernetes" darslarida batafsil ko'ramiz. Hozir Corefile mantig'ini tushunib olganingiz — o'sha darslar uchun tayyor poydevor.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** CoreDNS'ning Corefile konfiguratsiyasini klasteringizdan chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl -n kube-system get configmap coredns -o jsonpath='{.data.Corefile}'
+```
+</details>
+
+**2-topshiriq · o'rta.** CoreDNS pod'larining loglarini ko'ring va DNS so'rovlari kelayotganini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl -n kube-system logs -l k8s-app=kube-dns --tail=20
+```
+</details>
+
+**3-topshiriq · qiyin.** Corefile'ga `log` plaginini qo'shing. **Avval ayting:** o'zgarish darrov
+kuchga kiradimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl -n kube-system edit configmap coredns
+# Corefile ichiga `log` qatorini qo'shing
+kubectl -n kube-system rollout restart deployment coredns
+```
+
+**Darrov emas.** ConfigMap o'zgarishi Pod ichidagi faylga bir necha
+o'nlab soniyada yetib boradi, CoreDNS esa uni qayta o'qishi uchun
+qayta ishga tushishi kerak.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" CoreDNS qaysi portda ishlaydi?

@@ -59,6 +59,45 @@ graph TB
 
 Diqqat qiling: mavzular bir-biriga zanjir kabi bog'langan. Network namespace'larni tushunmasangiz — Pod networking tushunarsiz bo'ladi; Pod networking'siz — CNI havoda qoladi. Shuning uchun ketma-ketlikni buzmaslikni tavsiya qilamiz.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizdagi uchta tarmoq oralig'ini aniqlang: node, Pod va Service.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o wide          # node tarmog'i
+kubectl get pods -A -o wide        # pod tarmog'i
+kubectl get svc -A                 # service tarmog'i
+```
+</details>
+
+**2-topshiriq · o'rta.** Uchala oraliq bir-biri bilan kesishmasligini tekshiring va nima uchun
+bu muhimligini ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl cluster-info dump | grep -m2 -E 'cluster-cidr|service-cluster-ip-range'
+```
+</details>
+
+**3-topshiriq · qiyin.** Klasteringiz qaysi CNI plaginini ishlatayotganini toping. **Avval ayting:**
+buni qayerdan bilish mumkin?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ls /etc/cni/net.d/            # node'da
+kubectl get pods -n kube-system | grep -Ei 'calico|flannel|weave|cilium'
+```
+
+CNI konfiguratsiyasi har node'da `/etc/cni/net.d/` da yotadi, plaginning
+o'zi esa odatda `kube-system` namespace'ida DaemonSet sifatida ishlaydi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Tayyorgarlik darslarini o'tkazib yuborsam bo'ladimi?

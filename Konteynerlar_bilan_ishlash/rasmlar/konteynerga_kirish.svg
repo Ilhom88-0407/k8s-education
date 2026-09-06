@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 390" width="860"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Ishlab turgan Pod bilan ishlashning uch usuli</title>
+  <desc id="izoh">kubectl exec konteyner ichida buyruq bajaradi, kubectl logs konteynerning standart chiqishini o&#x27;qiydi, kubectl port-forward esa lokal portni Pod portiga ulaydi. Uchalasi ham apiserver orqali o&#x27;tadi — ya&#x27;ni node&#x27;ga SSH qilish shart emas.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="860" height="390" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">exec, logs va port-forward</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">Uchalasi ham apiserver orqali ishlaydi — SSH kerak emas</text>
+  <rect x="340" y="84" width="180" height="54" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="430" y="118" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">kube-apiserver</text>
+  <rect x="340" y="300" width="180" height="62" rx="8" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="430" y="330" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Pod: web-app</text>
+  <text x="430" y="347" text-anchor="middle" font-size="11" fill="#5C5A55">konteyner: nginx</text>
+  <path d="M 430 138 L 430 296" stroke="#5C5A55" stroke-width="2" fill="none" marker-start="url(#ok5C5A55)" marker-end="url(#ok5C5A55)"/>
+  <text x="442" y="224" font-size="10.5" fill="#5C5A55">kubelet orqali</text>
+  <rect x="28" y="84" width="236" height="88" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="146" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kubectl exec -it</text>
+  <text x="146" y="136" text-anchor="middle" font-size="11" fill="#5C5A55">Konteyner ichida</text>
+  <text x="146" y="152" text-anchor="middle" font-size="11" fill="#5C5A55">buyruq bajaradi</text>
+  <text x="146" y="190" text-anchor="middle" font-size="11" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5C5A55">-- /bin/sh</text>
+  <rect x="596" y="84" width="236" height="88" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="714" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kubectl logs -f</text>
+  <text x="714" y="136" text-anchor="middle" font-size="11" fill="#5C5A55">Konteynerning chiqishini</text>
+  <text x="714" y="152" text-anchor="middle" font-size="11" fill="#5C5A55">o&#x27;qiydi</text>
+  <text x="714" y="190" text-anchor="middle" font-size="11" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5C5A55">--tail=50</text>
+  <path d="M 264 128 L 336 128" stroke="#2C6FB5" stroke-width="2" fill="none" marker-end="url(#ok2C6FB5)"/>
+  <path d="M 592 128 L 524 128" stroke="#5B4FBE" stroke-width="2" fill="none" marker-end="url(#ok5B4FBE)"/>
+  <rect x="28" y="214" width="236" height="88" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="146" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kubectl port-forward</text>
+  <text x="146" y="266" text-anchor="middle" font-size="11" fill="#5C5A55">Lokal portni Pod portiga</text>
+  <text x="146" y="282" text-anchor="middle" font-size="11" fill="#5C5A55">ulaydi</text>
+  <text x="146" y="320" text-anchor="middle" font-size="11" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5C5A55">localhost:8080 -&gt; pod:80</text>
+  <path d="M 264 258 C 310 258, 310 320, 336 320" stroke="#B5761A" stroke-width="2" fill="none" marker-end="url(#okB5761A)"/>
+  <rect x="596" y="214" width="236" height="148" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="714" y="264" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Nima uchun SSH kerak emas</text>
+  <text x="714" y="281" text-anchor="middle" font-size="11" fill="#5C5A55">Uchala buyruq ham apiserver</text>
+  <text x="714" y="296" text-anchor="middle" font-size="11" fill="#5C5A55">orqali o&#x27;tadi. Node&#x27;ga to&#x27;g&#x27;ridan-</text>
+  <text x="714" y="311" text-anchor="middle" font-size="11" fill="#5C5A55">to&#x27;g&#x27;ri kirish huquqi bo&#x27;lmasa ham</text>
+  <text x="714" y="326" text-anchor="middle" font-size="11" fill="#5C5A55">ular ishlaydi.</text>
+  <path d="M 592 288 L 528 300" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+</svg>

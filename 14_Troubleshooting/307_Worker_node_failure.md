@@ -116,6 +116,47 @@ Natijada uch narsaga e'tibor bering:
 | 6 | kubelet loglari | `sudo journalctl -u kubelet` | Xato xabarlari |
 | 7 | Sertifikatlar | `openssl x509 -in ... -text -noout` | Muddati, guruhi, CA |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Node'lar holatini tekshiring va `NotReady` bo'lganini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes
+```
+</details>
+
+**2-topshiriq · o'rta.** `NotReady` node'da kubelet holatini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo systemctl status kubelet
+sudo journalctl -u kubelet -n 50 --no-pager
+```
+</details>
+
+**3-topshiriq · qiyin.** Node `NotReady` bo'lishining uchta eng ko'p sababini ayting.
+**Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+1. **kubelet to'xtagan** — `systemctl start kubelet`.
+2. **Disk to'lgan** — `df -h`; kubelet `DiskPressure` e'lon qiladi va
+   yangi Pod qabul qilmaydi.
+3. **Sertifikat eskirgan yoki noto'g'ri** — `journalctl` da
+   `x509: certificate has expired` yoki `unable to load client CA file`.
+
+To'rtinchisi ham uchraydi: **CNI o'rnatilmagan yoki buzilgan**.
+
+```bash
+kubectl describe node <nom> | grep -A8 Conditions
+```
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Node conditions hammasi `Unknown` bo'lib qolgan. Bu nimani bildiradi?

@@ -1,5 +1,10 @@
-## Biz bindan oldingi darsda NodeJS dasturi uchun yaradik va uning imedgini Docker Hub ga yuklashni o'rgandik.
-### Endi bo'lsa biz Kubernetes klastorimizda buz yaratgan Docker imegimizni ishga tushiramiz:
+# Image'ni Docker Hub'ga yuklash va Deployment yaratish
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Image'ni teglash va Docker Hub'ga yuklash
+> - Klaster image'ni qayerdan oladi
+> - Deployment manifestida o'z image'ingizni ko'rsatish
+## Endi bo'lsa biz Kubernetes klastorimizda buz yaratgan Docker imegimizni ishga tushiramiz:
 ```bash
 kubectl run k8s-web-hello --image=<dockerhub_username>/k8s-web-hello:1.0.0 --port=3000
 ```
@@ -7,7 +12,7 @@ Bu buyruq k8s-web-hello nomli pod yaratadi va unga <dockerhub_username>/k8s-web-
 ```bash 
 kubectl get pods
 ```
-Yuqoridagi buyruqda biz quidagilarni ko'rshimiz mumkin:
+Yuqoridagi buyruqda biz quyidagilarni ko'rshimiz mumkin:
 ```bash
 root@test-server-k8s-1:~# kubectl run k8s-web-hello --image=<dockerhub_username>/k8s-web-hello:1.0.0 --port=3000
 pod/k8s-web-hello created
@@ -80,11 +85,95 @@ Agar biz yaratgan podimizni toxtatmoqchi bo'lsak, quyidagi buyruqni bajarishimiz
 ```bash
 kubectl delete pod k8s-web-hello
 ```
-Endi bo'lsa biz PODni deploymant orqali yaratamiz. Deploymant bu Kubernetes resursi bo'lib, u bizning PODlarimizni boshqarish uchun ishlatiladi. Deploymant yordamida biz PODlarimizni avtomatik ravishda yangilash, ko'paytirish yoki kamaytirish imkoniyatiga ega bo'lamiz. Deploymant yaratish uchun quyidagi buyruqni bajarishimiz kerak:
+Endi bo'lsa biz PODni deployment orqali yaratamiz. Deployment bu Kubernetes resursi bo'lib, u bizning PODlarimizni boshqarish uchun ishlatiladi. Deployment yordamida biz PODlarimizni avtomatik ravishda yangilash, ko'paytirish yoki kamaytirish imkoniyatiga ega bo'lamiz. Deployment yaratish uchun quyidagi buyruqni bajarishimiz kerak:
 ```bash
 kubectl create deployment k8s-web-hello --image=<dockerhub_username>/k8s-web-hello:1.0.0
 ```
-Bu buyruq k8s-web-hello nomli deploymant yaratadi va unga <dockerhub_username>/k8s-web-hello:1.0.0 nomli Docker image ni ishlatadi. Endi biz deploymant yaratdik, endi biz uning holatini tekshirishimiz kerak. Deploymant holatini tekshirish uchun quyidagi buyruqni bajarishimiz kerak:
+Bu buyruq k8s-web-hello nomli deployment yaratadi va unga <dockerhub_username>/k8s-web-hello:1.0.0 nomli Docker image ni ishlatadi. Endi biz deployment yaratdik, endi biz uning holatini tekshirishimiz kerak. Deployment holatini tekshirish uchun quyidagi buyruqni bajarishimiz kerak:
 ```bash
 kubectl get deployments
 ```
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Image'ni o'z Docker Hub hisobingiz nomi bilan
+teglang va yuklang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+docker tag k8s-web-hello:1.0.3 <foydalanuvchi>/k8s-web-hello:1.0.3
+docker push <foydalanuvchi>/k8s-web-hello:1.0.3
+docker pull <foydalanuvchi>/k8s-web-hello:1.0.3   # boshqa mashinadan tortiladimi
+```
+</details>
+
+**2-topshiriq · o'rta.** Deployment yarating va Pod'lar image'ni
+tortganini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl describe pod <nom> | grep -E 'Image:|Pulled'
+```
+</details>
+
+**3-topshiriq · qiyin.** Image tegini mavjud bo'lmagan raqamga
+o'zgartiring. **Avval ayting:** Pod qanday `STATUS` oladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods
+# ImagePullBackOff
+kubectl describe pod <nom> | tail -6
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** minikube'da lokal image'ni push qilmasdan ishlatsam bo'ladimi?
+**Javob:** Ha: `eval $(minikube docker-env)` deb Docker'ni minikube ichiga
+yo'naltiring, keyin `docker build` qiling. Yoki `minikube image load <nom>`.
+
+**Savol:** Xususiy registry'dan image tortish qanday?
+**Javob:** `imagePullSecrets` kerak:
+
+```bash
+kubectl create secret docker-registry regcred \
+  --docker-server=<server> --docker-username=<user> --docker-password=<parol>
+```
+
+**Savol:** `imagePullPolicy` nima qiladi?
+**Javob:** `IfNotPresent` (standart) — node'da bor bo'lsa tortmaydi.
+`Always` — har safar tortadi. Tegi `latest` bo'lsa standart qiymat
+avtomatik `Always` ga o'zgaradi.
+
+## 📌 CKA imtihon uchun maslahat
+
+```bash
+kubectl set image deployment/<nom> <konteyner>=<image>:<teg>
+kubectl create secret docker-registry regcred --docker-server=... 
+```
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Image** | Ilova va uning muhitidan iborat o'zgarmas qolip |
+| **Konteyner** | Ishga tushirilgan image nusxasi |
+| **Dockerfile** | Image qanday qurilishini tasvirlovchi fayl |
+| **Registry** | Image'lar saqlanadigan omborxona (Docker Hub, GHCR, ECR) |
+| **Teg (tag)** | Image versiyasini bildiruvchi belgi: `:1.0.3` |
+| **Qatlam (layer)** | Dockerfile'ning har bir buyrug'i hosil qiladigan bo'lak |
+
+## 🔗 Manbalar
+
+- [Dockerfile reference](https://docs.docker.com/reference/dockerfile/)
+- [Images — kubernetes.io](https://kubernetes.io/docs/concepts/containers/images/)
+- [Node.js Docker best practices](https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md)
+
+---
+⬅️ [Oldingi dars](lesson3.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson5.md](lesson5.md)

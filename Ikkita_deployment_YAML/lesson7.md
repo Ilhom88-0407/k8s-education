@@ -1,5 +1,9 @@
 # YAML malumotlarini yaratish bo'yicha yakuniy dars
 
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Bo'lim bo'yicha yakuniy xulosa
+> - YAML yozishda eng ko'p uchraydigan xatolar
+
 ## Bu darsda biz kichik bir `YAML` fayl yaratishni o'rganamiz.
 ## `YAML` fayl yaratish uchun biz oddiy matn muharriridan foydalanamiz. Masalan, `Notepad` yoki `VS Code`.
 ## Quyidagi `YAML` faylni yaratamiz:
@@ -31,29 +35,72 @@ spec:
 ```bash
 kubectl apply -f my-pod.yaml
 ``` 
-# Bu buyruq `my-pod.yaml` faylini `Kubernetes` klasteriga qo'llaydi va `Pod` resursini yaratadi.
-# Endi biz `Pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu buyruq `my-pod.yaml` faylini `Kubernetes` klasteriga qo'llaydi va `Pod` resursini yaratadi.
+## Endi biz `Pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl get pods
 ```     
-# Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rishingiz kerak.
-# Agar siz `my-pod` resursining holatini batafsil ko'rishni istasangiz, quyidagi buyruqni bajarishingiz mumkin:
+## Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rishingiz kerak.
+## Agar siz `my-pod` resursining holatini batafsil ko'rishni istasangiz, quyidagi buyruqni bajarishingiz mumkin:
 
 ```bash
 kubectl describe pod my-pod
 ```     
-# Bu buyruq `my-pod` resursining holatini ko'rsatadi.   
-# Endi biz `my-pod` resursini o'chirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu buyruq `my-pod` resursining holatini ko'rsatadi.   
+## Endi biz `my-pod` resursini o'chirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl delete pod my-pod
 ```
-# Bu buyruq `my-pod` resursini `Kubernetes` klasteridan o'chiradi.
-# Endi biz `my-pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu buyruq `my-pod` resursini `Kubernetes` klasteridan o'chiradi.
+## Endi biz `my-pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl get pods
 ```
-# Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rmasligingiz kerak, chunki u o'chirilgan.
-# Bu darsda biz `YAML` malumotlarini yaratish va `Kubernetes` klasteriga qo'llashni o'rgandik. Endi siz `YAML` fayllarini yaratish va `Kubernetes` resurslarini boshqarish bo'yicha asosiy bilimlarga egasiz. Keyingi darslarda biz yanada murakkab `YAML` fayllarini yaratishni o'rganamiz.
+## Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rmasligingiz kerak, chunki u o'chirilgan.
+## Bu darsda biz `YAML` malumotlarini yaratish va `Kubernetes` klasteriga qo'llashni o'rgandik. Endi siz `YAML` fayllarini yaratish va `Kubernetes` resurslarini boshqarish bo'yicha asosiy bilimlarga egasiz. Keyingi darslarda biz yanada murakkab `YAML` fayllarini yaratishni o'rganamiz.
+
+## 🧪 Mustaqil topshiriq
+
+**Topshiriq.** Shu darsdagi buyruqlarni o'z klasteringizda qaytaring va
+natijani `kubectl get all` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deploy,svc,pods -o wide
+```
+</details>
+
+📁 Tayyor fayllar: [`amaliyot/`](amaliyot/)
+
+## ❓ Savol-Javob
+
+**Savol:** `kubectl apply -f` ga bir necha faylni birdan berish mumkinmi?
+**Javob:** Ha: `kubectl apply -f a.yaml -f b.yaml`. Butun papkani ham:
+`kubectl apply -f amaliyot/`.
+
+**Savol:** Bitta faylda bir necha obyekt bo'lishi mumkinmi?
+**Javob:** Ha. Ular `---` qatori bilan ajratiladi. Bu bog'liq obyektlarni
+(Service + Deployment) birga saqlashda qulay.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Service DNS nomi** | Klaster ichida servisga murojaat qilish uchun nom |
+| **ClusterIP** | Faqat klaster ichidan ko'rinadigan Service turi |
+| **CoreDNS** | Service nomlarini IP'ga aylantiruvchi klaster DNS serveri |
+| **FQDN** | `<servis>.<namespace>.svc.cluster.local` — to'liq nom |
+| **Ko'p hujjatli YAML** | Bitta faylda `---` bilan ajratilgan bir necha obyekt |
+
+## 🔗 Manbalar
+
+- [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+- [Connecting Applications with Services](https://kubernetes.io/docs/tutorials/services/connect-applications-service/)
+- [Service — kubernetes.io](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+---
+⬅️ [Bo'lim indeksi](README.md) · ➡️ [lesson8.md](lesson8.md)

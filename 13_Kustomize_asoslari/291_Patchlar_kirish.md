@@ -160,6 +160,43 @@ graph TB
 
 💡 Ikkala usul ham to'liq ishlaydi — bu shaxsiy didga bog'liq. Hatto ikkalasini aralash ishlatish ham mumkin. Kurs instruktori strategic merge'ni afzal ko'radi, chunki oddiy Kubernetes konfiglari bilan ishlanadi va o'qish osonroq.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Bitta Deployment'ning `replicas` ini patch bilan o'zgartiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep -A1 'replicas:'
+```
+</details>
+
+**2-topshiriq · o'rta.** Patch qaysi obyektga tegishini `target` orqali aniq ko'rsating.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep -B5 'replicas: 5'
+```
+</details>
+
+**3-topshiriq · qiyin.** Patch mavjud bo'lmagan obyektga yo'naltirilsa nima bo'ladi? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Kustomize'ning yangi versiyalarida **xato beradi**:
+
+```text
+Error: no matches for Id apps_v1_Deployment|~X|yoq-bunday
+```
+
+Eski versiyalarda esa jimgina e'tiborsiz qoldirilardi. Yangi xatti-harakat
+afzalroq: nomni xato yozganingizni darrov bilasiz, aks holda patch
+qo'llanmagani sezilmay qolardi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Qachon transformer, qachon patch ishlataman?

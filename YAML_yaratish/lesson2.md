@@ -1,8 +1,13 @@
-# YAML faylning kubernetis klastorida qo'llanilishi
+# YAML faylning Kubernetes klasterida qo'llanilishi
 
-Kubernetis klastorida `Deployment` yaratish uchun `YAML` fayl yaratishni o'rganishga mo'ljallangan.
-Xozirda biz yaratgan <deployment.yaml> fayli mavjud va biz uni kubernetes klasterida ishga tushiramiz:
-buning uchun quidagi buyruqni ishlatamiz:
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Manifestni klasterga qo'llash va o'zgartirish
+> - `kubectl apply` idempotentligi
+> - Yangilanishdan keyin nima o'zgarganini tekshirish
+
+Kubernetes klasterida `Deployment` yaratish uchun `YAML` fayl yaratishni o'rganishga mo'ljallangan.
+Hozirda biz yaratgan <deployment.yaml> fayli mavjud va biz uni kubernetes klasterida ishga tushiramiz:
+buning uchun quyidagi buyruqni ishlatamiz:
 
 ```bash
 kubectl apply -f deployment.yaml
@@ -62,13 +67,13 @@ Events:
   ----    ------             ----  ----                   -------
   Normal  ScalingReplicaSet  46s   deployment-controller  Scaled up replica set k8s-web-hello-7c47cb8cd8 from 0 to 5
 ```
-bu yerda biz deploymentni kubernetis klastorida yaratdik va uning holatini tekshirib oldik.
+bu yerda biz deploymentni Kubernetes klasterida yaratdik va uning holatini tekshirib oldik.
 
-Agarda biz yaml fayilida o'zgartirishlar kiritgan bo'lsak quidagi buyruqni ishlatamiz:
+Agarda biz yaml fayilida o'zgartirishlar kiritgan bo'lsak quyidagi buyruqni ishlatamiz:
 ```bash 
-kubectl applay -f deployment.yaml
+kubectl apply -f deployment.yaml
 ```
-misol uchun bizning `deployment.yaml` faylida <replicas: 5> ni <replicas: 10> ga <image: mrpocker88/k8s-web-hello:1.0.2> ni esa <image: mrpocker88/k8s-web-hello:1.0.3> ga o'zgartirdik va uni kubernetis klastorida yaratishimiz mumkin.
+misol uchun bizning `deployment.yaml` faylida <replicas: 5> ni <replicas: 10> ga <image: mrpocker88/k8s-web-hello:1.0.2> ni esa <image: mrpocker88/k8s-web-hello:1.0.3> ga o'zgartirdik va uni Kubernetes klasterida yaratishimiz mumkin.
 Edi bo'lsa analiz qilib ko'ramiz o'zgarishlarni
 ```bash
 root@test-server-k8s-1:~# kubectl apply -f deployment.yaml
@@ -139,3 +144,79 @@ Events:
   Normal  ScalingReplicaSet  8s (x14 over 11s)  deployment-controller  (combined from similar events): Scaled down replica set k8s-web-hello-7dfdc85b77 from 1 to 0
 ```
 <Scaled up replica set k8s-web-hello-7dfdc85b77 from 5 to 10> bu yerda '10' ta pod yaratilgan va '5' ta pod o'chirilgan.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Manifestdagi `replicas` ni o'zgartirib qayta
+qo'llang va `kubectl get deploy` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deployment k8s-web-hello -o wide
+```
+</details>
+
+**2-topshiriq · o'rta.** `kubectl apply` ni **ikki marta** ketma-ket
+bajaring. Ikkinchi safar chiqish nima deydi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```text
+deployment.apps/k8s-web-hello unchanged
+```
+</details>
+
+**3-topshiriq · qiyin.** `kubectl edit deployment` bilan image tegini
+o'zgartiring. **Avval ayting:** ReplicaSet'lar bilan nima bo'ladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get rs -l app=k8s-web-hello
+# Ikkita ReplicaSet: eskisi 0 replika, yangisi to'liq
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** `apply` ni ikki marta bajarsam zarari bormi?
+**Javob:** Yo'q. `apply` **idempotent** — o'zgarish bo'lmasa `unchanged`
+deydi va hech nima qilmaydi.
+
+**Savol:** Manifestdagi o'zgarish qo'llanmadi. Nima uchun?
+**Javob:** Ba'zi maydonlar o'zgarmas (`spec.selector`). Ular uchun
+obyektni o'chirib qayta yaratish kerak. Xato xabari buni aniq aytadi.
+
+**Savol:** `kubectl apply` va `kubectl edit` — qaysi biri?
+**Javob:** `apply` — manifest git'da saqlangan bo'lsa. `edit` — tez tuzatish
+uchun, lekin o'zgarish faylda qolmaydi va keyingi `apply` uni bekor qiladi.
+
+## 📌 CKA imtihon uchun maslahat
+
+```bash
+kubectl apply -f manifest.yaml --dry-run=server   # klasterga tegmasdan tekshirish
+kubectl diff -f manifest.yaml                     # nima o'zgarishini ko'rish
+```
+
+`kubectl diff` — apply'dan oldin nima o'zgarishini ko'rsatadi. Xavfli
+o'zgarishlarni oldindan ushlaydi.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Idempotent** | Necha marta bajarilsa ham natija bir xil |
+| **`--dry-run=client`** | Faqat lokal tekshirish, apiserver'ga yubormaydi |
+| **`--dry-run=server`** | apiserver tekshiradi, lekin saqlamaydi |
+| **`kubectl diff`** | Manifest va klaster holati orasidagi farq |
+
+## 🔗 Manbalar
+
+- [Declarative Management of Objects](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/)
+- [kubectl apply](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#apply)
+
+---
+⬅️ [Oldingi dars](lesson1.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson3.md](lesson3.md)

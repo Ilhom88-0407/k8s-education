@@ -126,6 +126,47 @@ graph TB
 
 Chart dependency (bog'liqliklar) mavzusini kursda keyinroq batafsil ko'ramiz.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `helm create` bilan yangi chart yarating va tuzilmasini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm create mening-chartim
+find mening-chartim -type f | sort
+```
+</details>
+
+**2-topshiriq · o'rta.** `Chart.yaml` va `values.yaml` fayllarini o'qing va farqini ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+cat mening-chartim/Chart.yaml
+head -20 mening-chartim/values.yaml
+```
+</details>
+
+**3-topshiriq · qiyin.** `templates/` ichidagi faylda `{{ .Values.replicaCount }}` nima qiladi?
+**Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Bu **Go template** ifodasi. `helm install` paytida u `values.yaml` dagi
+`replicaCount` qiymati bilan almashtiriladi.
+
+```bash
+helm template mening-chartim | grep -A1 replicas
+helm template mening-chartim --set replicaCount=7 | grep -A1 replicas
+```
+
+`helm template` — klasterga tegmasdan natijani ko'rishning eng tez usuli.
+Chart yozayotganda uni doim shu bilan tekshiring.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `appVersion` va `version` maydonlarining farqi nima?

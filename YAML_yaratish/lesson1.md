@@ -1,11 +1,20 @@
-## Deployment uchun YAML fayl yaratish
-# 📄 YAML Fayllarida Ma'lumot Turlari (Qisqacha Qo'llanma)
+# Deployment uchun YAML fayl yaratish
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Manifestning to'rt majburiy qismi: apiVersion, kind, metadata, spec
+> - YAML'dagi ma'lumot turlari: satr, son, ro'yxat, lug'at
+> - `selector` va `template.labels` nima uchun mos kelishi kerak
+> - Resurs so'rovlari va limitlari (`requests`, `limits`)
+
+![Manifest anatomiyasi: apiVersion qaysi API guruhi, kind qanday obyekt, metadata obyektning kimligi, spec esa kerakli holatni belgilaydi; status maydonini klaster o'zi to'ldiradi](rasmlar/manifest_anatomiyasi.svg)
+
+## 📄 YAML fayllarida ma'lumot turlari
 
 Ushbu qo'llanma Kubernetes tizimida `Deployment` yaratishni, uning arxitekturasini va YAML fayllarini to'g'ri yozish qoidalarini o'rganishga mo'ljallangan.
 
 ---
 
-# 🏗️ 1-QISM: Kubernetes Deployment Obyekti
+## 🏗️ 1-qism: Kubernetes Deployment obyekti
 
 Kubernetes'da ilovalarni uzluksiz ishlatish uchun `Deployment` obyektidan foydalaniladi.
 
@@ -43,7 +52,7 @@ spec:
           ports:
             - containerPort: 3000
 ```
-![deploymant](image.png)
+![deployment](image.png)
 
 📖 Qatorlar bo'yicha lug'at
 apiVersion
@@ -148,7 +157,7 @@ Misol:
 image: mrpocker88/k8s-web-hello:1.0.2
 ```
 
-# 📝 3-QISM: YAML Faylni Oddiy Tilda O'qish
+## 📝 3-QISM: YAML Faylni Oddiy Tilda O'qish
 
 Kubernetes'ga yuborilgan buyruq oddiy tilda quyidagicha bo'ladi:
 
@@ -162,7 +171,7 @@ Kubernetes'ga yuborilgan buyruq oddiy tilda quyidagicha bo'ladi:
 
 ---
 
-# 🧩 4-QISM: YAML Sintaksisi va Ma'lumot Turlari
+## 🧩 4-QISM: YAML Sintaksisi va Ma'lumot Turlari
 
 YAML — inson o'qishi uchun qulay konfiguratsiya tili.
 
@@ -228,3 +237,112 @@ spec:
 spec:
 <TAB>containers:
 ```
+
+## 📁 Tayyor fayllar
+
+Bu darsdagi manifestlar `amaliyot/` papkasida ishlaydigan fayl sifatida turadi:
+
+- [`amaliyot/lesson1/01-deployment.yaml`](amaliyot/lesson1/01-deployment.yaml)
+- [`amaliyot/lesson1/02-service.yaml`](amaliyot/lesson1/02-service.yaml)
+
+```bash
+kubectl apply -f amaliyot/lesson1/01-deployment.yaml
+kubectl apply -f amaliyot/lesson1/02-service.yaml
+```
+
+Bu bo'limda interaktiv simulyator ham bor —
+[`amaliyot/lesson1/simulyator.html`](amaliyot/lesson1/simulyator.html)
+faylini brauzerda oching.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** `01-deployment.yaml` dagi `replicas` ni 3 ga
+o'zgartiring va qo'llang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deployment k8s-web-hello -o jsonpath='{.spec.replicas}{"\n"}'
+```
+</details>
+
+**2-topshiriq · o'rta.** Manifestga `livenessProbe` qo'shing: `/` yo'liga
+HTTP GET, 3000-portda.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl describe deployment k8s-web-hello | grep -i liveness
+```
+</details>
+
+**3-topshiriq · qiyin.** `selector.matchLabels` ni `template.metadata.labels`
+dan farqli qiling. **Avval ayting:** `kubectl apply` nima deydi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```text
+`selector` does not match template `labels`
+```
+</details>
+
+📁 To'liq yechimlar: [`amaliyot/lesson1/YECHIM.md`](amaliyot/lesson1/YECHIM.md)
+
+## ❓ Savol-Javob
+
+**Savol:** `apiVersion` da `v1` va `apps/v1` farqi nima?
+**Javob:** `v1` — asosiy (core) API guruhi: Pod, Service, ConfigMap, Secret.
+`apps/v1` — ilovalar guruhi: Deployment, ReplicaSet, StatefulSet, DaemonSet.
+Qaysi obyekt qaysi guruhda ekanini `kubectl api-resources` ko'rsatadi.
+
+**Savol:** YAML'da tab ishlatsam bo'ladimi?
+**Javob:** Yo'q. YAML **tabni qabul qilmaydi** — faqat bo'shliq. Bu eng ko'p
+uchraydigan sintaksis xatosi.
+
+**Savol:** `requests` va `limits` farqi nima?
+**Javob:** `requests` — Pod'ni joylashtirish uchun **kafolatlangan** minimum;
+scheduler shunga qarab node tanlaydi. `limits` — yuqori chegara; undan
+oshsa konteyner cheklanadi (CPU) yoki o'ldiriladi (xotira, OOMKilled).
+
+**Savol:** `250m` nima degani?
+**Javob:** 250 millicore — bitta CPU yadrosining chorak qismi.
+`1000m` = `1` = butun yadro.
+
+## 📌 CKA imtihon uchun maslahat
+
+Manifestni qo'lda yozmang:
+
+```bash
+kubectl create deployment web --image=nginx:1.27-alpine \
+  --dry-run=client -o yaml > deploy.yaml
+```
+
+Maydon nomini unutsangiz — hujjatlarni ochish shart emas:
+
+```bash
+kubectl explain deployment.spec.template.spec.containers
+kubectl explain deployment --recursive | head -40
+```
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **`apiVersion`** | Obyekt qaysi API guruhi va versiyasiga tegishli |
+| **`kind`** | Obyekt turi: Pod, Deployment, Service ... |
+| **`metadata`** | Obyektning nomi, namespace'i va labellari |
+| **`spec`** | Kerakli holat — siz nimani xohlaysiz |
+| **`status`** | Haqiqiy holat — klaster o'zi to'ldiradi |
+| **millicore (`m`)** | CPU o'lchov birligi; `1000m` = 1 yadro |
+| **OOMKilled** | Konteyner xotira limitidan oshgani uchun o'ldirilgan |
+
+## 🔗 Manbalar
+
+- [Kubernetes Object Management](https://kubernetes.io/docs/concepts/overview/working-with-objects/)
+- [Resource Management for Pods](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+- [kubectl explain](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#explain)
+
+---
+⬅️ [Bo'lim indeksi](README.md) · ➡️ Keyingi dars: [lesson2.md](lesson2.md)

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 452" width="800"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Pod ichki tuzilishi</title>
+  <desc id="izoh">Pod bir yoki bir nechta konteynerni o&#x27;rab turadi. Konteynerlar bitta tarmoq namespace&#x27;ini bo&#x27;lishadi — ya&#x27;ni bitta IP manzil va bitta port maydoni — hamda umumiy volume orqali fayl almashadi. Shuning uchun Kubernetes konteynerni emas, Pod&#x27;ni rejalashtiradi va o&#x27;chiradi.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="452" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">Pod ichki tuzilishi</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">Nima uchun Kubernetes konteynerni emas, Pod&#x27;ni boshqaradi</text>
+  <rect x="28" y="82" width="484" height="344" rx="12" fill="#F0F8F3" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="44" y="106" font-size="13.5" font-weight="600" fill="#2A7D53">POD — web-app</text>
+  <text x="270" y="118" text-anchor="middle" font-size="11.5" fill="#5C5A55">Kubernetes uchun eng kichik joylashtirish birligi</text>
+  <rect x="48" y="134" width="220" height="88" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="158" y="170" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">konteyner: web</text>
+  <text x="158" y="187" text-anchor="middle" font-size="11" fill="#5C5A55">nginx:1.27-alpine</text>
+  <text x="158" y="202" text-anchor="middle" font-size="11" fill="#5C5A55">80-portda tinglaydi</text>
+  <rect x="288" y="134" width="204" height="88" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="390" y="170" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">konteyner: log-agent</text>
+  <text x="390" y="187" text-anchor="middle" font-size="11" fill="#5C5A55">fluent-bit:3.1</text>
+  <text x="390" y="202" text-anchor="middle" font-size="11" fill="#5C5A55">loglarni yig&#x27;adi</text>
+  <rect x="48" y="240" width="444" height="82" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="270" y="273" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Umumiy tarmoq namespace</text>
+  <text x="270" y="290" text-anchor="middle" font-size="11" fill="#5C5A55">Bitta IP: 10.244.0.7 — o&#x27;zaro localhost orqali gaplashadi</text>
+  <text x="270" y="305" text-anchor="middle" font-size="11" fill="#5C5A55">Portlar Pod ichida takrorlanmasligi kerak</text>
+  <rect x="48" y="336" width="444" height="78" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="270" y="367" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Umumiy volume: /var/log</text>
+  <text x="270" y="384" text-anchor="middle" font-size="11" fill="#5C5A55">web yozadi, log-agent o&#x27;qiydi — bitta papka</text>
+  <text x="270" y="399" text-anchor="middle" font-size="11" fill="#5C5A55">Pod o&#x27;chsa, emptyDir turidagi volume ham yo&#x27;qoladi</text>
+  <rect x="536" y="134" width="236" height="88" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="654" y="170" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Birga tug&#x27;iladi</text>
+  <text x="654" y="187" text-anchor="middle" font-size="11" fill="#5C5A55">Konteynerlar bitta node&#x27;ga</text>
+  <text x="654" y="202" text-anchor="middle" font-size="11" fill="#5C5A55">birga rejalashtiriladi</text>
+  <rect x="536" y="240" width="236" height="82" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="654" y="273" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Birga o&#x27;ladi</text>
+  <text x="654" y="290" text-anchor="middle" font-size="11" fill="#5C5A55">Pod o&#x27;chirilsa, ichidagi barcha</text>
+  <text x="654" y="305" text-anchor="middle" font-size="11" fill="#5C5A55">konteynerlar ham o&#x27;chadi</text>
+  <rect x="536" y="336" width="236" height="78" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="654" y="367" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Ko&#x27;paytirish = Pod nusxasi</text>
+  <text x="654" y="384" text-anchor="middle" font-size="11" fill="#5C5A55">Bitta konteynerni emas,</text>
+  <text x="654" y="399" text-anchor="middle" font-size="11" fill="#5C5A55">butun Pod&#x27;ni nusxalaysiz</text>
+  <path d="M 512 178 L 530 178" stroke="#2A7D53" stroke-width="2" fill="none" marker-end="url(#ok2A7D53)"/>
+  <path d="M 512 281 L 530 281" stroke="#2A7D53" stroke-width="2" fill="none" marker-end="url(#ok2A7D53)"/>
+  <path d="M 512 375 L 530 375" stroke="#2A7D53" stroke-width="2" fill="none" marker-end="url(#ok2A7D53)"/>
+</svg>

@@ -114,6 +114,49 @@ sequenceDiagram
     W-->>T: Welcome to nginx!
 ```
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Vaqtinchalik Pod ochib, `kubernetes` servisining DNS nomini yechib ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl run t --rm -it --image=busybox:1.37 --restart=Never -- nslookup kubernetes
+```
+</details>
+
+**2-topshiriq · o'rta.** Boshqa namespace'dagi servisga to'liq FQDN bilan murojaat qiling.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl run t --rm -it --image=busybox:1.37 --restart=Never \
+  -- nslookup kube-dns.kube-system.svc.cluster.local
+```
+</details>
+
+**3-topshiriq · qiyin.** Pod ichidagi `/etc/resolv.conf` ni o'qing. **Avval ayting:** u yerda
+nima yozilgan bo'ladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl exec <pod> -- cat /etc/resolv.conf
+```
+
+```text
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+```
+
+`search` qatori tufayli qisqa nom (`web`) avtomatik to'liq nomga
+kengaytiriladi. `ndots:5` esa nuqtasi 5 tadan kam bo'lgan har nomni
+avval shu qo'shimchalar bilan sinashni bildiradi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Bir xil namespace'dagi service'ga to'liq nom bilan murojaat qilish shartmi?

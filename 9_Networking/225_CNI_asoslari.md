@@ -56,7 +56,7 @@ CNI ikki tomonga aniq mas'uliyat belgilaydi:
 
 ### Plugin zimmasida:
 
-- `add`, `del`, `check` buyruq qatори argumentlarini qo'llab-quvvatlash;
+- `add`, `del`, `check` buyruq qatori argumentlarini qo'llab-quvvatlash;
 - Container ID va network namespace kabi parametrlarni qabul qilish;
 - Pod/container'ga **IP manzil berish**;
 - Container'lar tarmoqdagi boshqa container'larga yeta olishi uchun kerakli **route'larni sozlash**;
@@ -147,6 +147,47 @@ bridge add 2e34dcf34 /var/run/netns/2e34dcf34
 | Kim ishlatadi | Kubernetes, rkt, Mesos va boshqalar | Docker |
 | Plugin'lar | bridge, flannel, calico, weave, cilium... | Docker libnetwork driver'lari |
 | O'zaro moslik | CNI plugin Docker'ga to'g'ridan-to'g'ri ulanmaydi | CNM driver CNI runtime'larda ishlamaydi |
+
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Node'dagi CNI konfiguratsiya fayllarini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ls -la /etc/cni/net.d/
+cat /etc/cni/net.d/*.conflist
+```
+</details>
+
+**2-topshiriq · o'rta.** O'rnatilgan CNI binarylarini ro'yxatlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ls /opt/cni/bin/
+```
+</details>
+
+**3-topshiriq · qiyin.** CNI konfiguratsiyasini vaqtincha boshqa nomga o'zgartiring va yangi Pod
+yaratib ko'ring. **Avval ayting:** Pod qanday holatda qoladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo mv /etc/cni/net.d/10-flannel.conflist /tmp/
+kubectl run sinov --image=nginx:1.27-alpine
+kubectl get pod sinov
+```
+
+Pod **`ContainerCreating`** holatida qotib qoladi. `describe` da:
+`network: cni plugin not initialized`. CNI'siz kubelet Pod'ga tarmoq
+bera olmaydi.
+
+⚠️ Faqat sinov klasterida bajaring. Faylni qaytarishni unutmang.
+</details>
 
 ## ❓ Savol-Javob
 

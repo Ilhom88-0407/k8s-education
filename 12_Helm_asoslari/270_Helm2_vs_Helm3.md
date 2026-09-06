@@ -108,6 +108,43 @@ Chart o'rnatib, keyin ba'zi Kubernetes obyektlariga o'zingiz qo'shimcha o'zgarti
 | Qo'lda qilingan o'zgarishlar | Rollback'da sezilmaydi, upgrade'da yo'qoladi | Sezadi va hisobga oladi/saqlaydi |
 | Chiqqan yili | 2016-noyabr | 2019-noyabr |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** O'rnatilgan Helm versiyasi 3 ekanini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm version --short   # v3.x
+```
+</details>
+
+**2-topshiriq · o'rta.** Klasterda Tiller qoldig'i yo'qligini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -A | grep -i tiller || echo 'Tiller yo\'q — bu to\'g\'ri'
+```
+</details>
+
+**3-topshiriq · qiyin.** Tiller nima uchun olib tashlandi? **Avval ayting:** u qanday xavf tug'dirardi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Tiller — klasterda ishlaydigan server komponenti edi va u odatda
+**cluster-admin** huquqi bilan ishlardi.
+
+Natijada: Tiller'ga yeta olgan har kim (hatto oddiy Pod ichidan) butun
+klasterga admin bo'la olardi. RBAC amalda chetlab o'tilardi.
+
+Helm 3 da Tiller olib tashlandi: endi `helm` mijozning o'zi
+**foydalanuvchining kubeconfig'i va huquqlari bilan** ishlaydi. Ya'ni
+siz nimaga ruxsatingiz bo'lsa, Helm ham faqat shuni qila oladi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Tiller nima edi va nega Helm 3'da olib tashlandi?

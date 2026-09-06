@@ -203,7 +203,7 @@ spec:
 Yaratamiz va tekshiramiz:
 
 ```bash
-kubectl create -f ingress-wear.yaml
+kubectl apply -f ingress-wear.yaml
 # ingress.networking.k8s.io/ingress-wear created
 
 kubectl get ingress
@@ -262,7 +262,7 @@ spec:
 ```
 
 ```bash
-kubectl create -f ingress-wear-watch.yaml
+kubectl apply -f ingress-wear-watch.yaml
 
 kubectl describe ingress ingress-wear-watch
 # Name:             ingress-wear-watch
@@ -419,6 +419,47 @@ spec:
 ```
 
 Bu yerda `/something/foo/bar`ga kelgan so'rov backend'ga `/foo/bar` bo'lib boradi (`$2` — regexdagi ikkinchi guruh). nginx controller'ning boshqa ko'plab annotatsiyalarini [rasmiy ro'yxatdan](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/) ko'rishingiz mumkin.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizda Ingress controller o'rnatilganmi — tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -A | grep -i ingress
+kubectl get ingressclass
+```
+</details>
+
+**2-topshiriq · o'rta.** Ikki xil yo'l (`/wear` va `/watch`) uchun Ingress yarating va qoidalarni
+tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl describe ingress <nom>
+# Rules bo'limida ikkala yo'l ham ko'rinishi kerak
+```
+</details>
+
+**3-topshiriq · qiyin.** `rewrite-target` annotatsiyasini olib tashlang. **Avval ayting:** backend
+ga qanday yo'l boradi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+`rewrite-target` bo'lmasa, backend to'liq yo'lni oladi: `/wear/sotib-olish`.
+Ilova esa `/sotib-olish` ni kutadi — natijada **404**.
+
+`nginx.ingress.kubernetes.io/rewrite-target: /$2` va yo'lda `(/|$)(.*)`
+guruhi birgalikda prefiksni kesib tashlaydi.
+
+```bash
+kubectl describe ingress <nom> | grep -A3 Annotations
+```
+</details>
 
 ## ❓ Savol-Javob
 

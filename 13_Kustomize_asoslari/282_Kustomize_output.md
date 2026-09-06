@@ -89,6 +89,45 @@ kubectl delete -k k8s/
 | Yaratish / yangilash | `kustomize build k8s/ \| kubectl apply -f -` | `kubectl apply -k k8s/` |
 | O'chirish | `kustomize build k8s/ \| kubectl delete -f -` | `kubectl delete -k k8s/` |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** `kubectl kustomize` bilan natijani ko'ring — klasterga hech nima yubormasdan.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize .
+```
+</details>
+
+**2-topshiriq · o'rta.** Xuddi shu natijani klasterga qo'llang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl apply -k .
+kubectl get all
+```
+</details>
+
+**3-topshiriq · qiyin.** `kubectl apply -k` va `kubectl kustomize . | kubectl apply -f -` farqi bormi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Natija bir xil**, lekin `-k` qulayroq: u bitta buyruq va `kubectl` ning
+o'z Kustomize'ini ishlatadi.
+
+Ikkinchi shakl esa oraliq natijani ko'rish yoki uni faylga saqlash kerak
+bo'lganda foydali:
+
+```bash
+kubectl kustomize overlays/prod > chiqish.yaml
+kubectl diff -f chiqish.yaml
+```
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `kustomize build k8s/ | kubectl apply -f -` buyrug'idagi `|` nima qiladi?

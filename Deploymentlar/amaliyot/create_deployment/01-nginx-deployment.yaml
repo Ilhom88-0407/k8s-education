@@ -1,0 +1,37 @@
+# Oddiy Deployment: 3 ta nginx Pod'i.
+#
+# Deployment Pod'ni bevosita yaratmaydi — u ReplicaSet yaratadi, ReplicaSet
+# esa Pod'larni. Shuning uchun `kubectl get all` da uchala obyekt ham
+# ko'rinadi.
+#
+# Qo'llash:   kubectl apply -f 01-nginx-deployment.yaml
+# Tekshirish: kubectl get deploy,rs,pods -l app=nginx-namuna
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-namuna
+spec:
+  replicas: 3
+
+  # selector Deployment qaysi Pod'larni "o'ziniki" deb hisoblashini belgilaydi.
+  # U template.metadata.labels bilan MOS kelishi shart — aks holda
+  # `kubectl apply` xato beradi.
+  selector:
+    matchLabels:
+      app: nginx-namuna
+
+  template:
+    metadata:
+      labels:
+        app: nginx-namuna
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests: { memory: 32Mi, cpu: 50m }
+            limits: { memory: 128Mi, cpu: 250m }

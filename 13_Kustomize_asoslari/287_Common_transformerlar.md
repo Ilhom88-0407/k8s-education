@@ -114,6 +114,43 @@ commonAnnotations:
 
 Natijada har bir resursning `metadata.annotations` bo'limida `branch: master` paydo bo'ladi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `namePrefix`, `nameSuffix` va `commonLabels` ni qo'llang va natijani ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep -E 'name:|app:'
+```
+</details>
+
+**2-topshiriq · o'rta.** `namespace:` transformerini qo'shing va barcha obyektlar o'sha
+namespace'ga tushganini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep namespace:
+```
+</details>
+
+**3-topshiriq · qiyin.** `commonLabels` Service'ning `selector` iga ham tegadimi? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Ha, tegadi** — va bu ataylab shunday.
+
+`commonLabels` label'ni ham `metadata.labels` ga, ham Service'ning
+`spec.selector` iga, ham Deployment'ning `spec.selector.matchLabels` iga
+qo'shadi. Aks holda Service o'z Pod'larini topa olmay qolardi.
+
+⚠️ Aynan shu sababli `commonLabels` ni mavjud Deployment'ga keyin
+qo'shish xavfli: `selector` o'zgarmas maydon va apply xato beradi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Common transformer aynan qaysi resurslarga qo'llanadi?

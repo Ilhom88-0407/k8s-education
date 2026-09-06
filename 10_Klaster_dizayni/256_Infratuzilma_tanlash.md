@@ -93,6 +93,44 @@ graph LR
 
 Demak, hozirgi dizaynimiz: **3 node — 1 master, 2 worker**, laptopda VirtualBox orqali yaratilgan VM'larda.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Klasteringiz qayerda ishlayotganini aniqlang (minikube, bulut, bare-metal).
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o wide
+kubectl get nodes -o jsonpath='{.items[0].spec.providerID}{"\n"}'
+```
+</details>
+
+**2-topshiriq · o'rta.** Node'ning operatsion tizimi va konteyner runtime'ini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o custom-columns=NOM:.metadata.name,OS:.status.nodeInfo.osImage,RUNTIME:.status.nodeInfo.containerRuntimeVersion
+```
+</details>
+
+**3-topshiriq · qiyin.** Managed va o'zi o'rnatilgan klaster orasida tanlashda uchta asosiy
+mezonni ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+1. **Kim control plane uchun javob beradi** — managed'da provayder
+   (yangilanish, zaxira, mavjudlik), o'zingizda esa siz.
+2. **Xarajat** — managed'da control plane ko'pincha bepul, lekin
+   node'lar va LoadBalancer'lar qimmatroq.
+3. **Nazorat darajasi** — apiserver bayroqlarini o'zgartirish, maxsus
+   admission plaginlar qo'shish faqat o'z klasteringizda mumkin.
+
+CKA imtihoni o'zi o'rnatilgan (kubeadm) klasterda o'tadi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** minikube bilan kubeadm'ning asosiy farqi nima?

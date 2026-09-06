@@ -1,5 +1,9 @@
 # Helm Lab — Savollar va Javoblar
 
+> 🎯 **Bu laboratoriyada nimani mashq qilamiz:**
+> - Helm bo'yicha o'z bilimingizni tekshirish
+> - Eng ko'p uchraydigan savollarga javob topish
+
 Kubernetes klasterida Helm bilan ishlash bo'yicha lab savollari, javoblari va ishlatilgan CLI buyruqlar.
 
 ---
@@ -207,3 +211,12 @@ helm repo list
 | `helm uninstall <release>` | Release'ni o'chirish |
 | `helm upgrade <release> <chart>` | Release'ni yangilash |
 | `helm rollback <release> <revision>` | Oldingi versiyaga qaytarish |
+
+## 🔗 Manbalar
+
+- [Helm rasmiy hujjatlari](https://helm.sh/docs/)
+- [Helm Charts](https://helm.sh/docs/topics/charts/)
+- [Artifact Hub — tayyor chartlar](https://artifacthub.io/)
+
+---
+⬅️ [Bo'lim indeksi](README.md)

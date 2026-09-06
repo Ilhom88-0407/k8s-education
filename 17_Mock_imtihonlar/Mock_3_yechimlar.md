@@ -10,7 +10,7 @@ Oddiy o'xshatish: mock imtihon — haydovchilik imtihonidan oldingi mashq maydon
 
 ---
 
-### 1-savol: kubeadm uchun tarmoq parametrlarini sozlash
+## 1-savol: kubeadm uchun tarmoq parametrlarini sozlash
 
 **Masala:** Siz kubeadm yordamida yangi klaster tayyorlayotgan administratorsiz. Tizimda quyidagi tarmoq parametrlarini yoqing va o'zgarishlar **reboot'dan keyin ham saqlanishini** ta'minlang (IPv4 forwarding va bridge trafigini iptables'dan o'tkazish).
 
@@ -598,3 +598,12 @@ cat /root/pod-cidr.txt
 
 ---
 *Bu dars KodeKloud CKA kursining 324-videosi asosida tayyorlandi.*
+
+## 🔗 Manbalar
+
+- [CKA imtihon dasturi (CNCF)](https://www.cncf.io/certification/cka/)
+- [Kubernetes hujjatlari](https://kubernetes.io/docs/home/)
+- [Killer.sh — CKA simulyatori](https://killer.sh/)
+
+---
+⬅️ [Bo'lim indeksi](README.md)

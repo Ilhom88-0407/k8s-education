@@ -6,6 +6,8 @@
 > - Service selektorlari va portlarini tekshirish
 > - Pod status, events va loglarni o'qish (`-f` va `--previous` bilan)
 
+![Nosozlikni qidirish tartibi: avval ilova qatlami, keyin worker node, keyin control plane, oxirida tarmoq. Har qatlam uchun birinchi beriladigan buyruq ko'rsatilgan](rasmlar/qaror_daraxti.svg)
+
 ## Hayotiy o'xshatish: shifokor tashxisi
 
 Ilovadagi muammoni izlash — shifokor ishiga o'xshaydi. Bemor "boshim og'riyapti" desa, yaxshi shifokor darrov dori yozib bermaydi: avval haroratni o'lchaydi, qon bosimini tekshiradi, tahlil topshirtiradi — ya'ni **belgilardan sababga qarab qadam-baqadam boradi**. Kubernetesda ham xuddi shunday: foydalanuvchi "sayt ochilmayapti" desa, biz ilova xaritasidagi har bir bo'g'inni birma-bir tekshirib chiqamiz, toki asl sabab (root cause) topilguncha.
@@ -143,6 +145,44 @@ graph TB
 | 6 | Pod hodisalari | `kubectl describe pod <nom>` | Events bo'limidagi xatolar |
 | 7 | Ilova loglari | `kubectl logs <pod> -f --previous` | Xato xabarlari |
 | 8 | DB qavati | `kubectl describe svc/logs` DB uchun | Ulanish, parol, baza nomi |
+
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Ataylab buzuq Pod yarating (mavjud bo'lmagan image) va `STATUS` ni ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl run buzuq --image=nginx:yoq-bunday
+kubectl get pod buzuq
+```
+</details>
+
+**2-topshiriq · o'rta.** `describe` chiqishidagi Events bo'limidan aniq sababni toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl describe pod buzuq | tail -8
+```
+</details>
+
+**3-topshiriq · qiyin.** `CrashLoopBackOff` va `ImagePullBackOff` farqi nima? **Avval ayting:**
+qaysi buyruq qaysi holatda yordam beradi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+| Holat | Ma'nosi | Birinchi buyruq |
+|---|---|---|
+| `ImagePullBackOff` | Image yuklab bo'lmayapti | `describe pod` -> Events |
+| `CrashLoopBackOff` | Konteyner ko'tarilib, darrov yiqilyapti | `logs <pod> --previous` |
+
+Farq muhim: `ImagePullBackOff` da **log yo'q** (konteyner umuman
+ishga tushmagan), shuning uchun `kubectl logs` bo'sh qaytadi va
+javob faqat Events'da bo'ladi.
+</details>
 
 ## ❓ Savol-Javob
 

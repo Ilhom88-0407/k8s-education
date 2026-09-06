@@ -1,0 +1,22 @@
+# NodePort — har node'ning IP manzili va yuqori porti orqali ochadi.
+#
+# NodePort ClusterIP ni O'Z ICHIGA OLADI: bu servis yaratilganda unga
+# ClusterIP ham beriladi.
+#
+# Qo'llash:   kubectl apply -f 03-nodeport.yaml
+# Tekshirish: minikube service web-nodeport --url
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      # nodePort ixtiyoriy. Yozmasangiz Kubernetes 30000-32767 oralig'idan
+      # o'zi tanlaydi. Aniq port kerak bo'lgandagina qo'lda yozing.
+      nodePort: 30080

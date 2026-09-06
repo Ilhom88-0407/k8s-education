@@ -1,0 +1,18 @@
+# k8s-web-hello ilovasini tashqariga chiqaruvchi Service.
+#
+# port va targetPort ataylab boshqa-boshqa: ilova konteyner ichida
+# 3000-portda ishlaydi, tashqarida esa 3030 raqami ostida ko'rinadi.
+#
+# Qo'llash: kubectl apply -f 02-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-web-hello
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8s-web-hello
+  ports:
+    - name: http
+      port: 3030        # Service'ning porti — tashqaridan shu raqam
+      targetPort: 3000  # Pod ichidagi konteyner porti

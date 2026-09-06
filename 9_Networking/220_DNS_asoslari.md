@@ -212,6 +212,44 @@ www.google.com.     245     IN      A       172.217.194.99
 
 `dig` ham `/etc/hosts` ni e'tiborga olmaydi — faqat DNS server bilan ishlaydi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `/etc/resolv.conf` faylini o'qing va tizim qaysi DNS serverni ishlatayotganini ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+cat /etc/resolv.conf
+```
+</details>
+
+**2-topshiriq · o'rta.** `dig` bilan `kubernetes.io` uchun A yozuvini so'rang va javob qaysi
+serverdan kelganini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+dig kubernetes.io A +noall +answer +stats | tail -6
+```
+</details>
+
+**3-topshiriq · qiyin.** `/etc/hosts` ga soxta yozuv qo'shing va `ping` bilan tekshiring.
+**Avval ayting:** DNS server bu nomni bilmasa ham ishlaydimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+echo '127.0.0.1 sinov.local' | sudo tee -a /etc/hosts
+ping -c1 sinov.local
+```
+
+**Ishlaydi.** Resolver avval `/etc/hosts` ga qaraydi, DNS serverga esa
+faqat u yerda topilmasa murojaat qiladi. Tartibni `/etc/nsswitch.conf`
+dagi `hosts:` qatori belgilaydi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Host nomni resolve qilishda avval qayerga qaraydi — `/etc/hosts` gami yoki DNS servergami?

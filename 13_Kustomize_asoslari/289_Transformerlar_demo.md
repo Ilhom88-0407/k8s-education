@@ -190,6 +190,41 @@ containers:
 
 Boshqa resurslardagi image'lar tegilmagan — chunki transformer faqat `db/` papkasiga yozilgan edi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Bir vaqtda `namePrefix`, `commonLabels` va `images` ni qo'llang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | head -40
+```
+</details>
+
+**2-topshiriq · o'rta.** Base va yakuniy natija orasidagi farqni ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+diff <(kubectl kustomize base/) <(kubectl kustomize overlays/dev/) | head -20
+```
+</details>
+
+**3-topshiriq · qiyin.** Transformer va patch orasidagi farq nima? Qachon qaysi biri?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Transformer** — ko'p obyektga bir xil o'zgarish (barcha nomlarga prefiks,
+barcha obyektga label). Deklarativ va qisqa.
+
+**Patch** — bitta obyektning aniq maydonini o'zgartirish (`replicas: 3`
+faqat `web` deployment'ida). Aniqroq, lekin ko'proq yozuv.
+
+Qoida: ko'pchilikka tegsa — transformer, bittasiga tegsa — patch.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Transformerni root `kustomization.yaml` ga yozish bilan subdirectory'dagisiga yozishning farqi nima?

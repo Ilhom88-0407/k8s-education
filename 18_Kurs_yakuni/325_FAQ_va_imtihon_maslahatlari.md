@@ -10,6 +10,46 @@
 
 CKA imtihoni — bu haydovchilik guvohnomasi olishga o'xshaydi. Nazariy qoidalarni yodlab qo'yish yetarli emas — mashina rulini ushlab, chorrahada to'g'ri qaror qabul qila olishingiz kerak. Shuning uchun bu kursda shunchalik ko'p amaliy lab va mock imtihon bor: maqsad — sizni "rulda" qulay his qildirish, faqat qoidalarni yodlatish emas.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** CKA imtihonida ruxsat etilgan saytlar ro'yxatini eslang va yozing.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+# kubernetes.io/docs, kubernetes.io/blog, github.com/kubernetes
+# va helm.sh — boshqasi taqiqlangan
+```
+</details>
+
+**2-topshiriq · o'rta.** O'zingizga eng qulay `kubectl` taxalluslari to'plamini tayyorlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+alias k=kubectl
+export do='--dry-run=client -o yaml'
+export now='--grace-period=0 --force'
+```
+</details>
+
+**3-topshiriq · qiyin.** Imtihonda vaqt yetmayapti. **Avval ayting:** qaysi uchta odat eng ko'p
+vaqt tejaydi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+1. **`kubectl explain`** — hujjatlarni brauzerda ochish o'rniga terminaldan
+   maydon nomini topish.
+2. **`--dry-run=client -o yaml`** — manifestni noldan yozmaslik.
+3. **Masalani tashlab ketishni bilish** — bitta qiyin masalaga 20 daqiqa
+   sarflagandan ko'ra, uchta osonini bajarish ko'proq ball beradi.
+   Belgilab qo'ying va oxirida qayting.
+
+Va har masala boshida: `kubectl config use-context <nom>`.
+</details>
+
 ## ❓ Ko'p so'raladigan savollar
 
 **Men haqiqiy imtihonga tayyormanmi?**

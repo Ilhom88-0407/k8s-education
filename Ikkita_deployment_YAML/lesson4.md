@@ -1,9 +1,22 @@
-# Deploymant uchun bizda 2 ta yaml fayl mavjud va bu fayllar o'zaro qo'liq bo'lishi kerak.
-- birinchi yaml fayl bu k8s-web-hello-deployment.yaml
-- ikkinchi yaml fayl bu nginx.yaml
+# Ikkita manifest va ularning bog'lanishi
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Ikkita manifestni to'g'ri tartibda qo'llash
+> - Ko'p hujjatli YAML (`---` bilan ajratilgan)
+> - Natijani tekshirish
+
+Bu bo'limda ikkita ilova bir-biri bilan gaplashadi. Har biri uchun bitta
+manifest bor — ichida Service ham, Deployment ham:
+
+| Fayl | Nima bor | Turi |
+|---|---|---|
+| [`amaliyot/01-nginx.yaml`](amaliyot/01-nginx.yaml) | nginx Deployment + Service | ClusterIP — faqat ichkarida |
+| [`amaliyot/02-k8s-web-to-nginx.yaml`](amaliyot/02-k8s-web-to-nginx.yaml) | web ilova Deployment + Service | LoadBalancer — tashqariga chiqadi |
+
+Tartib muhim: avval `nginx` (uni chaqiradigan ilova unga tayanadi).
 ## Endi bo'lsa ushbu ikkita deploymentni ishga tushiramiz
 ```bash
-kubectl apply -f k8s-web-hello-deployment.yaml -f nginx.yaml
+kubectl apply -f amaliyot/01-nginx.yaml -f amaliyot/02-k8s-web-to-nginx.yaml
 service/k8s-web-to-nginx created
 deployment.apps/k8s-web-to-nginx created
 service/nginx created
@@ -107,7 +120,7 @@ Events:
 Bu yerda podni qanday ishga tushganini ko'rishimiz mumkin.
 
 Brouzerda http://194.107.115.75:30807/ kiritsangiz ekaranda : 
-```Hello from the k8s-web-to-nginx-7b4dbf47f8-s5zwm``` yozuvini ko'rishingiz mumkin.
+`Hello from the k8s-web-to-nginx-7b4dbf47f8-s5zwm` yozuvini ko'rishingiz mumkin.
 
 Agarda http://194.107.115.75:30807/nginx kiritsangiz:
 ```html
@@ -121,3 +134,46 @@ For enterprise grade support, professional services, additional security feature
 Thank you for using nginx.
 ```
 Yozuvini ko'rishingiz mumkin.
+
+## 🧪 Mustaqil topshiriq
+
+**Topshiriq.** Shu darsdagi buyruqlarni o'z klasteringizda qaytaring va
+natijani `kubectl get all` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deploy,svc,pods -o wide
+```
+</details>
+
+📁 Tayyor fayllar: [`amaliyot/`](amaliyot/)
+
+## ❓ Savol-Javob
+
+**Savol:** `kubectl apply -f` ga bir necha faylni birdan berish mumkinmi?
+**Javob:** Ha: `kubectl apply -f a.yaml -f b.yaml`. Butun papkani ham:
+`kubectl apply -f amaliyot/`.
+
+**Savol:** Bitta faylda bir necha obyekt bo'lishi mumkinmi?
+**Javob:** Ha. Ular `---` qatori bilan ajratiladi. Bu bog'liq obyektlarni
+(Service + Deployment) birga saqlashda qulay.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Service DNS nomi** | Klaster ichida servisga murojaat qilish uchun nom |
+| **ClusterIP** | Faqat klaster ichidan ko'rinadigan Service turi |
+| **CoreDNS** | Service nomlarini IP'ga aylantiruvchi klaster DNS serveri |
+| **FQDN** | `<servis>.<namespace>.svc.cluster.local` — to'liq nom |
+| **Ko'p hujjatli YAML** | Bitta faylda `---` bilan ajratilgan bir necha obyekt |
+
+## 🔗 Manbalar
+
+- [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+- [Connecting Applications with Services](https://kubernetes.io/docs/tutorials/services/connect-applications-service/)
+- [Service — kubernetes.io](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+---
+⬅️ [Bo'lim indeksi](README.md) · ➡️ [lesson5.md](lesson5.md)

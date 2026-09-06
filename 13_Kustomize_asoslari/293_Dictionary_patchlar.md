@@ -173,6 +173,45 @@ Merge paytida `null` qiymat "bu kalitni o'chirib tashla" degani — natijada `or
 | Qo'shish | `op: add`, path oxirida yangi kalit, `value` — qiymat | Yangi kalit-qiymat yoziladi |
 | O'chirish | `op: remove`, path oxirida kalit, value YO'Q | Kalitga `null` qiymat beriladi |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** JSON 6902 patch bilan `replicas` qiymatini `replace` qiling.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep -A1 replicas
+```
+</details>
+
+**2-topshiriq · o'rta.** `add` operatsiyasi bilan yangi label qo'shing.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep -A3 'labels:'
+```
+</details>
+
+**3-topshiriq · qiyin.** `remove` bilan mavjud bo'lmagan maydonni o'chirmoqchi bo'ling.
+**Avval ayting:** xato beradimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Ha, xato beradi.** JSON Patch (RFC 6902) qat'iy: `remove` operatsiyasi
+yo'lni topa olmasa to'xtaydi.
+
+```text
+Error: remove operation does not apply: doc is missing path: /spec/foo
+```
+
+Strategic merge patch esa yumshoqroq — u yo'q maydonni jimgina
+e'tiborsiz qoldiradi. Aniqlik kerak bo'lganda JSON 6902, qulaylik
+kerak bo'lganda strategic merge tanlanadi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** JSON 6902'da o'zgartirilayotgan kalit nomi qayerda yoziladi?

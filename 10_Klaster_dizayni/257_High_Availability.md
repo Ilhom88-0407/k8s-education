@@ -7,6 +7,8 @@
 > - Scheduler va Controller Manager'da leader election (active-standby rejim)
 > - etcd'ning ikki topologiyasi: stacked va external
 
+![Chapda bitta control plane node: u yiqilsa klasterni boshqarib bo'lmaydi. O'ngda uchta node: bittasi yiqilganda qolgan ikkitasi etcd uchun kvorum hosil qiladi va klaster ishlashda davom etadi](rasmlar/ha_control_plane.svg)
+
 ## ✈️ Hayotiy o'xshatish
 
 HA — samolyotdagi ikki uchuvchiga o'xshaydi. Samolyotni bitta uchuvchi ham boshqara oladi, lekin doim ikkinchisi ham o'tiradi. Asosiy uchuvchi (leader) boshqaradi, ikkinchisi (standby) kuzatib turadi — asosiysiga bir gap bo'lsa, darhol boshqaruvni oladi. Kubernetes'da ham: bitta master yo'qolsa, ilovalaringiz hali "uchishda" davom etadi, lekin boshqaradigan hech kim qolmaydi. Shuning uchun production'da bir nechta master bo'lishi shart.
@@ -145,6 +147,47 @@ etcd — distributed (taqsimlangan) tizim, shuning uchun API server unga **istal
 ## Yangilangan dizaynimiz
 
 Dastlab bitta master rejalashtirgan edik. HA uchun endi **bir nechta master** sozlashga qaror qildik, hamda API server uchun **load balancer** ham qo'shamiz. Natijada klasterimizda jami **5 ta node** bo'ladi: 2 master + 2 worker + 1 load balancer.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizda nechta control plane node borligini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -l node-role.kubernetes.io/control-plane
+```
+</details>
+
+**2-topshiriq · o'rta.** Control plane komponentlari qaysi Pod'lar sifatida ishlayotganini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -n kube-system -o wide | grep -E 'apiserver|scheduler|controller-manager|etcd'
+```
+</details>
+
+**3-topshiriq · qiyin.** Nima uchun control plane node'lar soni **toq** bo'lishi kerak?
+**Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+etcd qaror qabul qilish uchun **kvorum** — ya'ni ko'pchilik ovoz talab qiladi.
+
+| Node soni | Kvorum | Nechta yiqilsa chidaydi |
+|---|---|---|
+| 1 | 1 | 0 |
+| 2 | 2 | **0** |
+| 3 | 2 | 1 |
+| 4 | 3 | 1 |
+| 5 | 3 | 2 |
+
+2 va 4 node hech qanday foyda bermaydi — ular 1 va 3 bilan bir xil
+chidamlilik beradi, lekin ko'proq resurs yeydi. Shuning uchun 3 yoki 5.
+</details>
 
 ## ❓ Savol-Javob
 

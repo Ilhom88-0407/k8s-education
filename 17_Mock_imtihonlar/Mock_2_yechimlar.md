@@ -12,7 +12,7 @@ Oddiy o'xshatish: mock imtihon — haydovchilik imtihonidan oldingi mashq maydon
 
 ---
 
-### 1-savol: Default StorageClass yaratish
+## 1-savol: Default StorageClass yaratish
 
 **Shart:** `cluster1` control plane'da `local-sc` nomli StorageClass yarating va uni klasterning default StorageClass'i qilib belgilang (volume expansion yoqilgan, binding mode — `WaitForFirstConsumer`).
 

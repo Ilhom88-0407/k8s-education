@@ -197,6 +197,44 @@ graph LR
     D --> E["Calico ishlaydi<br/>NetworkPolicy ISHLAYDI"]
 ```
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizda NetworkPolicy obyektlari bormi — tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get networkpolicy -A
+```
+</details>
+
+**2-topshiriq · o'rta.** Barcha kiruvchi trafikni taqiqlovchi NetworkPolicy yozing va qo'llang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get networkpolicy -o yaml | grep -A5 podSelector
+```
+</details>
+
+**3-topshiriq · qiyin.** Flannel ishlayotgan klasterda NetworkPolicy qo'llang. **Avval ayting:**
+u ishlaydimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Ishlamaydi.** Obyekt yaratiladi, `kubectl get networkpolicy` uni
+ko'rsatadi — lekin **hech qanday ta'sir qilmaydi**.
+
+Sababi: NetworkPolicy'ni Kubernetes'ning o'zi emas, **CNI plagini**
+amalga oshiradi. Flannel'da bunday imkoniyat yo'q.
+
+Qo'llab-quvvatlaydiganlari: Calico, Cilium, Weave Net, Antrea.
+
+Bu eng xavfli holat: siyosat yozilgan deb o'ylaysiz, aslida tarmoq ochiq.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Flannel'ni o'chirsam, mavjud pod'lar ishlashda davom etadimi?

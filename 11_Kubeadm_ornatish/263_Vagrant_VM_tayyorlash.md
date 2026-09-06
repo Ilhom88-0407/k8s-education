@@ -135,6 +135,47 @@ vagrant ssh kubenode02
 
 Uchchala VM ishlayapti va ularga ulana olamiz — hammasi tayyor. Keyingi darsda ana shu VM'lar ustida kubeadm yordamida haqiqiy Kubernetes klasterini ko'taramiz.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Vagrant o'rnatilganini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+vagrant --version
+```
+</details>
+
+**2-topshiriq · o'rta.** Vagrantfile'dagi VM'lar sonini va resurslarini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+grep -E 'memory|cpus|NODE_COUNT' Vagrantfile
+```
+</details>
+
+**3-topshiriq · qiyin.** Klaster uchun VM'da swap nima uchun o'chiriladi? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+kubelet standart holatda **swap yoqilgan node'da ishga tushmaydi**.
+
+Sababi: Kubernetes Pod'larga aniq xotira limiti beradi va bu limitni
+hisoblash swap bo'lganda ishonchsiz bo'lib qoladi — Pod limitdan oshsa
+ham diskga tushib ishlashda davom etadi, natijada butun node sekinlashadi.
+
+```bash
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab   # qayta yuklashdan keyin ham
+```
+
+(Yangi versiyalarda swap qo'llab-quvvatlashi alfa bosqichida bor, lekin
+standart holatda hamon o'chirilgan bo'lishi kerak.)
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Nega VM'larni VirtualBox'ning o'zida qo'lda yaratmaymiz?

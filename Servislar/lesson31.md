@@ -1,81 +1,261 @@
-## LoadBalancer turidagi servis yaratish
-NodePort turidagi servis yaratganimizdan so'ng, endi LoadBalancer turidagi servis yaratamiz. LoadBalancer turidagi servis, klaster ichidagi podlarga tashqi dunyo orqali kirish imkonini beradi va yuk balanslashni amalga oshiradi.
-"Savol:" LoadBalancer turidagi servis qaysi nodelarda yaratiladi?
-"Javob:" LoadBalancer turidagi servis, klaster ichidagi barcha nodelarda yaratiladi.
+# LoadBalancer — haqiqiy tashqi IP
 
-![loadBalancer](image-4.png)
-![LB_test](image-6.png)
-## servislarning 4 turdagi ko'rinishi
-Kubernetesda servislarning 4 turi mavjud: ClusterIP, NodePort, LoadBalancer va ExternalName. Har bir servis turi o'ziga xos xususiyatlarga ega va turli vazifalar uchun ishlatiladi.
-- ClusterIP: Bu servis turi, klaster ichidagi podlarga kirish imkonini beradi, lekin tashqi dunyo bilan aloqa qilish imkonini bermaydi. Bu servis turi, klaster ichidagi xizmatlarni bir-biri bilan aloqa qilish uchun ishlatiladi.
-- NodePort: Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali   kirish imkonini beradi. NodePort turidagi servis, klaster ichidagi barcha nodelarda yaratiladi va tashqi dunyo orqali kirish uchun port raqamini belgilaydi.
-- LoadBalancer: Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali   kirish imkonini beradi va yuk balanslashni amalga oshiradi. LoadBalancer turidagi servis, klaster ichidagi barcha nodelarda yaratiladi va tashqi dunyo orqali kirish uchun port raqamini belgilaydi.
-- ExternalName: Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali   kirish imkonini beradi, lekin bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun DNS nomini belgilaydi. Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun DNS nomini belgilaydi va bu DNS nomi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun ishlatiladi.
-Bu yerda har bir servis turining ko'rinishini ko'rishingiz mumkin:
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - LoadBalancer Service yaratish va u nimani o'z ichiga olishi
+> - `EXTERNAL-IP: <pending>` nima uchun chiqadi va nima qilish kerak
+> - `kubectl expose` buyrug'i ichkarida qanday ishlaydi — 6 qadam
+> - `minikube tunnel` va MetalLB
+> - To'rt xil Service turining taqqoslanishi
 
-![alt text](image-5.png)
+![kubectl expose --type=LoadBalancer sxemasi: LoadBalancer NodePort'ni, NodePort esa ClusterIP'ni o'z ichiga oladi; trafik selector app=web bo'yicha podlarga taqsimlanadi](rasmlar/expose_loadbalancer.svg)
 
-LoadBalancer turdagi servisni yaratishdan oldin, NodePort turidagi servisni o'chirib tashlaymiz va yangi servis yaratamiz. Buning uchun quyidagi buyruqni ishlatamiz:
+## 💡 Hayotiy o'xshatish: qabulxona xodimi
+
+NodePort — bino yon eshigi: kirishingiz mumkin, lekin qaysi eshik ochiqligini
+va raqamini o'zingiz bilishingiz kerak.
+
+LoadBalancer — **ko'chada turgan qabulxona xodimi**: mehmonlarni kutib
+oladi, kim bo'shligini biladi va o'zi olib kiradi. Siz faqat bitta manzilni
+bilasiz.
+
+Farqi shundaki, bunday xodimni **bino egasi yollaydi** — Kubernetes uni o'zi
+yarata olmaydi. Bulutda bu ishni provayder qiladi.
+
+## LoadBalancer uchta qatlamni o'z ichiga oladi
+
+Bu Service turlari **bir-birining ustiga qo'yiladi**:
+
+```mermaid
+graph LR
+    A["ClusterIP<br/>klaster ichida"] --> B["NodePort<br/>+ node porti"]
+    B --> C["LoadBalancer<br/>+ tashqi IP"]
 ```
-root@test-server-k8s-1:~# kubectl delete service nginx-deploy -n default
-service "nginx-deploy" deleted from default namespace
+
+LoadBalancer yaratganingizda **uchalasi ham** paydo bo'ladi: ClusterIP,
+NodePort va tashqi IP. Shuning uchun `PORT(S)` ustunida `8080:31377/TCP`
+ko'rinadi — NodePort ham o'sha yerda.
+
+## Yaratish
+
+```bash
+kubectl delete service nginx-deploy
+kubectl expose deployment nginx-deploy --type=LoadBalancer --port=8080 --target-port=80
 ```
-tekshirish uchun quyidagi buyruqni ishlatamiz:
-```
-root@test-server-k8s-1:~# kubectl get service
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   131m
-```
-Endi bo'lsa LoadBalancer turidagi servis yaratamiz. LoadBalancer turidagi servis yaratish uchun quyidagi buyruqni ishlatamiz:
-```
-kubectl expose deployment nginx-deploy --type=LoadBalancer --port=8080 --target-port=80 -n default
-misol uchun: 
-root@test-server-k8s-1:~# kubectl expose deployment nginx-deploy --type=LoadBalancer --port=8080 --target-port=80 -n default
+
+```text
 service/nginx-deploy exposed
-tekshirib olamiz:
-root@test-server-k8s-1:~# kubectl get service
+```
+
+```bash
+kubectl get service
+```
+
+```text
 NAME           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          132m
 nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   2s
 ```
-Bu yerda `nginx-deploy` servisi LoadBalancer turida yaratilganligini va tashqi dunyo orqali 8080 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
-`nginx-deploy` xaqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
+
+> 📁 **Tayyor fayl:** [`amaliyot/servis_yaratish/04-loadbalancer.yaml`](amaliyot/servis_yaratish/04-loadbalancer.yaml)
+
+![LoadBalancer qanday yaratiladi: K8s API server LoadBalancer Controller'ga xabar beradi, u esa bulut provayderidan tashqi balanslovchi (ELB) so'raydi; balanslovchi trafikni node'lardagi podlarga yuboradi](image-4.png)
+
+## ⚠️ `EXTERNAL-IP: <pending>` — nima uchun
+
+Bu **eng ko'p beriladigan savol**. Sababi oddiy: Kubernetes'ning o'zi
+balanslovchi qura olmaydi. U faqat bulut provayderidan **so'raydi**.
+
+| Muhit | Natija |
+|---|---|
+| AWS, GCP, Azure, DigitalOcean | Provayder haqiqiy IP beradi |
+| Bare-metal (o'z serveringiz) | `<pending>` — hech kim javob bermaydi |
+| minikube | `<pending>`, `minikube tunnel` ochilmaguncha |
+
+### Uchta yechim
+
+**1. Node IP + NodePort orqali kirish** — hech narsa o'rnatmasdan:
+
+LoadBalancer NodePort'ni ham yaratadi, u yuqoridagi chiqishda `31377`:
+
+```bash
+curl http://192.168.16.197:31377
 ```
-root@test-server-k8s-1:~# kubectl get service
-NAME           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          3h2m
-nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   49m
 
+**2. minikube tunnel** — lokal ishlab chiqish uchun:
+
+```bash
+minikube tunnel
 ```
-bu yesda siz <nginx-deploy> ning EXTERNAL-IP si <pending> ekanlogini ko'rishingiz mumkin. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. EXTERNAL-IP IP o'rniga tashqi IP manzili turishi kerak edi. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. Ikki yechim bor:
-- MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
-- Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 31377)
-Agar bizda EXTERNAL-IP bo'ganida brouzer orqali 45.71.15.25:8080 manziliga kirganimizda nginx serverining xush kelibsiz sahifasini ko'rishimiz mumkin bo'lardi. 
-![alt text](image-9.png)
 
-![alt text](kubectl_expose_loadbalancer_flow-1.svg)
+![minikube tunnel buyrug'ining chiqishi: "Tunnel successfully started" va "Starting tunnel for service my-nginx-deploy" — terminal ochiq turishi kerakligi haqida ogohlantirish bilan](image-8.png)
 
-Endi qadamma-qadam tushuntirib beraman:
-1-qadam — kubectl komandasining o'zi: kubectl bu shunchaki client dasturi. U sizning kompyuteringizda (yoki master nodaga SSH orqali kirgan bo'lsangiz, master nodada) ishga tushadi. Komanda ~/.kube/config faylini o'qib, master node manzilini topadi va o'sha yerga HTTPS REST so'rov yuboradi.
+⚠️ Bu buyruq **alohida terminalda ochiq turishi kerak**. Yopsangiz,
+`EXTERNAL-IP` yana `<pending>` ga qaytadi.
 
-2-qadam — Master node so'rovni qabul qiladi: kube-apiserver (master nodada port 6443'da ishlaydi) so'rovni qabul qiladi, autentifikatsiya/avtorizatsiyadan o'tkazadi va Service obyektini yaratadi.
+Tunnel ishga tushgach `EXTERNAL-IP` to'ladi:
 
-3-qadam — Service etcdga saqlanadi: Yangi Service obyekti master nodadagi etcd ma'lumotlar bazasiga yoziladi. Aynan shu daqiqada Service "yaratilgan" hisoblanadi.
+![kubectl expose deploy --type=LoadBalancer --port=9999 buyrug'i va keyingi kubectl get svc chiqishi: my-nginx-deploy servisi LoadBalancer turida, CLUSTER-IP 10.99.163.168, EXTERNAL-IP 127.0.0.1, PORT 9999:31323/TCP](image-9.png)
 
-4-qadam — Controller manager LoadBalancer logikasini bajaradi: kube-controller-managerdagi service controller type: LoadBalancer ni ko'radi va cloud provider (yoki MetalLB) dan tashqi IP so'raydi. Shuningdek NodePort ham avtomatik ajratiladi.
+**3. MetalLB o'rnatish** — bare-metal ishlab chiqarish uchun:
 
-5-qadam — Hamma nodelarda kube-proxy yangilanadi: apiserver Service haqida xabarni hamma nodelardagi (1 ta master + 3 ta worker) kube-proxy'larga jo'natadi. Har bir kube-proxy iptables/ipvs qoidalarini yangilaydi — endi har qanday node IP'ga <NodePort>'ga kelgan trafik nginx pod'larga yo'naltiriladi.
+MetalLB — bare-metal klaster uchun LoadBalancer amalga oshiruvchisi. U siz
+bergan IP pool'dan manzil ajratadi va uni ARP yoki BGP orqali tarmoqqa
+e'lon qiladi.
 
-6-qadam — nginx pod'lar trafik qabul qiladi: Pod'lar worker nodelarda (Deployment scheduler joylashtirgan joyda) ishlaydi. kube-proxy trafikni shu pod'larga round-robin tarzida yuboradi.
+## `kubectl expose` ichkarida nima qiladi — 6 qadam
 
-Muhim eslatma sizning klasteringiz uchun: Siz bare-metal serverda (cloud provider yo'q) klaster ishlatayotgan bo'lsangiz, kubectl get svc qilganda EXTERNAL-IP ustuni <pending> bo'lib turadi. Buning sababi — odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. Ikki yechim bor:
+**1-qadam — kubectl mijoz dasturi.** U sizning kompyuteringizda ishlaydi.
+`~/.kube/config` faylini o'qib apiserver manzilini topadi va u yerga HTTPS
+REST so'rov yuboradi.
 
-MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
-Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 30080)
+**2-qadam — apiserver so'rovni qabul qiladi.** 6443-portda tinglaydi,
+autentifikatsiya va avtorizatsiyadan o'tkazadi, Service obyektini tekshiradi.
 
-### Dicker Desktop Mac/Windows foydalanuvchilari uchun tunel qilish tavfsiya etiladi.
+**3-qadam — etcd'ga yoziladi.** Yangi Service obyekti bazaga saqlanadi.
+Aynan shu daqiqada Service "yaratilgan" hisoblanadi.
 
+**4-qadam — controller-manager LoadBalancer mantiqini bajaradi.**
+`service controller` `type: LoadBalancer` ni ko'radi va bulut provayderidan
+(yoki MetalLB'dan) tashqi IP so'raydi. Shu bilan birga NodePort ham
+avtomatik ajratiladi.
+
+**5-qadam — barcha node'lardagi kube-proxy yangilanadi.** apiserver
+o'zgarish haqida har node'dagi kube-proxy'ga xabar beradi. Har biri
+iptables (yoki IPVS) qoidalarini yangilaydi — endi NodePort'ga kelgan
+trafik nginx Pod'lariga yo'naltiriladi.
+
+**6-qadam — Pod'lar trafik qabul qiladi.** kube-proxy so'rovlarni Pod'lar
+orasida navbat bilan (round-robin) taqsimlaydi.
+
+### Murakkabroq holat: har Pod uchun alohida manzil
+
+Ba'zi ilovalar (masalan Kafka) mijozga o'z manzilini o'zi aytadi. Bunday holatda bitta umumiy LoadBalancer yetmaydi — har broker uchun alohida manzil kerak bo'ladi:
+
+![Kafka klasteri: har Pod o'zining advertised address'ini (Node2:31234) e'lon qiladi, shuning uchun har broker uchun alohida LoadBalancer qo'yiladi](image-6.png)
+
+Bu darslik doirasidan tashqarida, lekin LoadBalancer'ning chegarasini ko'rsatadi: u trafikni taqsimlaydi, lekin ilovaning o'zi manzil e'lon qilsa, sxema murakkablashadi.
+
+## To'rt xil Service turi
+
+![To'rt xil Service turining yonma-yon sxemasi: ClusterIP faqat klaster ichida, NodePort node portlari orqali, LoadBalancer tashqi balanslovchi orqali, ExternalName esa tashqi domen nomiga yo'naltiradi](image-5.png)
+
+| Tur | Kim ko'radi | Qachon ishlatiladi |
+|---|---|---|
+| **ClusterIP** | Faqat klaster ichi | Bir servis ikkinchisini chaqirganda. Standart tur |
+| **NodePort** | Node IP + 30000–32767 port | Sinov, demo, ichki tarmoq |
+| **LoadBalancer** | Haqiqiy tashqi IP | Bulutda ishlab chiqarish |
+| **ExternalName** | — | Klaster tashqarisidagi xizmatga DNS taxallusi |
+
+**ExternalName** boshqalardan farq qiladi: u proxy qilmaydi, IP ham bermaydi.
+U shunchaki DNS CNAME yozuvi yaratadi:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: tashqi-baza
+spec:
+  type: ExternalName
+  externalName: db.example.com
 ```
-minikube tunnel  ### ushbu komanda ishga tushiriladi local kompyuterdan tekshirish uchun
+
+Endi klaster ichidan `tashqi-baza` deb murojaat qilsangiz, DNS sizni
+`db.example.com` ga yuboradi.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** LoadBalancer Service yarating va `EXTERNAL-IP`
+ustunini kuzating. Nima ko'rinadi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get svc web-lb
+# minikube'da tunnel ochilmaguncha <pending>
 ```
-![alt text](image-8.png)
+</details>
+
+**2-topshiriq · o'rta.** `minikube tunnel` ni alohida terminalda ishga
+tushiring va `EXTERNAL-IP` to'lganini ko'ring, keyin unga so'rov yuboring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get svc web-lb -o jsonpath='{.status.loadBalancer.ingress[0].ip}{"\n"}'
+curl -s http://<shu-IP> | grep -o '<title>.*</title>'
+```
+</details>
+
+**3-topshiriq · qiyin.** `minikube tunnel` ni to'xtatmasdan turib,
+LoadBalancer Service'ining **NodePort** i orqali ham kirib ko'ring.
+**Avval ayting:** NodePort mavjudmi? Nima uchun?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get svc web-lb -o jsonpath='{.spec.ports[0].nodePort}{"\n"}'
+# NodePort BOR — LoadBalancer uni o'z ichiga oladi
+```
+</details>
+
+📁 To'liq yechimlar: [`amaliyot/servis_yaratish/YECHIM.md`](amaliyot/servis_yaratish/YECHIM.md)
+
+## ❓ Savol-Javob
+
+**Savol:** LoadBalancer Service qaysi node'larda yaratiladi?
+**Javob:** Service — klaster darajasidagi obyekt, u "node'da yaratilmaydi".
+Lekin uning NodePort qismi **har bir node'da** ochiladi, tashqi balanslovchi
+esa barcha node'larga trafik taqsimlaydi.
+
+**Savol:** Har Service uchun alohida LoadBalancer kerakmi?
+**Javob:** Ha — va bulutda har biri alohida pul turadi. Ko'p sayt uchun
+bitta **Ingress** ishlatish ancha arzon: bitta LoadBalancer ostida
+o'nlab domen bo'lishi mumkin.
+
+**Savol:** `minikube tunnel` sudo so'rayapti. Nima uchun?
+**Javob:** U mahalliy marshrutlash jadvaliga yozuv qo'shadi va past
+raqamli portlarni ochadi — bunga administrator huquqi kerak.
+
+**Savol:** Bare-metal'da MetalLB'dan boshqa yo'l bormi?
+**Javob:** Ha: NodePort + tashqi HAProxy/nginx, yoki `hostNetwork` bilan
+Ingress controller, yoki kube-vip.
+
+## 📌 CKA imtihon uchun maslahat
+
+```bash
+kubectl expose deploy web --type=LoadBalancer --port=80
+```
+
+Imtihon muhitida bulut provayderi **yo'q**, shuning uchun `EXTERNAL-IP`
+doim `<pending>` bo'ladi — bu **xato emas**. Vazifa Service to'g'ri
+yaratilganini talab qiladi, tashqi IP kelishini emas.
+
+Tekshirish uchun NodePort'dan foydalaning:
+
+```bash
+kubectl get svc web -o jsonpath='{.spec.ports[0].nodePort}{"\n"}'
+curl http://localhost:<nodePort>
+```
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **LoadBalancer** | Bulut provayderidan tashqi IP so'raydigan Service turi |
+| **`<pending>`** | Tashqi IP hali berilmagan; bare-metal'da doimiy holat |
+| **MetalLB** | Bare-metal klaster uchun LoadBalancer amalga oshiruvchisi |
+| **`minikube tunnel`** | minikube'da LoadBalancer'ga tashqi IP taqlid qiluvchi buyruq |
+| **ExternalName** | Tashqi domenga DNS taxallusi yaratuvchi Service turi |
+| **Round-robin** | So'rovlarni navbat bilan taqsimlash usuli |
+
+## 🔗 Manbalar
+
+- [Service Type LoadBalancer](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
+- [MetalLB](https://metallb.universe.tf/)
+- [minikube tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access)
+- [ExternalName Services](https://kubernetes.io/docs/concepts/services-networking/service/#externalname)
+
+---
+⬅️ [Oldingi dars](lesson30.md) · [Bo'lim indeksi](README.md) · ➡️ [Lesson32.md](Lesson32.md)

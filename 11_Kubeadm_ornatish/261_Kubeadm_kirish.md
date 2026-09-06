@@ -58,6 +58,44 @@ Bu savol ko'pchilikni chalg'itadi. Worker node'larda konteynerlar ishlashi tushu
 | Pod network (CNI) o'rnatish | Master'dan bitta buyruq bilan (agent hamma node'ga o'zi tarqaladi) |
 | `kubeadm join` | Faqat worker node'lar |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** kubeadm o'rnatilganini va versiyasini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubeadm version
+```
+</details>
+
+**2-topshiriq · o'rta.** Klaster kubeadm bilan ko'tarilganini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get configmap -n kube-system kubeadm-config
+```
+</details>
+
+**3-topshiriq · qiyin.** kubeadm nima QILMAYDI? **Avval ayting:** u qaysi ishlarni sizga qoldiradi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+kubeadm faqat **control plane va kubelet'ni** ko'taradi. U qilmaydigan ishlar:
+
+- **CNI o'rnatish** — plaginni siz tanlaysiz va o'rnatasiz;
+- serverlarni tayyorlash (OS, swap o'chirish, kernel modullari);
+- konteyner runtime o'rnatish (containerd);
+- monitoring, log yig'ish, Ingress controller;
+- zaxira nusxa va yangilash siyosati.
+
+Shuning uchun `kubeadm init` dan keyin node'lar `NotReady` bo'lib turadi —
+CNI o'rnatilmaguncha.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" kubeadm klasterni "boshqaradimi" yoki faqat "o'rnatadimi"?

@@ -108,7 +108,7 @@ spec:
 Yaratishga urinamiz:
 
 ```bash
-kubectl create -f ingress-controller.yaml
+kubectl apply -f ingress-controller.yaml
 # error: error parsing ingress-controller.yaml: error converting YAML to JSON:
 # yaml: line 36: ...
 ```
@@ -116,14 +116,14 @@ kubectl create -f ingress-controller.yaml
 **1-xato:** 36-qatorda YAML **indentation** (bo'sh joylar) xatosi bor. Faylni ochib (`vi ingress-controller.yaml`), o'sha qatordagi joylashuvni to'g'rilaymiz. Yana urinamiz:
 
 ```bash
-kubectl create -f ingress-controller.yaml
+kubectl apply -f ingress-controller.yaml
 # Error from server (NotFound): namespaces "ingress-" not found
 ```
 
 **2-xato:** `metadata.namespace` noto'g'ri yozilgan (`ingress-`). Uni `ingress-space` ga to'g'rilaymiz va qayta yaratamiz:
 
 ```bash
-kubectl create -f ingress-controller.yaml
+kubectl apply -f ingress-controller.yaml
 deployment.apps/ingress-controller created
 
 kubectl get deploy -n ingress-space

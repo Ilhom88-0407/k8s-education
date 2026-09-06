@@ -5,6 +5,8 @@
 > - Helm nima va nima uchun uni "Kubernetes uchun package manager" deb atashadi
 > - Helm bizga qanday yordam beradi: install, sozlash, upgrade, rollback, uninstall
 
+![Chart (qolip) va values.yaml (qiymatlar) helm install orqali birlashib klasterda release hosil qiladi; har upgrade yangi revision yaratadi, shuning uchun helm rollback bilan orqaga qaytish mumkin](rasmlar/helm_oqimi.svg)
+
 ## Muammo: Kubernetes ilovasi — bu bitta narsa emas, o'nlab bo'laklar
 
 Kubernetes murakkab infratuzilmalarni boshqarishda juda zo'r. Lekin biz — odamlar — murakkablik bilan ishlashda qiynalamiz. Klasterga joylashtiradigan ilovalarimiz juda ko'p obyektlardan tashkil topadi va bu obyektlar bir-biri bilan bog'lanib ishlashi kerak.
@@ -78,6 +80,47 @@ graph LR
 ```
 
 Xulosa qilib aytganda: Helm ham **package manager** (o'rnatish/o'chirish ustasi), ham **release manager** (yangilash va orqaga qaytarishga yordamchi) bo'lib ishlaydi. Eng muhimi — u bizga Kubernetes ilovalarini "obyektlar to'plami" emas, **yaxlit ilova (app)** sifatida boshqarish imkonini beradi. Bu yelkamizdan katta yukni oladi: endi har bir obyektni alohida nazorat qilishimiz shart emas — buni Helm qiladi.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Helm o'rnatilganini tekshiring va versiyasini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm version
+```
+</details>
+
+**2-topshiriq · o'rta.** Helm'siz bitta ilovani joylashtirish uchun nechta YAML fayl kerakligini
+sanang, keyin tayyor chart bilan solishtiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm show chart bitnami/nginx 2>/dev/null | head -5 || echo 'repo qo\'shilmagan'
+```
+</details>
+
+**3-topshiriq · qiyin.** Helm nima uchun "Kubernetes uchun paket menejeri" deb ataladi?
+**Avval ayting:** `apt` bilan o'xshashligi nimada?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+| `apt` | Helm |
+|---|---|
+| paket | chart |
+| o'rnatilgan paket | release |
+| repozitoriy | chart repository |
+| `apt install` | `helm install` |
+| `apt remove` | `helm uninstall` |
+
+Eng muhim o'xshashlik: ikkalasi ham **bog'liqliklarni** va **versiyalarni**
+boshqaradi. Farqi — Helm qolipni (template) qiymat bilan to'ldiradi, `apt` esa
+tayyor binaryni ko'chiradi.
+</details>
 
 ## ❓ Savol-Javob
 

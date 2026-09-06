@@ -1,0 +1,39 @@
+# Darslikda uchramasligi kerak bo'lgan yozuvlar.
+# Format:  xato<TAB>to'g'ri shakl (izoh uchun)
+# '#' bilan boshlangan qatorlar e'tiborga olinmaydi.
+# Katta-kichik harf farqlanmaydi.
+
+# --- Imlo xatolari ---
+deploymant	deployment
+deploymnet	deployment
+deplomant	deployment
+kubernetis	Kubernetes
+klastr	klaster
+kluster	klaster
+quidagi	quyidagi
+xozir	hozir
+xaqida	haqida
+tasharidan	tashqaridan
+faqrini	farqini
+xaulasa	xulosa
+yaratsih	yaratish
+mashtablash	masshtablash
+Dicker Desktop	Docker Desktop
+NideJS	NodeJS
+
+# --- Atama izchilligi (USLUB.md 4-bo'lim) ---
+imidj	image
+metka	label
+obraz	image
+
+# --- Mavjud bo'lmagan yoki eskirgan buyruqlar ---
+kubectl applay	kubectl apply
+kubectl ger	kubectl get
+
+# --- FAQAT KOD BLOKIDA taqiqlanadi ---
+# Bu yozuvlarni dars PROZADA nomlashi mumkin ("bases: eskirgan, ishlatmang"),
+# lekin kod blokida ular o'quvchi ko'chirib ishlatadigan buyruqqa aylanadi.
+# Shuning uchun ular faqat ``` ichida tekshiriladi.
+KOD	kubectl ssh	kubectl debug node/<nom> yoki minikube ssh
+KOD	kubectl create -f	kubectl apply -f
+KOD	bases:	resources: (Kustomize v5 da bases: olib tashlangan)

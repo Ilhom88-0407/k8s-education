@@ -244,6 +244,48 @@ sequenceDiagram
 
 💡 **Nega bu dars shunchalik muhim?** Docker konteyner uchun aynan shu ishlarni — namespace, veth juftlik, bridge (`docker0`), NAT, port forwarding — avtomatik bajaradi. Kubernetes'dagi CNI plugin'lar ham xuddi shu tamoyillar asosida Pod tarmog'ini quradi. Siz hozir qo'lda qilgan ishlar — keyingi darslardagi "sehr"ning ichki mexanizmi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Mashinangizda yangi network namespace yarating va ro'yxatda ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo ip netns add sinov
+ip netns list
+```
+</details>
+
+**2-topshiriq · o'rta.** Namespace ichida `ip addr` bajaring va tashqaridagidan farqini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo ip netns exec sinov ip addr
+# faqat lo interfeysi, u ham DOWN holatda
+```
+</details>
+
+**3-topshiriq · qiyin.** veth juftligi yarating va bir uchini namespace ichiga kiriting.
+**Avval ayting:** juftlikning ikkinchi uchi qayerda qoladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo ip link add veth0 type veth peer name veth1
+sudo ip link set veth1 netns sinov
+ip link | grep veth      # veth0 host'da qoladi
+sudo ip netns exec sinov ip link | grep veth1
+```
+
+veth — doim **juftlik**: bir uchiga kirgan paket ikkinchisidan chiqadi.
+Kubernetes Pod'ni node'ga aynan shu mexanizm bilan ulaydi.
+
+Tozalash: `sudo ip netns del sinov`
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Network namespace konteynerga nima beradi?

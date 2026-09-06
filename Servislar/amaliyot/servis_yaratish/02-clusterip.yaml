@@ -1,0 +1,20 @@
+# ClusterIP — standart Service turi.
+#
+# Faqat klaster ICHIDAN ko'rinadi. Bir servis ikkinchisini chaqirganda
+# ishlatiladigan asosiy tur.
+#
+# Qo'llash:   kubectl apply -f 02-clusterip.yaml
+# Tekshirish: kubectl run t --rm -it --image=curlimages/curl:8.10.1 \
+#               --restart=Never -- curl -s http://web-clusterip
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: web          # Deployment template'idagi label bilan bir xil
+  ports:
+    - name: http
+      port: 80        # Service'ning porti
+      targetPort: 80  # Pod ichidagi konteyner porti
