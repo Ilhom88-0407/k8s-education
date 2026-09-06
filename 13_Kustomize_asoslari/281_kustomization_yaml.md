@@ -117,6 +117,42 @@ Ko'rib turganingizdek, ikkala resurs ham chiqdi va eng muhimi — **transformats
 
 `kustomize build` ishga tushganda klasterda **hech qanday resurs yaratilmaydi**. Buyruq faqat "yakuniy config mana bunday bo'ladi" deb terminalga **chiqarib beradi**, xolos. Klasterga haqiqatan apply qilish uchun bu output'ni `kubectl apply` buyrug'iga uzatish kerak — buni keyingi darsda ko'ramiz.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `resources:` ro'yxatiga ikkita fayl qo'shing va natijani ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize .    # ikkala obyekt ham chiqishi kerak
+```
+</details>
+
+**2-topshiriq · o'rta.** `namePrefix:` qo'shing va obyekt nomlari o'zgarganini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep '  name:'
+```
+</details>
+
+**3-topshiriq · qiyin.** `resources:` da mavjud bo'lmagan faylni ko'rsating. **Avval ayting:**
+qanday xato chiqadi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```text
+Error: accumulating resources: ... no such file or directory
+```
+
+Kustomize `resources:` dagi har bir yo'lni **majburiy** deb biladi.
+Ixtiyoriy fayl degan tushuncha yo'q — shuning uchun `kustomize build`
+boshdanoq to'xtaydi va noto'liq manifest hosil bo'lmaydi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Kustomize katalogdagi YAML fayllarni o'zi avtomatik topib olmaydimi?

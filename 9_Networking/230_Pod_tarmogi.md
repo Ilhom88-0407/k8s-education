@@ -185,6 +185,46 @@ Har bir node'dagi **container runtime** container yaratishga mas'ul. U container
 
 CNI Kubernetes'da qayerda va qanday sozlanishini keyingi darsda ko'ramiz.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Ikki xil node'dagi ikkita Pod'ning IP manzilini oling.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -A -o wide | head
+```
+</details>
+
+**2-topshiriq · o'rta.** Bir Pod'dan ikkinchisiga (boshqa node'dagi) so'rov yuboring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl exec -it <pod-1> -- wget -qO- http://<pod-2-IP>
+```
+</details>
+
+**3-topshiriq · qiyin.** Kubernetes tarmoq modelining uchta talabini ayting va klasteringizda
+ularning bajarilishini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Uchta talab:
+
+1. Har Pod o'z IP manziliga ega;
+2. Barcha Pod'lar bir-biri bilan **NAT'siz** gaplashadi;
+3. Node'dagi agentlar (kubelet) o'sha node'dagi Pod'larga yeta oladi.
+
+```bash
+# 2-talabni tekshirish: qabul qiluvchi loglarda mijoz IP'si
+# yuboruvchi Pod IP'siga TENG bo'lishi kerak (NAT bo'lganda tenglik buziladi)
+kubectl logs <qabul-qiluvchi-pod> --tail=3
+```
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Kubernetes pod tarmog'i uchun tayyor yechim bilan keladimi?

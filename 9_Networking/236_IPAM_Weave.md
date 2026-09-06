@@ -106,6 +106,45 @@ kubectl logs -n kube-system weave-net-xxxxx -c weave | grep ipalloc
 kubectl get pods -o wide
 ```
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Klasterning umumiy Pod CIDR oralig'ini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl cluster-info dump | grep -m1 cluster-cidr
+```
+</details>
+
+**2-topshiriq · o'rta.** Har node'ga qaysi Pod CIDR bo'lagi tegganini chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"	"}{.spec.podCIDR}{"
+"}{end}'
+```
+</details>
+
+**3-topshiriq · qiyin.** Bitta node nechta Pod sig'dira olishini hisoblang. **Avval ayting:**
+chegarani nima belgilaydi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Ikki chegara bor va **kichigi** g'olib chiqadi:
+
+1. **IP oralig'i:** `/24` bo'lak = 254 ta manzil.
+2. **kubelet chegarasi:** `--max-pods`, standart **110**.
+
+```bash
+kubectl get node <nom> -o jsonpath='{.status.capacity.pods}{"
+"}'
+```
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Pod'larga IP berish kimning vazifasi — Kubernetes'nikimi yoki CNI pluginnikimi?

@@ -296,6 +296,50 @@ kubectl delete pod web
 
 Tabriklayman — kubeadm yordamida to'laqonli, 3 node'li Kubernetes klasterini muvaffaqiyatli qurdik!
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** `kubeadm init` chiqishidagi `join` buyrug'ini qayta tiklang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubeadm token create --print-join-command
+```
+</details>
+
+**2-topshiriq · o'rta.** Klaster sertifikatlarining amal qilish muddatini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubeadm certs check-expiration
+```
+</details>
+
+**3-topshiriq · qiyin.** `kubeadm init` dan keyin node `NotReady` bo'lib turibdi. **Avval ayting:**
+sabab nima?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**CNI o'rnatilmagan.** kubeadm tarmoq plaginini o'rnatmaydi — uni siz
+tanlaysiz.
+
+```bash
+kubectl describe node <nom> | grep -A3 Conditions
+# NetworkPluginNotReady: cni plugin not initialized
+```
+
+Yechim — istalgan CNI'ni qo'llash:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/calico.yaml
+```
+
+Bir necha daqiqada node `Ready` bo'ladi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" `kubeadm init` dan keyin master nega `NotReady` edi?

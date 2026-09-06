@@ -140,6 +140,44 @@ Adding new service "default/db-service:3306" at 10.103.132.104:3306/TCP
 
 ⚠️ Log faylning joylashuvi o'rnatish usulingizga qarab farq qilishi mumkin. Yozuvlar ko'rinmasa, jarayonning verbosity (batafsillik) darajasini ham tekshiring.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** kube-proxy qaysi rejimda ishlayotganini aniqlang (iptables yoki IPVS).
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl -n kube-system logs -l k8s-app=kube-proxy --tail=20 | grep -i 'proxy mode'
+```
+</details>
+
+**2-topshiriq · o'rta.** Node'da ma'lum bir Service uchun yozilgan iptables qoidalarini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo iptables-save -t nat | grep <service-nomi>
+```
+</details>
+
+**3-topshiriq · qiyin.** Service'ni masshtablang va iptables qoidalari soni o'zgarganini kuzating.
+**Avval ayting:** har Pod uchun alohida qoida yoziladimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo iptables-save -t nat | grep -c <service-nomi>
+kubectl scale deployment web --replicas=6
+sudo iptables-save -t nat | grep -c <service-nomi>
+```
+
+**Ha.** iptables rejimida har Endpoint uchun alohida DNAT qoidasi yoziladi.
+Shuning uchun minglab Service bo'lgan klasterda qoidalar soni o'nlab minglarga
+yetadi va kube-proxy sekinlashadi — o'sha holatda IPVS rejimi tanlanadi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Service IP'sida qaysi jarayon "tinglab" turadi?

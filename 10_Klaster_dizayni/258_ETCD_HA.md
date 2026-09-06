@@ -154,6 +154,46 @@ HA muhitida klasterimiz nechta node'ga ega bo'lishi kerak?
 
 Kursda biz **3 ta** bilan ketamiz. Lekin laptop imkoniyati cheklangani uchun amalda **2 ta master** ko'taramiz (yetarli quvvatga ega muhitda bo'lsangiz, bemalol 3 ta qiling). Topologiya sifatida **stacked** ni tanladik — etcd serverlar master node'larning o'zida bo'ladi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** etcd Pod'ini toping va uning holatini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -n kube-system -l component=etcd
+```
+</details>
+
+**2-topshiriq · o'rta.** etcd a'zolari ro'yxatini chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl -n kube-system exec etcd-<node> -- etcdctl \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key member list
+```
+</details>
+
+**3-topshiriq · qiyin.** Stacked va external etcd farqi nima? **Avval ayting:** qaysi biri
+xavfsizroq?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Stacked** — etcd control plane node'ning o'zida Pod sifatida ishlaydi.
+kubeadm shu ko'rinishni standart qiladi: sozlash oson, kamroq server kerak.
+
+**External** — etcd alohida serverlarda. Xavfsizroq: control plane node
+yiqilsa etcd zarar ko'rmaydi va aksincha. Lekin ikki barobar ko'p server
+va murakkabroq sozlash.
+
+Kichik va o'rta klaster uchun stacked yetarli.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Yozish so'rovi follower node'ga kelsa nima bo'ladi?

@@ -425,13 +425,25 @@ def f011_shablon(h: Hisobot) -> None:
     darslar = 0
     for p in md_fayllar():
         n = nisbiy(p)
-        if p.name == "README.md" or n.parts[0] in {"skriptlar", "rasmlar"}:
+        # amaliyot/ ichidagi YECHIM.md va yo'riqnomalar dars emas —
+        # ularga shablon bo'limlari talab qilinmaydi.
+        if (p.name == "README.md" or n.parts[0] in {"skriptlar", "rasmlar"}
+                or "amaliyot" in n.parts):
             continue
         if len(n.parts) < 2:
             continue
         darslar += 1
         matn = p.read_text(encoding="utf-8", errors="replace")
-        yoq = [nom for nom, naqsh in kerakli.items()
+        # Lab va mock fayllarning O'ZI topshiriq — ularda alohida
+        # "🧪 Mustaqil topshiriqlar" va "❓ Savol-Javob" bo'limi talab
+        # qilinmaydi, chunki butun fayl shu vazifani bajaradi.
+        lab = bool(re.search(r"(Lab_|Mock_|helm-lab)", p.name))
+        talab = dict(kerakli)
+        if lab:
+            talab.pop("🧪 topshiriqlar", None)
+            talab.pop("❓ Savol-Javob", None)
+            talab.pop("📖 Asosiy atamalar", None)
+        yoq = [nom for nom, naqsh in talab.items()
                if not re.search(naqsh, matn, re.M)]
         for nom, naqsh in kerakli.items():
             if re.search(naqsh, matn, re.M):

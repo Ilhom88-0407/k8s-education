@@ -88,6 +88,45 @@ echo '<base64-qiymat>' | base64 -d > <fayl-yo'li>
 3. O'zingizga ishonch hosil qilgach, Linux Foundation / CNCF sahifasi orqali **CKA imtihoniga ro'yxatdan o'ting** (chegirma kodlari 325-darsdagi FAQ faylida).
 4. Imtihondan keyin — CKS yoki boshqa yo'nalishlarga (327-darsga qarang).
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** CKA'dan keyingi sertifikatlarni sanang (CKAD, CKS) va farqini ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+# CKA  — administrator: klaster o'rnatish, boshqarish, tuzatish
+# CKAD — dasturchi: ilovani joylashtirish va sozlash
+# CKS  — xavfsizlik: CKA talab qilinadi
+```
+</details>
+
+**2-topshiriq · o'rta.** O'zingiz uchun keyingi o'rganish rejasini uch banddan tuzing.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+# Masalan: GitOps (ArgoCD) -> monitoring (Prometheus) -> service mesh
+```
+</details>
+
+**3-topshiriq · qiyin.** Kubernetes bilimini amalda qanday mustahkamlash mumkin?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Eng samarali uchta yo'l:
+
+1. **O'z klasteringizni ko'taring va unda haqiqiy narsa ishlating** —
+   blog, bot, monitoring. Sinov klasteri bilan taqqoslab bo'lmaydigan
+   muammolar chiqadi.
+2. **Buzing va tuzating.** Ataylab CNI'ni o'chiring, sertifikatni
+   eskirtiring, disk to'ldiring — keyin tiklang.
+3. **Ochiq kodli loyihalarga hissa qo'shing** — hatto hujjatdagi xatoni
+   tuzatish ham real jarayonni ko'rsatadi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Imtihonda (va mock'da) har savoldan oldin nimani unutmaslik kerak?

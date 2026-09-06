@@ -194,6 +194,50 @@ Address: 10.244.2.5
 | `10-244-2-5` (pod, qisqa) | ❌ — search faqat service uchun |
 | `10-244-2-5.default.pod.cluster.local` | ✅ (to'liq FQDN) |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** CoreDNS Deployment'ida nechta replika ishlayotganini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deployment coredns -n kube-system
+```
+</details>
+
+**2-topshiriq · o'rta.** `kube-dns` servisining ClusterIP manzilini toping va u Pod'lardagi
+`resolv.conf` bilan mos kelishini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get svc kube-dns -n kube-system
+```
+</details>
+
+**3-topshiriq · qiyin.** CoreDNS'ni 0 replikaga tushiring va DNS so'rov yuboring. **Avval ayting:**
+qanday xato chiqadi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl scale deployment coredns -n kube-system --replicas=0
+kubectl run t --rm -it --image=busybox:1.37 --restart=Never -- nslookup kubernetes
+```
+
+```text
+;; connection timed out; no servers could be reached
+```
+
+Diqqat: **IP manzillar baribir ishlaydi** — faqat nomlar yechilmaydi.
+Shuning uchun "ilova ishlamayapti, lekin ping o'tadi" holatida birinchi
+gumon — DNS.
+
+Qaytarish: `kubectl scale deployment coredns -n kube-system --replicas=2`
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Pod'larning resolv.conf faylini kim sozlaydi?

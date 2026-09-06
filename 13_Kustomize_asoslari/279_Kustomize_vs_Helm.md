@@ -119,6 +119,46 @@ Asosiy savdolashuv (trade-off) shunday:
 
 Ikkalasining ham ishlash prinsipini va afzallik/kamchiliklarini bilib, loyihangiz talabidan kelib chiqib tanlang.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Kustomize va Helm'ning asosiy farqini bir jumlada ayting.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize --help
+helm version
+```
+</details>
+
+**2-topshiriq · o'rta.** Qaysi holatda Helm, qaysi holatda Kustomize afzalroq — ikkitadan misol keltiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm search hub postgresql | head -3    # tayyor chartlar mavjudligi
+```
+</details>
+
+**3-topshiriq · qiyin.** Ikkalasini birga ishlatish mumkinmi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Ha va bu ko'p uchraydi.** Helm chart'ining chiqishini Kustomize bilan
+patch qilish mumkin:
+
+```bash
+helm template myapp ./chart > tayyor.yaml
+# keyin kustomization.yaml da:
+#   resources: [tayyor.yaml]
+```
+
+Kustomize'ning `helmCharts` maydoni ham bor — u chart'ni to'g'ridan-to'g'ri
+render qiladi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Helm va Kustomize bir xil muammoni hal qiladimi?

@@ -124,6 +124,51 @@ sudo journalctl -u kube-apiserver
 | 8 | Pod loglari (kubeadm) | `kubectl logs kube-apiserver-controlplane -n kube-system` |
 | 9 | Servis loglari | `sudo journalctl -u kube-apiserver` |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Control plane komponentlarining holatini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -n kube-system | grep -E 'apiserver|scheduler|controller'
+```
+</details>
+
+**2-topshiriq · o'rta.** Static Pod manifestlari qayerda saqlanishini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ls -la /etc/kubernetes/manifests/
+```
+</details>
+
+**3-topshiriq · qiyin.** `kubectl` umuman javob bermayapti. **Avval ayting:** qayerdan boshlaysiz?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+`kubectl` ishlamasa, klasterni **kubectl bilan** tekshirib bo'lmaydi —
+node'ning o'ziga kirish kerak:
+
+```bash
+# 1. kubelet ishlayaptimi
+sudo systemctl status kubelet
+sudo journalctl -u kubelet -n 50
+
+# 2. static Pod'lar ko'tarilganmi (kubectl'siz)
+sudo crictl ps -a | grep -E 'apiserver|etcd'
+
+# 3. apiserver konteynerining logi
+sudo crictl logs <apiserver-container-id> | tail -30
+```
+
+Eng ko'p sabab: `/etc/kubernetes/manifests/kube-apiserver.yaml` da
+sintaksis xatosi yoki noto'g'ri yo'l.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" kubeadm bilan o'rnatilgan klasterda control plane loglarini qanday ko'ramiz?

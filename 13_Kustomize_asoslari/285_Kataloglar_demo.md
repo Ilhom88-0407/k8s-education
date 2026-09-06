@@ -227,6 +227,42 @@ Barcha resurslar muvaffaqiyatli yaratildi.
 | Ildizda bitta kustomization.yaml | `kubectl apply -k k8s/` | Bitta buyruq, lekin ildiz fayl shishadi |
 | Har katalogda kustomization.yaml | `kubectl apply -k k8s/` | Bitta buyruq + toza tuzilma |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `k8s/api`, `k8s/db` tuzilmasini yarating va ildizdan ikkalasini import qiling.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize k8s/ | grep '^kind:' | sort | uniq -c
+```
+</details>
+
+**2-topshiriq · o'rta.** Faqat `api` katalogini alohida render qiling.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize k8s/api/
+```
+</details>
+
+**3-topshiriq · qiyin.** Katalog tuzilmasini qanday tanlash kerak: mikroservis bo'yicha yoki
+obyekt turi bo'yicha?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Mikroservis bo'yicha** (`api/`, `db/`, `cache/`) deyarli har doim
+afzal: bitta xizmatga tegishli hamma narsa bir joyda bo'ladi, jamoalar
+bir-birining fayliga tegmaydi.
+
+Obyekt turi bo'yicha (`deployments/`, `services/`) bo'lish faqat juda
+kichik loyihalarda mantiqiy — kattasida bitta xizmatni o'zgartirish
+uchun beshta papkani ochish kerak bo'ladi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Bir necha katalogni Kustomize'siz bitta qatorda apply qilib bo'ladimi?

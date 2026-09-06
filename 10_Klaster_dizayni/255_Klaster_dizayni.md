@@ -110,6 +110,43 @@ graph TB
     end
 ```
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizda nechta node va ular qaysi rolda ekanini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes
+```
+</details>
+
+**2-topshiriq · o'rta.** Har node'ning CPU va xotira sig'imini chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o custom-columns=NOM:.metadata.name,CPU:.status.capacity.cpu,RAM:.status.capacity.memory
+```
+</details>
+
+**3-topshiriq · qiyin.** Bitta klaster ko'p muhit (dev/prod) uchunmi yoki har muhitga alohida?
+**O'z fikringizni asoslang.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Alohida klaster** afzal, chunki: prod'da tajriba qilinmaydi, RBAC
+sozlash osonroq, versiya yangilashni avval dev'da sinash mumkin.
+
+**Bitta klaster + namespace** arzonroq va boshqarish osonroq, lekin:
+namespace to'liq izolyatsiya bermaydi (node, CNI, CRD umumiy),
+bitta xato butun klasterga ta'sir qiladi.
+
+Amaliy qoida: prod alohida, dev va staging birga bo'lishi mumkin.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** O'rganish uchun qanday klaster yetarli?

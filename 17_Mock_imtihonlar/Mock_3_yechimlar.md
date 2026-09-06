@@ -598,3 +598,12 @@ cat /root/pod-cidr.txt
 
 ---
 *Bu dars KodeKloud CKA kursining 324-videosi asosida tayyorlandi.*
+
+## 🔗 Manbalar
+
+- [CKA imtihon dasturi (CNCF)](https://www.cncf.io/certification/cka/)
+- [Kubernetes hujjatlari](https://kubernetes.io/docs/home/)
+- [Killer.sh — CKA simulyatori](https://killer.sh/)
+
+---
+⬅️ [Bo'lim indeksi](README.md)

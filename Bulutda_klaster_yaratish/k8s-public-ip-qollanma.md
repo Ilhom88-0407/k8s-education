@@ -1,5 +1,10 @@
 # Kubernetes API Server'ga Public IP (NAT) Orqali Ulanish
 
+> 🎯 **Bu qo'llanmada nimani o'rganamiz:**
+> - NAT orqasidagi API Server'ga tashqaridan ulanish
+> - apiserver sertifikatiga qo'shimcha manzil (SAN) qo'shish
+> - kubeconfig'dagi server manzilini o'zgartirish
+
 > **Maqsad:** `kubeadm` yordamida o'rnatilgan Kubernetes klasterga tashqi (NAT) IP manzili orqali xavfsiz `kubectl` ulanishini sozlash.
 
 ---
@@ -319,3 +324,87 @@ sudo systemctl restart kubelet
 > 🖥 **Klaster:** kubeadm v1.35.4, Calico CNI
 >
 > 🌐 **Konfiguratsiya:** Private IP `192.168.16.196` ↔ NAT ↔ Public IP `194.107.115.75`
+
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Klasteringiz apiserver'ining manzilini kubeconfig'dan toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}{"\n"}'
+```
+</details>
+
+**2-topshiriq · o'rta.** apiserver sertifikatida qaysi manzillar (SAN) ko'rsatilganini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -noout -text | grep -A1 'Subject Alternative Name'
+```
+</details>
+
+**3-topshiriq · qiyin.** Public IP orqali ulanganda sertifikat xatosi chiqdi. **Avval ayting:**
+sabab nima?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```text
+x509: certificate is valid for 10.96.0.1, 192.168.1.10, not 194.107.115.102
+```
+
+apiserver sertifikati faqat unda **ro'yxatga olingan** manzillar uchun
+amal qiladi. Public IP `kubeadm init` paytida ma'lum bo'lmagan bo'lsa,
+u sertifikatga kirmagan.
+
+Yechim — sertifikatni yangi SAN bilan qayta yaratish:
+
+```bash
+sudo kubeadm init phase certs apiserver \\
+  --apiserver-cert-extra-sans=194.107.115.102
+# keyin apiserver podini qayta ishga tushirish
+```
+
+⚠️ `--insecure-skip-tls-verify` bilan chetlab o'tmang — u MITM hujumiga
+eshik ochadi.
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** `x509: certificate is valid for ..., not <public-IP>` xatosi nima?
+**Javob:** apiserver sertifikati faqat unda ro'yxatga olingan manzillar
+uchun amal qiladi. Public IP `kubeadm init` paytida ma'lum bo'lmagan bo'lsa,
+u sertifikatga kirmagan — uni SAN sifatida qo'shib, sertifikatni qayta
+yaratish kerak.
+
+**Savol:** `--insecure-skip-tls-verify` bilan chetlab o'tsam bo'ladimi?
+**Javob:** Ishlaydi, lekin **qilmang**. U sertifikat tekshiruvini butunlay
+o'chiradi va MITM hujumiga eshik ochadi — ya'ni kimdir o'zini sizning
+apiserver'ingiz deb ko'rsatib, barcha buyruqlaringizni ushlab qolishi mumkin.
+
+**Savol:** apiserver'ni internetga ochish xavfsizmi?
+**Javob:** Faqat qo'shimcha choralar bilan: firewall'da IP bo'yicha
+cheklash, kuchli autentifikatsiya, audit log yoqilgan. Eng yaxshisi — uni
+umuman ochmasdan VPN yoki bastion host orqali ulanish.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **NAT** | Ichki manzillarni tashqi IP orqali ko'rsatuvchi mexanizm |
+| **SAN** | Subject Alternative Name — sertifikat amal qiladigan manzillar ro'yxati |
+| **apiserver** | Klasterning yagona kirish nuqtasi (6443-port) |
+| **kubeconfig** | Klasterga ulanish ma'lumotlari va kalitlar fayli |
+| **Bastion host** | Ichki tarmoqqa nazorat ostida kirish uchun oraliq server |
+
+## 🔗 Manbalar
+
+- [kubeadm certs](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-certs/)
+- [Controlling Access to the API](https://kubernetes.io/docs/concepts/security/controlling-access/)
+- [Organizing Cluster Access Using kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
+
+---
+⬅️ [Bo'lim indeksi](README.md)

@@ -177,6 +177,45 @@ kubectl apply -k k8s/
 | Ildizda bitta kustomization.yaml | Bitta buyruq | Ildiz fayl yuzlab qatorga shishib ketadi |
 | Har katalogda o'z kustomization.yaml'i | Bitta buyruq | Deyarli yo'q — eng toza yechim |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Ikki darajali katalog tuzilmasi yarating: ildizda `kustomization.yaml`,
+ichida ikkita papka.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize .    # ikkala papkadagi obyektlar birga chiqadi
+```
+</details>
+
+**2-topshiriq · o'rta.** Ichki papkaning o'z `kustomization.yaml` fayli borligini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+find . -name kustomization.yaml
+```
+</details>
+
+**3-topshiriq · qiyin.** Ichki papkadagi `kustomization.yaml` ni o'chiring. **Avval ayting:**
+ishlaydimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Ishlamaydi.** `resources:` da katalog ko'rsatilganda Kustomize o'sha
+katalogdan `kustomization.yaml` faylini qidiradi.
+
+```text
+Error: unable to find one of 'kustomization.yaml' ... in directory
+```
+
+Ya'ni katalog import qilish uchun u **o'zi ham Kustomize katalogi**
+bo'lishi kerak.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Nega ichki kataloglar paydo bo'lganda `kubectl apply -f k8s/` yetmay qoldi?

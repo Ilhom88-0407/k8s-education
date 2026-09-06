@@ -81,6 +81,47 @@ graph LR
 
 Xulosa qilib aytganda: Helm ham **package manager** (o'rnatish/o'chirish ustasi), ham **release manager** (yangilash va orqaga qaytarishga yordamchi) bo'lib ishlaydi. Eng muhimi — u bizga Kubernetes ilovalarini "obyektlar to'plami" emas, **yaxlit ilova (app)** sifatida boshqarish imkonini beradi. Bu yelkamizdan katta yukni oladi: endi har bir obyektni alohida nazorat qilishimiz shart emas — buni Helm qiladi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Helm o'rnatilganini tekshiring va versiyasini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm version
+```
+</details>
+
+**2-topshiriq · o'rta.** Helm'siz bitta ilovani joylashtirish uchun nechta YAML fayl kerakligini
+sanang, keyin tayyor chart bilan solishtiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm show chart bitnami/nginx 2>/dev/null | head -5 || echo 'repo qo\'shilmagan'
+```
+</details>
+
+**3-topshiriq · qiyin.** Helm nima uchun "Kubernetes uchun paket menejeri" deb ataladi?
+**Avval ayting:** `apt` bilan o'xshashligi nimada?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+| `apt` | Helm |
+|---|---|
+| paket | chart |
+| o'rnatilgan paket | release |
+| repozitoriy | chart repository |
+| `apt install` | `helm install` |
+| `apt remove` | `helm uninstall` |
+
+Eng muhim o'xshashlik: ikkalasi ham **bog'liqliklarni** va **versiyalarni**
+boshqaradi. Farqi — Helm qolipni (template) qiymat bilan to'ldiradi, `apt` esa
+tayyor binaryni ko'chiradi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Nima uchun Kubernetes'ning o'zi ilovani "yaxlit paket" sifatida boshqara olmaydi?

@@ -131,6 +131,50 @@ helm repo update
 
 💡 `helm repo update` — Linux'dagi `sudo apt-get update` ga o'xshash buyruq. Gap shundaki, Helm repository haqidagi ma'lumotni **lokalda** saqlaydi. Vaqt o'tishi bilan repository egalari o'zgarishlar kiritadi, yangilaydi — va bizdagi lokal nusxa eskirib qoladi. Bu buyruq onlayn repository'dan eng so'nggi ma'lumotlarni tortib olib, lokal nusxani yangilaydi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Chart'ni klasterga o'rnating va release'ni ro'yxatda ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm install sinov ./mening-chartim
+helm list
+```
+</details>
+
+**2-topshiriq · o'rta.** Release yaratgan Kubernetes obyektlarini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm get manifest sinov | grep '^kind:'
+kubectl get all -l app.kubernetes.io/instance=sinov
+```
+</details>
+
+**3-topshiriq · qiyin.** Release'ni o'chiring. **Avval ayting:** obyektlar ham o'chadimi va tarix
+qoladimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm uninstall sinov
+kubectl get all -l app.kubernetes.io/instance=sinov
+helm list -a
+```
+
+**Obyektlar o'chadi**, tarix ham. Tarixni saqlash uchun:
+
+```bash
+helm uninstall sinov --keep-history
+helm list -a          # STATUS: uninstalled
+helm rollback sinov 1 # tiklash mumkin
+```
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `helm search hub` va `helm search repo` ning farqi nima?

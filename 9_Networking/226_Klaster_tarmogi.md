@@ -122,6 +122,43 @@ Amaliyot mashg'ulotida mavjud klasterning interfeyslari, IP'lari, hostname'lari 
 >
 > **Xulosa:** Rasmiy imtihonda CNI o'rnatish uchun kerakli barcha muhim ma'lumotlar (buyruq/manifest) savolning o'zida beriladi — tashqaridan qidirishga hojat qolmaydi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Control plane node'da ochiq portlarni ro'yxatlang va 6443 ni toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo ss -tulnp | grep -E ':(6443|2379|2380|10250|10259|10257)'
+```
+</details>
+
+**2-topshiriq · o'rta.** Worker node'da kubelet qaysi portda tinglayotganini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo ss -tulnp | grep 10250
+```
+</details>
+
+**3-topshiriq · qiyin.** apiserver portini firewall'da yoping va `kubectl get nodes` bajaring.
+**Avval ayting:** xato qanday bo'ladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```text
+The connection to the server <IP>:6443 was refused - did you specify the right host or port?
+```
+
+Bu xato eng ko'p uchraydiganlaridan: apiserver ishlamayapti, port yopiq
+yoki kubeconfig'da manzil xato. Uchalasini ketma-ket tekshiring.
+
+⚠️ Sinov klasterida bajaring va qoidani qaytarishni unutmang.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** kube-apiserver qaysi portda ishlaydi va unga kimlar murojaat qiladi?

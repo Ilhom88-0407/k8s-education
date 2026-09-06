@@ -162,6 +162,42 @@ Yagona shart: har bir `kustomization.yaml` o'z resurslarini to'g'ri import qilsi
 | production | `kubectl apply -k k8s/overlays/production` |
 | Oldindan ko'rish | `kustomize build k8s/overlays/dev` |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** `base/` va `overlays/dev/` tuzilmasini yarating va dev overlay'ini render qiling.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize overlays/dev | grep -A1 replicas
+```
+</details>
+
+**2-topshiriq · o'rta.** Ikkinchi overlay (`production`) qo'shing va ikkalasining farqini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+diff <(kubectl kustomize overlays/dev) <(kubectl kustomize overlays/production)
+```
+</details>
+
+**3-topshiriq · qiyin.** Base'dagi `replicas` ni o'zgartiring. **Avval ayting:** bu overlay'larga
+ta'sir qiladimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Patch qo'yilgan overlay'ga ta'sir qilmaydi** — patch base'ni ustidan
+yozadi.
+
+Lekin patch qo'yilmagan har qanday overlay yangi qiymatni oladi.
+
+Aynan shu Kustomize'ning asosiy foydasi: umumiy o'zgarish bir joyda,
+muhitga xos farq esa faqat o'sha overlay'da qoladi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `resources: ../../base` dagi `../../` nima degani?

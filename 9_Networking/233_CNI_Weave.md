@@ -102,6 +102,45 @@ Muammo bo'lsa, loglarni ko'rish uchun:
 kubectl logs weave-net-5gcmb -n kube-system -c weave
 ```
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizdagi CNI pod'larini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -n kube-system -o wide | grep -Ei 'weave|calico|flannel|cilium'
+```
+</details>
+
+**2-topshiriq · o'rta.** CNI DaemonSet'i har node'da bittadan pod ishga tushirganini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get ds -n kube-system
+# DESIRED soni node'lar soniga teng bo'lishi kerak
+```
+</details>
+
+**3-topshiriq · qiyin.** CNI pod'ining loglarini o'qing va u qaysi rejimda ishlayotganini aniqlang.
+**Avval ayting:** overlay va native routing farqi nima?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl logs -n kube-system <cni-pod> --tail=30
+```
+
+**Overlay** (VXLAN, Weave sleeve): paket ikkinchi paket ichiga o'raladi.
+Har qanday tarmoqda ishlaydi, lekin qo'shimcha yuk beradi.
+
+**Native routing** (Calico BGP, Weave fastdp): paket o'ralmaydi, marshrut
+to'g'ridan-to'g'ri yoziladi. Tezroq, lekin tarmoq qo'llab-quvvatlashi kerak.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Nega Weave paketni to'g'ridan-to'g'ri yubormasdan, yangi paket ichiga o'rab yuboradi?

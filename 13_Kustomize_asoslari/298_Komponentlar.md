@@ -161,6 +161,45 @@ components:
 
 Shu bilan tamom: feature mantiqi BIR joyda yoziladi, har bir overlay unga faqat havola beradi. O'zgarish kerak bo'lsa — faqat component papkasida o'zgartirasiz, barcha ulangan overlay'lar avtomatik yangi holatni oladi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Component yarating (`kind: Component`) va uni bitta overlay'ga ulang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize overlays/dev | grep -c 'kind:'
+```
+</details>
+
+**2-topshiriq · o'rta.** Xuddi shu componentni ikkinchi overlay'ga ham ulang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+diff <(kubectl kustomize overlays/dev) <(kubectl kustomize overlays/premium)
+```
+</details>
+
+**3-topshiriq · qiyin.** Component va base farqi nima? **Avval ayting:** nima uchun alohida
+`kind` kerak bo'ldi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Base** — to'liq, mustaqil manifestlar to'plami. Uni yakka o'zi
+`kubectl apply -k base/` bilan qo'llash mumkin.
+
+**Component** — bu **ixtiyoriy qo'shimcha**: bir imkoniyat (masalan
+"tashqi baza", "kesh"). U yakka o'zi ma'noga ega emas, faqat base
+ustiga qo'yilganda ishlaydi.
+
+Texnik farqi: componentlar `resources:` emas, alohida `components:`
+ro'yxatida ko'rsatiladi va **base import qilingandan keyin** qo'llanadi —
+shuning uchun ular base'ni patch qila oladi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Feature barcha overlay'larda kerak bo'lsa, component qilamanmi?

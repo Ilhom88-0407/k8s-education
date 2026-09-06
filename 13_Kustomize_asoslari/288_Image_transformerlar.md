@@ -111,6 +111,45 @@ containers:
 | Faqat tag'ni belgilash | `name: nginx` + `newTag: "2.4"` | `image: nginx:2.4` |
 | Ikkalasini ham | `name: nginx` + `newName: haproxy` + `newTag: "2.4"` | `image: haproxy:2.4` |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `images:` transformeri bilan image tegini o'zgartiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep 'image:'
+```
+</details>
+
+**2-topshiriq · o'rta.** Image nomini butunlay boshqasiga almashtiring (`newName`).
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep 'image:'
+```
+</details>
+
+**3-topshiriq · qiyin.** `images:` transformeri InitContainer'larga ham tegadimi? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Ha.** Kustomize `containers` va `initContainers` ichidagi barcha
+`image:` maydonlarini topadi.
+
+```yaml
+images:
+  - name: nginx                    # qidiriladigan nom
+    newName: my-registry/nginx     # yangi nom
+    newTag: 1.27-alpine            # yangi teg
+```
+
+`name` teg bilan emas, faqat image nomi bilan yoziladi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `images` bo'limidagi `name` konteyner nomini bildiradimi?

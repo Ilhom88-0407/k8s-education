@@ -141,6 +141,52 @@ Chart yangilashdan oldin database'larning izchil (consistent) zaxira nusxalarini
 | Pod'lar holati, image versiyalari | Database ichidagi real ma'lumotlar |
 | Konfiguratsiya obyektlari | Tashqi tizimlar (tashqi database va h.k.) |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** Release'ni yangilang va revision raqami oshganini ko'ring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm upgrade sinov ./mening-chartim --set replicaCount=4
+helm list
+```
+</details>
+
+**2-topshiriq · o'rta.** Revision tarixini chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm history sinov
+```
+</details>
+
+**3-topshiriq · qiyin.** 2-revizyaga qayting. **Avval ayting:** revision raqami 2 ga qaytadimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Qaytmaydi — yangi raqam qo'shiladi.**
+
+```bash
+helm rollback sinov 2
+helm history sinov
+```
+
+```text
+REVISION  DESCRIPTION
+1         Install complete
+2         Upgrade complete
+3         Upgrade complete
+4         Rollback to 2
+```
+
+Tarix hech qachon o'chirilmaydi — u faqat o'sib boradi. Shuning uchun
+har qanday nuqtaga qaytish mumkin va "nima bo'lganini" ko'rish oson.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** `helm rollback nginx-release 1` bajarilgach, joriy revision raqami nechchi bo'ladi?

@@ -206,6 +206,45 @@ net.ipv4.ip_forward = 1
 
 ⚠️ `ip` buyruqlari bilan qilingan o'zgarishlar faqat restart'gacha amal qiladi. Doimiy saqlash uchun ularni tarmoq interfeyslari konfiguratsiya fayliga (network interfaces file) yozish kerak.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** O'z mashinangizdagi marshrutlash jadvalini chiqaring va default gateway'ni toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ip route
+ip route show default
+```
+</details>
+
+**2-topshiriq · o'rta.** Ma'lum bir IP manzilga paket qaysi interfeys orqali ketishini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+ip route get 8.8.8.8
+```
+</details>
+
+**3-topshiriq · qiyin.** Vaqtinchalik marshrut qo'shing, keyin o'chiring. **Avval ayting:** mashina
+qayta yuklanganda bu marshrut qoladimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+sudo ip route add 10.99.0.0/24 via 192.168.1.1
+ip route | grep 10.99
+sudo ip route del 10.99.0.0/24
+```
+
+**Qolmaydi.** `ip route add` faqat ishlab turgan tizimda amal qiladi.
+Doimiy marshrut uchun distributiv konfiguratsiyasi (netplan, NetworkManager)
+yoki `systemd-networkd` ishlatiladi.
+</details>
+
 ## ❓ Savol-Javob
 
 "Savol:" Switch bilan router'ning farqi nimada?

@@ -85,6 +85,39 @@ Muhim nuanslar:
 
 Bu ikkala maydon **texnik jihatdan ixtiyoriy** — yozmasangiz, Kustomize default qiymatlarni o'zi oladi. Lekin baribir ularni **qo'lda aniq yozib qo'yish tavsiya etiladi**: kelajakda biror breaking change (moslikni buzuvchi o'zgarish) bo'lsa, faylingiz kutilmaganda ishlamay qolmaydi.
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** kubectl ichidagi Kustomize versiyasini aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl version --client -o yaml | grep -i kustomize
+```
+</details>
+
+**2-topshiriq · o'rta.** Bo'sh `kustomization.yaml` yarating va `kubectl kustomize` bajaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize .    # bo'sh chiqish yoki xato
+```
+</details>
+
+**3-topshiriq · qiyin.** `apiVersion: kustomize.config.k8s.io/v1beta1` nima uchun kerak?
+**Avval ayting:** uni yozmasak nima bo'ladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Kustomize `kustomization.yaml` ni **o'z obyekti** sifatida o'qiydi, xuddi
+Kubernetes manifesti kabi. `apiVersion` va `kind` bo'lmasa ham ko'p
+versiyalarda ishlaydi (u ularni o'zi to'ldiradi), lekin ularni yozish
+faylning nima ekanini aniq qiladi va vositalar uni to'g'ri taniydi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Kustomize kubectl ichida bor-ku, nega alohida o'rnatamiz?

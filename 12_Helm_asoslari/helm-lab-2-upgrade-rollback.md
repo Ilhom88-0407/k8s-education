@@ -1,5 +1,10 @@
 # Helm Lab 2 — Upgrade va Rollback
 
+> 🎯 **Bu laboratoriyada nimani mashq qilamiz:**
+> - Release'ni yangilash va revision tarixini kuzatish
+> - `helm rollback` bilan oldingi holatga qaytish
+> - `helm history` chiqishini o'qish
+
 Helm release'larni yangilash (upgrade), tarixini ko'rish (history) va orqaga qaytarish (rollback) bo'yicha lab savollari, javoblari va CLI buyruqlar.
 
 ---
@@ -140,3 +145,12 @@ REVISION  STATUS      CHART         APP VERSION  DESCRIPTION
 | `helm rollback <release>` | Bitta oldingi revisionga qaytarish |
 | `helm search repo <chart> --versions` | Chart'ning barcha versiyalarini ko'rish |
 | `helm status <release>` | Release holati |
+
+## 🔗 Manbalar
+
+- [Helm — Upgrade and Rollback](https://helm.sh/docs/intro/using_helm/#helm-upgrade-and-helm-rollback-upgrading-a-release-and-recovering-on-failure)
+- [helm rollback](https://helm.sh/docs/helm/helm_rollback/)
+- [helm history](https://helm.sh/docs/helm/helm_history/)
+
+---
+⬅️ [Bo'lim indeksi](README.md)

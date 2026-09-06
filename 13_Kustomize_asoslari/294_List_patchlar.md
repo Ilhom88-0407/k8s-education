@@ -191,6 +191,47 @@ spec:
 | Qo'shish (aniq o'ringa) | path oxirida indeks: `/containers/0` | (tartib merge'da boshqarilmaydi) |
 | O'chirish | `op: remove` + indeks, value yo'q | `$patch: delete` + nom |
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Ro'yxatdagi birinchi konteynerning image'ini indeks orqali o'zgartiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep 'image:'
+```
+</details>
+
+**2-topshiriq · o'rta.** Ro'yxat oxiriga yangi element qo'shing (`/-` sintaksisi).
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl kustomize . | grep -A6 'ports:'
+```
+</details>
+
+**3-topshiriq · qiyin.** Indeks orqali patch berish nima uchun xavfli? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+Indeks **tartibga bog'liq**. Kimdir base'ga yangi konteyner qo'shsa yoki
+tartibni o'zgartirsa, `/spec/template/spec/containers/0` butunlay boshqa
+konteynerga ishora qila boshlaydi — va patch jimgina noto'g'ri joyga
+tushadi.
+
+Xavfsizroq yo'l — strategic merge patch, u elementni **nomi bo'yicha**
+topadi:
+
+```yaml
+containers:
+  - name: nginx        # indeks emas, nom
+    image: nginx:1.27-alpine
+```
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Path oxiridagi raqam nimani bildiradi?

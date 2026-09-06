@@ -119,6 +119,45 @@ Natijada:
 - Jamoadagi hamma unga kira oladi — istalgan kishi helm upgrade qila oladi
 - Helm klasterda qilgan har bir ishini har doim kuzata oladi, chunki metadata doim qo'l ostida
 
+## 🧪 Mustaqil topshiriqlar
+
+> Yechishdan oldin darsni yopib qo'ying. Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** Chart, release va revision atamalarini o'z so'zingiz bilan ta'riflang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm list -A     # release'lar va ularning REVISION ustuni
+```
+</details>
+
+**2-topshiriq · o'rta.** Klasterdagi barcha release'larni chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+helm list --all-namespaces
+```
+</details>
+
+**3-topshiriq · qiyin.** Helm release ma'lumotini qayerda saqlaydi? **Avval ayting.**
+
+<details><summary>O'zingizni tekshiring</summary>
+
+**Klasterning o'zida, Secret sifatida** — release joylashgan namespace'da.
+
+```bash
+kubectl get secrets -l owner=helm
+# sh.helm.release.v1.<release>.v1 ko'rinishidagi nomlar
+```
+
+Har revision uchun alohida Secret yaratiladi — aynan shuning uchun
+`helm rollback` ishlaydi.
+
+⚠️ Bu Secret'larni qo'lda o'chirsangiz, Helm release tarixini yo'qotadi.
+</details>
+
 ## ❓ Savol-Javob
 
 **Savol:** Chart va release'ning farqi nima?
