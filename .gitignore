@@ -1,0 +1,69 @@
+# ---------------------------------------------------------------------------
+# k8s-education — git tomonidan kuzatilmaydigan fayllar
+#
+# Maqsad: maxfiy ma'lumotlar va generatsiya qilingan fayllar tasodifan
+# repozitoriyga tushib qolmasligi. Bu kurs ochiq (public) repo — bu yerga
+# tushgan har qanday kalit yoki parol butun internetga ochiq bo'ladi.
+# ---------------------------------------------------------------------------
+
+# --- Maxfiy ma'lumotlar (ENG MUHIM) ---------------------------------------
+# Kubeconfig fayllar — ular cluster-admin huquqini beruvchi kalitlarni saqlaydi
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+.kube/
+
+# Sertifikatlar va shaxsiy kalitlar
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Muhit o'zgaruvchilari va parollar
+.env
+.env.*
+!.env.example
+secrets.yaml
+*-secret.yaml
+*.token
+
+# --- Node.js (amaliyot/ ichidagi demo ilovalar) ----------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log
+.npm/
+
+# --- Helm -----------------------------------------------------------------
+*.tgz
+charts/*.tgz
+.helm/
+
+# --- Terraform / bulut vositalari -----------------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# --- Vagrant / VirtualBox -------------------------------------------------
+.vagrant/
+*.box
+
+# --- Vaqtinchalik va generatsiya qilingan fayllar --------------------------
+*.log
+*.tmp
+*.bak
+*.orig
+tmp/
+dist/
+build/
+
+# SVG sxemalardan generatsiya qilingan PNG nusxalar (asli — .svg fayl)
+rasmlar/*.generated.png
+
+# --- Operatsion tizim -----------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini

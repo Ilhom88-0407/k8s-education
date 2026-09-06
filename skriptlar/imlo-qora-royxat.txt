@@ -1,0 +1,36 @@
+# Darslikda uchramasligi kerak bo'lgan yozuvlar.
+# Format:  xato<TAB>to'g'ri shakl (izoh uchun)
+# '#' bilan boshlangan qatorlar e'tiborga olinmaydi.
+# Katta-kichik harf farqlanmaydi.
+
+# --- Imlo xatolari ---
+deploymant	deployment
+deploymnet	deployment
+deplomant	deployment
+kubernetis	Kubernetes
+klastr	klaster
+kluster	klaster
+quidagi	quyidagi
+xozir	hozir
+xaqida	haqida
+tasharidan	tashqaridan
+faqrini	farqini
+xaulasa	xulosa
+yaratsih	yaratish
+mashtablash	masshtablash
+Dicker Desktop	Docker Desktop
+NideJS	NodeJS
+
+# --- Atama izchilligi (USLUB.md 4-bo'lim) ---
+imidj	image
+metka	label
+obraz	image
+
+# --- Mavjud bo'lmagan yoki eskirgan buyruqlar ---
+kubectl applay	kubectl apply
+kubectl ger	kubectl get
+kubectl ssh	kubectl debug node/<nom> yoki minikube ssh
+kubectl create -f	kubectl apply -f
+
+# --- Eskirgan API/sintaksis ---
+bases:	resources: (Kustomize'da bases: olib tashlangan)

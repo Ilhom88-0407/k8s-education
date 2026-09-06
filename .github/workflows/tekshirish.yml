@@ -1,0 +1,51 @@
+# Darslik sifatini avtomatik tekshirish.
+#
+# Klaster ham, tashqi tarmoq ham talab qilinmaydi — barcha tekshiruvlar
+# statik. Shuning uchun har push va pull request'da tez ishlaydi.
+name: Darslik tekshiruvi
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  struktura:
+    name: Markdown, imlo va havolalar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: pyyaml o'rnatish
+        run: pip install --quiet pyyaml
+
+      - name: Sifat tekshiruvi
+        run: python3 skriptlar/tekshir.py
+
+  manifestlar:
+    name: amaliyot/ manifestlari haqiqiy Kubernetes obyektimi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: kubeconform o'rnatish
+        run: |
+          curl -sSL -o /tmp/kubeconform.tar.gz \
+            https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz
+          tar -xzf /tmp/kubeconform.tar.gz -C /tmp
+          sudo install /tmp/kubeconform /usr/local/bin/
+
+      - name: Manifestlarni tekshirish
+        run: |
+          # kustomization.yaml fayllari Kubernetes obyekti emas — ular chetlab o'tiladi
+          fayllar=$(find . -path '*/amaliyot/*' -name '*.yaml' ! -name 'kustomization.yaml')
+          if [ -z "$fayllar" ]; then
+            echo "amaliyot/ da hali YAML fayl yo'q — tekshirishga narsa yo'q."
+            exit 0
+          fi
+          kubeconform -strict -summary -ignore-missing-schemas $fayllar

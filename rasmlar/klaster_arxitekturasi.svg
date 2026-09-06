@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 620" width="940"
+     role="img" aria-labelledby="sarlavha izoh"
+     font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Kubernetes klaster arxitekturasi</title>
+  <desc id="izoh">Klaster ikki qismdan iborat. Chapda Control Plane: kube-apiserver
+    markazda turadi, unga etcd, kube-scheduler, kube-controller-manager va
+    cloud-controller-manager ulanadi. O'ngda ikkita Worker Node, har birida kubelet,
+    kube-proxy va konteyner runtime, ular ustida podlar ishlaydi. Foydalanuvchi
+    kubectl orqali faqat kube-apiserver bilan gaplashadi, apiserver esa har node
+    dagi kubelet bilan bog'lanadi.</desc>
+
+  <defs>
+    <marker id="ok" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okKok" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+  </defs>
+
+  <!-- Kanvas: o'z foni bilan -> yorug' va qorong'i temada bir xil o'qiladi -->
+  <rect x="0" y="0" width="940" height="620" rx="14" fill="#FBFBFA"
+        stroke="#D8D6D1" stroke-width="1"/>
+
+  <text x="32" y="42" font-size="21" font-weight="700" fill="#1A1A18">Kubernetes klaster arxitekturasi</text>
+  <text x="32" y="66" font-size="13" fill="#5C5A55">Boshqaruv qatlami "miya", ishchi nodelar esa "qo'l" vazifasini bajaradi</text>
+
+  <!-- ================= Foydalanuvchi ================= -->
+  <rect x="32" y="92" width="168" height="46" rx="8" fill="#FFFFFF" stroke="#5C5A55" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="116" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#1A1A18">Siz</text>
+  <text x="116" y="130" text-anchor="middle" font-size="11.5" fill="#5C5A55">kubectl apply -f ...</text>
+
+  <path d="M 116 138 L 116 176" stroke="#2C6FB5" stroke-width="2" fill="none" marker-end="url(#okKok)"/>
+  <text x="126" y="162" font-size="11" fill="#2C6FB5">HTTPS :6443</text>
+
+  <!-- ================= CONTROL PLANE ================= -->
+  <rect x="20" y="176" width="416" height="416" rx="12" fill="#F2F6FB" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="36" y="200" font-size="14" font-weight="700" fill="#2C6FB5">CONTROL PLANE (boshqaruv qatlami)</text>
+
+  <!-- apiserver -->
+  <rect x="36" y="212" width="384" height="60" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="2"/>
+  <text x="228" y="238" text-anchor="middle" font-size="16" font-weight="700" fill="#1A1A18">kube-apiserver</text>
+  <text x="228" y="257" text-anchor="middle" font-size="11.5" fill="#5C5A55">yagona kirish nuqtasi — hamma so'rov shu yerdan o'tadi</text>
+
+  <!-- etcd -->
+  <rect x="36" y="288" width="184" height="72" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="128" y="312" text-anchor="middle" font-size="14" font-weight="600" fill="#1A1A18">etcd</text>
+  <text x="128" y="330" text-anchor="middle" font-size="11" fill="#5C5A55">kalit-qiymat bazasi</text>
+  <text x="128" y="346" text-anchor="middle" font-size="11" fill="#5C5A55">butun holat shu yerda</text>
+
+  <!-- scheduler -->
+  <rect x="236" y="288" width="184" height="72" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="328" y="312" text-anchor="middle" font-size="14" font-weight="600" fill="#1A1A18">kube-scheduler</text>
+  <text x="328" y="330" text-anchor="middle" font-size="11" fill="#5C5A55">yangi podga mos</text>
+  <text x="328" y="346" text-anchor="middle" font-size="11" fill="#5C5A55">node tanlaydi</text>
+
+  <!-- controller manager -->
+  <rect x="36" y="376" width="184" height="76" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="128" y="400" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kube-controller-</text>
+  <text x="128" y="416" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">manager</text>
+  <text x="128" y="436" text-anchor="middle" font-size="11" fill="#5C5A55">holatni kuzatadi va tuzatadi</text>
+
+  <!-- cloud controller manager -->
+  <rect x="236" y="376" width="184" height="76" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="328" y="400" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">cloud-controller-</text>
+  <text x="328" y="416" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">manager</text>
+  <text x="328" y="436" text-anchor="middle" font-size="11" fill="#5C5A55">bulut API si bilan bog'laydi</text>
+
+  <!-- ichki strelkalar -->
+  <path d="M 128 288 L 128 272" stroke="#2C6FB5" stroke-width="1.5" fill="none" marker-end="url(#okKok)"/>
+  <path d="M 328 288 L 328 272" stroke="#2C6FB5" stroke-width="1.5" fill="none" marker-end="url(#okKok)"/>
+  <path d="M 128 376 L 128 360" stroke="#2C6FB5" stroke-width="1.5" fill="none" marker-end="url(#okKok)"/>
+  <path d="M 328 376 L 328 360" stroke="#2C6FB5" stroke-width="1.5" fill="none" marker-end="url(#okKok)"/>
+
+  <rect x="36" y="468" width="384" height="108" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="52" y="492" font-size="12.5" font-weight="700" fill="#1A1A18">Diqqat</text>
+  <text x="52" y="514" font-size="11.5" fill="#1A1A18">Faqat kube-apiserver tashqi dunyo bilan gaplashadi.</text>
+  <text x="52" y="533" font-size="11.5" fill="#1A1A18">etcd, scheduler va controller-manager bir-biri bilan</text>
+  <text x="52" y="552" font-size="11.5" fill="#1A1A18">to'g'ridan-to'g'ri emas, doim apiserver orqali</text>
+  <text x="52" y="568" font-size="11.5" fill="#1A1A18">bog'lanadi.</text>
+
+  <!-- ================= WORKER NODE 1 ================= -->
+  <rect x="484" y="176" width="436" height="196" rx="12" fill="#F3FAF5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="500" y="200" font-size="14" font-weight="700" fill="#2A7D53">WORKER NODE 1 (ishchi node)</text>
+
+  <rect x="500" y="212" width="130" height="46" rx="7" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="565" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kubelet</text>
+  <text x="565" y="248" text-anchor="middle" font-size="10.5" fill="#5C5A55">node agenti</text>
+
+  <rect x="640" y="212" width="130" height="46" rx="7" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="705" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kube-proxy</text>
+  <text x="705" y="248" text-anchor="middle" font-size="10.5" fill="#5C5A55">tarmoq qoidalari</text>
+
+  <rect x="780" y="212" width="124" height="46" rx="7" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="842" y="232" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">runtime</text>
+  <text x="842" y="248" text-anchor="middle" font-size="10.5" fill="#5C5A55">containerd</text>
+
+  <rect x="500" y="274" width="196" height="80" rx="7" fill="#FFFFFF" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="598" y="296" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">Pod</text>
+  <rect x="516" y="306" width="76" height="34" rx="5" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1"/>
+  <text x="554" y="327" text-anchor="middle" font-size="10.5" fill="#1A1A18">konteyner</text>
+  <rect x="604" y="306" width="76" height="34" rx="5" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1"/>
+  <text x="642" y="327" text-anchor="middle" font-size="10.5" fill="#1A1A18">konteyner</text>
+
+  <rect x="708" y="274" width="196" height="80" rx="7" fill="#FFFFFF" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="806" y="296" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">Pod</text>
+  <rect x="748" y="306" width="116" height="34" rx="5" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1"/>
+  <text x="806" y="327" text-anchor="middle" font-size="10.5" fill="#1A1A18">konteyner</text>
+
+  <!-- ================= WORKER NODE 2 ================= -->
+  <rect x="484" y="396" width="436" height="196" rx="12" fill="#F3FAF5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="500" y="420" font-size="14" font-weight="700" fill="#2A7D53">WORKER NODE 2 (ishchi node)</text>
+
+  <rect x="500" y="432" width="130" height="46" rx="7" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="565" y="452" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kubelet</text>
+  <text x="565" y="468" text-anchor="middle" font-size="10.5" fill="#5C5A55">node agenti</text>
+
+  <rect x="640" y="432" width="130" height="46" rx="7" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="705" y="452" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">kube-proxy</text>
+  <text x="705" y="468" text-anchor="middle" font-size="10.5" fill="#5C5A55">tarmoq qoidalari</text>
+
+  <rect x="780" y="432" width="124" height="46" rx="7" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="842" y="452" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">runtime</text>
+  <text x="842" y="468" text-anchor="middle" font-size="10.5" fill="#5C5A55">containerd</text>
+
+  <rect x="500" y="494" width="404" height="80" rx="7" fill="#FFFFFF" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="702" y="516" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">Pod</text>
+  <rect x="560" y="526" width="116" height="34" rx="5" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1"/>
+  <text x="618" y="547" text-anchor="middle" font-size="10.5" fill="#1A1A18">konteyner</text>
+  <rect x="728" y="526" width="116" height="34" rx="5" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1"/>
+  <text x="786" y="547" text-anchor="middle" font-size="10.5" fill="#1A1A18">konteyner</text>
+
+  <!-- ============ apiserver <-> kubelet strelkalari ============ -->
+  <path d="M 420 236 L 500 236" stroke="#5C5A55" stroke-width="2" fill="none"
+        marker-start="url(#ok)" marker-end="url(#ok)"/>
+  <path d="M 420 248 C 452 248, 452 456, 500 456" stroke="#5C5A55" stroke-width="2" fill="none"
+        marker-start="url(#ok)" marker-end="url(#ok)"/>
+  <text x="460" y="224" text-anchor="middle" font-size="10.5" fill="#5C5A55">:10250</text>
+</svg>
