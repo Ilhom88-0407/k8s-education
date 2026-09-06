@@ -387,6 +387,11 @@ def f009_image_qadalgan(h: Hisobot) -> None:
             oxirgi = ref.rsplit("/", 1)[-1]
             if ":" not in oxirgi and "@" not in oxirgi:
                 h.xato("F009", nisbiy(f), i, f"image versiyasiz: {ref}")
+            elif oxirgi.endswith(":latest"):
+                # `latest` texnik jihatdan teg, lekin u ham har safar boshqa
+                # image tortishi mumkin — shuning uchun ogohlantiramiz.
+                h.ogoh("F009", nisbiy(f), i,
+                       f"`:latest` tegi — aniq versiya afzalroq: {ref}")
 
 
 def f010_amaliyot_moslik(h: Hisobot) -> None:
@@ -397,9 +402,14 @@ def f010_amaliyot_moslik(h: Hisobot) -> None:
         bolim = amaliyot.parent
         darslar = {p.stem for p in bolim.glob("*.md")}
         for ichki in amaliyot.iterdir():
-            if ichki.is_dir() and ichki.name not in darslar:
-                h.ogoh("F010", nisbiy(ichki), 0,
-                       f"'{ichki.name}.md' darsi yo'q — papka nomi darsga mos emas")
+            if not ichki.is_dir() or ichki.name in darslar:
+                continue
+            # Ilova manbasi (Dockerfile / package.json bor) — bu dars laboratoriyasi
+            # emas, shuning uchun nomi darsga mos kelishi shart emas.
+            if (ichki / "Dockerfile").exists() or (ichki / "package.json").exists():
+                continue
+            h.ogoh("F010", nisbiy(ichki), 0,
+                   f"'{ichki.name}.md' darsi yo'q — papka nomi darsga mos emas")
 
 
 def f011_shablon(h: Hisobot) -> None:

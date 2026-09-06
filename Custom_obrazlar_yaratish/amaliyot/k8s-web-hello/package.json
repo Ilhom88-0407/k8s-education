@@ -1,0 +1,16 @@
+{
+  "name": "k8s-web-hello",
+  "version": "1.0.3",
+  "description": "Kubernetes darsligi uchun oddiy Express ilovasi",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "type": "module"
+}

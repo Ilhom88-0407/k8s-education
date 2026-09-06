@@ -1,0 +1,16 @@
+{
+  "name": "k8s-web-to-nginx",
+  "version": "2.0.0",
+  "description": "Ikkinchi servisga Service DNS nomi orqali murojaat qiluvchi namuna ilova",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "type": "module"
+}

@@ -1,0 +1,55 @@
+# Birinchi ilova: k8s-web-to-nginx.
+#
+# Bu ilova tashqariga chiqadi (LoadBalancer) va /nginx yo'liga so'rov
+# kelganda ichkaridagi `nginx` servisiga murojaat qiladi.
+#
+# Trafik yo'li:
+#   tashqi IP:3333 -> bu Service -> Pod:3000 -> http://nginx -> nginx Pod:80
+#
+# Qo'llash: kubectl apply -f 02-k8s-web-to-nginx.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-web-to-nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8s-web-to-nginx
+  ports:
+    - name: http
+      port: 3333        # tashqaridan shu port
+      targetPort: 3000  # ilova konteyner ichida shu portda ishlaydi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-to-nginx
+  labels:
+    app: k8s-web-to-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-web-to-nginx
+  template:
+    metadata:
+      labels:
+        app: k8s-web-to-nginx
+    spec:
+      containers:
+        - name: k8s-web-to-nginx
+          # ⚠️ `latest` — yomon amaliyot: u bugun bir versiyani, ertaga
+          # boshqasini tortadi. Bu yerda u faqat shu sababli turibdi:
+          # yuqori oqim demo image'i boshqa teg chiqarmagan. O'z ilovangizni
+          # joylashtirganda DOIM aniq versiya yozing: `:2.0.0` kabi.
+          image: bstashchuk/k8s-web-to-nginx:latest
+          ports:
+            - containerPort: 3000
+          env:
+            # Ilova qaysi servisga murojaat qilishini shu yerdan boshqarish
+            # mumkin — image'ni qayta qurish shart emas.
+            - name: NGINX_URL
+              value: http://nginx
+          resources:
+            requests: { memory: 64Mi, cpu: 100m }
+            limits: { memory: 128Mi, cpu: 250m }
