@@ -53,6 +53,8 @@ Service o'chirilmaguncha **o'zgarmaydi**.
 
 `EXTERNAL-IP: <none>` — bu normal. ClusterIP turi tashqi manzil olmaydi.
 
+![ClusterIP arxitekturasi: nginx-service nomli servis mijoz so'rovini beshta nginx podiga taqsimlaydi; servisning IP'si doimiy, podlarniki esa o'zgaruvchan](image.png)
+
 ## Sinash
 
 Node'ning o'zida turib:

@@ -4,7 +4,7 @@
 > - Image'ni teglash va Docker Hub'ga yuklash
 > - Klaster image'ni qayerdan oladi
 > - Deployment manifestida o'z image'ingizni ko'rsatish
-### Endi bo'lsa biz Kubernetes klastorimizda buz yaratgan Docker imegimizni ishga tushiramiz:
+## Endi bo'lsa biz Kubernetes klastorimizda buz yaratgan Docker imegimizni ishga tushiramiz:
 ```bash
 kubectl run k8s-web-hello --image=<dockerhub_username>/k8s-web-hello:1.0.0 --port=3000
 ```

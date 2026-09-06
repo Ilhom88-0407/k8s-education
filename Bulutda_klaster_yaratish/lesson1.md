@@ -5,7 +5,7 @@
 > - Node pool va uning o'lchamini tanlash
 > - kubeconfig faylini olish va kubectl'ni sozlash
 > - kubeconfig bilan xavfsiz ishlash
-### 1. DigitalOcean'da hisob yaratish
+## 1. DigitalOcean'da hisob yaratish
 Agar sizda DigitalOcean hisobingiz bo'lmasa, [DigitalOcean](https://www.digitalocean.com/) saytiga o'ting va ro'yxatdan o'ting. Hisob yaratish uchun elektron pochta manzilingiz va parol kerak bo'ladi.
 ![bu yerda ko'rishingiz mumkin](image.png)
 

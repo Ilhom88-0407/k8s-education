@@ -10,7 +10,7 @@ Oddiy o'xshatish: mock imtihon — haydovchilik imtihonidan oldingi mashq maydon
 
 ---
 
-### 1-savol: kubeadm uchun tarmoq parametrlarini sozlash
+## 1-savol: kubeadm uchun tarmoq parametrlarini sozlash
 
 **Masala:** Siz kubeadm yordamida yangi klaster tayyorlayotgan administratorsiz. Tizimda quyidagi tarmoq parametrlarini yoqing va o'zgarishlar **reboot'dan keyin ham saqlanishini** ta'minlang (IPv4 forwarding va bridge trafigini iptables'dan o'tkazish).
 

@@ -35,32 +35,32 @@ spec:
 ```bash
 kubectl apply -f my-pod.yaml
 ``` 
-# Bu buyruq `my-pod.yaml` faylini `Kubernetes` klasteriga qo'llaydi va `Pod` resursini yaratadi.
-# Endi biz `Pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu buyruq `my-pod.yaml` faylini `Kubernetes` klasteriga qo'llaydi va `Pod` resursini yaratadi.
+## Endi biz `Pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl get pods
 ```     
-# Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rishingiz kerak.
-# Agar siz `my-pod` resursining holatini batafsil ko'rishni istasangiz, quyidagi buyruqni bajarishingiz mumkin:
+## Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rishingiz kerak.
+## Agar siz `my-pod` resursining holatini batafsil ko'rishni istasangiz, quyidagi buyruqni bajarishingiz mumkin:
 
 ```bash
 kubectl describe pod my-pod
 ```     
-# Bu buyruq `my-pod` resursining holatini ko'rsatadi.   
-# Endi biz `my-pod` resursini o'chirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu buyruq `my-pod` resursining holatini ko'rsatadi.   
+## Endi biz `my-pod` resursini o'chirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl delete pod my-pod
 ```
-# Bu buyruq `my-pod` resursini `Kubernetes` klasteridan o'chiradi.
-# Endi biz `my-pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
+## Bu buyruq `my-pod` resursini `Kubernetes` klasteridan o'chiradi.
+## Endi biz `my-pod` resursining holatini tekshirishimiz mumkin. Buning uchun quyidagi buyruqni bajarishimiz kerak:
 
 ```bash
 kubectl get pods
 ```
-# Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rmasligingiz kerak, chunki u o'chirilgan.
-# Bu darsda biz `YAML` malumotlarini yaratish va `Kubernetes` klasteriga qo'llashni o'rgandik. Endi siz `YAML` fayllarini yaratish va `Kubernetes` resurslarini boshqarish bo'yicha asosiy bilimlarga egasiz. Keyingi darslarda biz yanada murakkab `YAML` fayllarini yaratishni o'rganamiz.
+## Bu buyruq `Kubernetes` klasteridagi barcha `Pod` resurslarini ko'rsatadi. Siz `my-pod` nomli `Pod` resursini ko'rmasligingiz kerak, chunki u o'chirilgan.
+## Bu darsda biz `YAML` malumotlarini yaratish va `Kubernetes` klasteriga qo'llashni o'rgandik. Endi siz `YAML` fayllarini yaratish va `Kubernetes` resurslarini boshqarish bo'yicha asosiy bilimlarga egasiz. Keyingi darslarda biz yanada murakkab `YAML` fayllarini yaratishni o'rganamiz.
 
 ## 🧪 Mustaqil topshiriq
 

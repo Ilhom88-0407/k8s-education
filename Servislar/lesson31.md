@@ -58,6 +58,8 @@ nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   2s
 
 > 📁 **Tayyor fayl:** [`amaliyot/servis_yaratish/04-loadbalancer.yaml`](amaliyot/servis_yaratish/04-loadbalancer.yaml)
 
+![LoadBalancer qanday yaratiladi: K8s API server LoadBalancer Controller'ga xabar beradi, u esa bulut provayderidan tashqi balanslovchi (ELB) so'raydi; balanslovchi trafikni node'lardagi podlarga yuboradi](image-4.png)
+
 ## ⚠️ `EXTERNAL-IP: <pending>` — nima uchun
 
 Bu **eng ko'p beriladigan savol**. Sababi oddiy: Kubernetes'ning o'zi
@@ -124,6 +126,14 @@ trafik nginx Pod'lariga yo'naltiriladi.
 
 **6-qadam — Pod'lar trafik qabul qiladi.** kube-proxy so'rovlarni Pod'lar
 orasida navbat bilan (round-robin) taqsimlaydi.
+
+### Murakkabroq holat: har Pod uchun alohida manzil
+
+Ba'zi ilovalar (masalan Kafka) mijozga o'z manzilini o'zi aytadi. Bunday holatda bitta umumiy LoadBalancer yetmaydi — har broker uchun alohida manzil kerak bo'ladi:
+
+![Kafka klasteri: har Pod o'zining advertised address'ini (Node2:31234) e'lon qiladi, shuning uchun har broker uchun alohida LoadBalancer qo'yiladi](image-6.png)
+
+Bu darslik doirasidan tashqarida, lekin LoadBalancer'ning chegarasini ko'rsatadi: u trafikni taqsimlaydi, lekin ilovaning o'zi manzil e'lon qilsa, sxema murakkablashadi.
 
 ## To'rt xil Service turi
 

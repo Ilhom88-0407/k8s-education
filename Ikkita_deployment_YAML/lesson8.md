@@ -11,7 +11,7 @@ docker push your_dockerhub_username/your_image_name:tag
 ```
 ## Bu buyruqlar `Dockerfile` dan yangilangan image ni yaratadi va `Docker Hub` ga push qiladi. Siz `your_dockerhub_username`, `your_image_name`, va `tag` ni o'zingizning ma'lumotlaringiz bilan almashtirishingiz kerak.
 ## Endi siz `Docker Hub` da yangilangan image ni ko'rishingiz mumkin.   
-# Endi biz `Kubernetes` klasterida yangilangan image ni ishlatish uchun `YAML` faylni yangilaymiz. Quyidagi `YAML` faylni yaratamiz:
+## Endi biz `Kubernetes` klasterida yangilangan image ni ishlatish uchun `YAML` faylni yangilaymiz. Quyidagi `YAML` faylni yaratamiz:
 
 ```yaml
 apiVersion: v1

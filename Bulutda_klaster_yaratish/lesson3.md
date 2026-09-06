@@ -22,7 +22,7 @@ spec:
 ``` 
 Bu `LoadBalancerIP` maydonini to'g'ri ishlatish uchun, sizning klasteringizda bu IP manzili mavjud bo'lishi va sizning bulut provayderingiz tomonidan qo'llab-quvvatlanishi kerak. Shuningdek, bu IP manzili sizning tarmog'ingizda bo'sh va foydalanishga tayyor bo'lishi kerak.
 Yuqoridagi YAML faylini `kubectl apply -f` buyrug'i yordamida klasterga qo'llang va servis yaratilishini tekshiring. Agar hamma narsa to'g'ri bo'lsa, sizning LoadBalancer servisingiz `my-loadbalancer-service` nomli bo'lishi va 194.107.115.75 IP manziliga ega bo'lishi kerak.
-# Ayrim bulutli provayderlarda LoadBalancer servisni IP manzilini tayinlash uchun qo'shimcha konfiguratsiyalar talab qilinishi mumkin. Masalan, Google Cloud Platform (GCP) da siz avval statik IP manzilini yaratishingiz va keyin uni LoadBalancer servisiga tayinlashingiz kerak bo'ladi. AWS da esa siz Elastic IP manzilini yaratib, uni LoadBalancer servisiga tayinlashingiz mumkin. Har bir bulut provayderining o'ziga xos talablarini tekshirish va ularga mos ravishda konfiguratsiya qilish mumkin.
+## Ayrim bulutli provayderlarda LoadBalancer servisni IP manzilini tayinlash uchun qo'shimcha konfiguratsiyalar talab qilinishi mumkin. Masalan, Google Cloud Platform (GCP) da siz avval statik IP manzilini yaratishingiz va keyin uni LoadBalancer servisiga tayinlashingiz kerak bo'ladi. AWS da esa siz Elastic IP manzilini yaratib, uni LoadBalancer servisiga tayinlashingiz mumkin. Har bir bulut provayderining o'ziga xos talablarini tekshirish va ularga mos ravishda konfiguratsiya qilish mumkin.
 
 ## Unicon.uz bulutli muxidida LoadBalancer servisni IP manzilini tayinlash
 
@@ -131,7 +131,7 @@ NAT qoidalari:
 ---
 
 > 📅 **2026-yil 13-may** · Klaster: kubeadm v1.35.4 · Public IP: 194.107.115.75
-# Kubernetes LoadBalancer Bare-Metal Klasterda
+## Kubernetes LoadBalancer Bare-Metal Klasterda
 
 ## 🧪 Mustaqil topshiriq
 

@@ -4,7 +4,7 @@
 > - kubernetes.io hujjatlaridan tayyor manifest namunasini olish
 > - `kubectl explain` bilan maydon nomini topish
 > - Imtihonda hujjatlardan qanday tez foydalanish
-# https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
+## https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
 K8S bo'yicha barcha ma'limotlarni quyidagi sayq orqali olsangiz bo'ladi:
 ```
 https://kubernetes.io/ru/docs/home/

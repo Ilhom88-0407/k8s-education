@@ -31,6 +31,8 @@ o'zgarmaydigan** IP va DNS nom qo'yadi.
 
 ![Nginx xizmati arxitekturasi: mijozlar Load Balancer va Ingress orqali klasterga kiradi, klaster ichida esa Nginx xizmati (10.96.0.10) so'rovlarni beshta pod orasida taqsimlaydi](image-1.png)
 
+![Service sxemasi: mijoz 80-portga so'rov yuboradi, nginx-service nomli ClusterIP servis (10.100.200.50) uni app=nginx selektoriga mos keluvchi 5 ta podga taqsimlaydi; podlar turli worker nodelarda joylashgan](image-2.png)
+
 ## Service Pod'larni qanday topadi
 
 Service Pod'ni **nomi bilan emas, label selektori** bilan topadi:

@@ -5,17 +5,17 @@
 > - `/nginx` yo'li ichkarida nima qiladi
 > - Xatolarni ushlash nima uchun muhim
 
-# Bu rasmda ikkita deployment yaratilganligini ko'rishimiz mumkin
+## Bu rasmda ikkita deployment yaratilganligini ko'rishimiz mumkin
 
 1. deployment <k8s-web-to-ngnix>
 2. deployment <nginx>
 
-# shu bilan birgalikda 1 ta CluserIP servis
+## shu bilan birgalikda 1 ta CluserIP servis
 
-# K8S clusterIP
-# LoadBalancer
+## K8S clusterIP
+## LoadBalancer
 
-# shu kabi xizmatlarni ishga tushirib ko'rib chiqamiz.  
+## shu kabi xizmatlarni ishga tushirib ko'rib chiqamiz.  
 
 1 - deployment <k8s-web-to-ngnix> da biz quyidagi <k8s-web-to-ngnix> katalogidagi index.mjs dan foydalanamiz
 ```js

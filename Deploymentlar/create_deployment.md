@@ -37,6 +37,8 @@ Shu sababli **amalda Pod hech qachon bevosita yaratilmaydi.**
 
 ## Uchta obyekt, uchta vazifa
 
+![Deployment sxemasi: bitta Deployment uchta ReplicaSet'ni, har ReplicaSet esa ikkitadan Pod'ni boshqaradi; Pod'lar uchta node bo'ylab taqsimlangan](image.png)
+
 ```mermaid
 graph TB
     A["Deployment<br/>Siz yozadigan yagona obyekt"] --> B["ReplicaSet<br/>Podlar sonini saqlaydi"]
