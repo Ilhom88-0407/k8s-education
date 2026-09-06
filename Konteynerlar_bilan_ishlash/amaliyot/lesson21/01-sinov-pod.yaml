@@ -1,0 +1,23 @@
+# exec, logs va port-forward buyruqlarini sinash uchun Pod.
+#
+# nginx tanlandi, chunki unda:
+#   * shell bor (sh) — kubectl exec ni sinash mumkin;
+#   * so'rovlarni logga yozadi — kubectl logs ni sinash mumkin;
+#   * 80-portda tinglaydi — kubectl port-forward ni sinash mumkin.
+#
+# Qo'llash: kubectl apply -f 01-sinov-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sinov-nginx
+  labels:
+    app: sinov
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      ports:
+        - containerPort: 80
+      resources:
+        requests: { memory: 32Mi, cpu: 50m }
+        limits: { memory: 128Mi, cpu: 250m }

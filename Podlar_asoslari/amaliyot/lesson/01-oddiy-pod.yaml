@@ -1,0 +1,27 @@
+# Eng oddiy Pod: bitta konteyner.
+#
+# Amalda Pod'ni bevosita shu ko'rinishda yaratmaysiz — Deployment orqali
+# boshqarasiz. Lekin Pod nimadan iboratligini ko'rish uchun eng aniq misol shu.
+#
+# Qo'llash:  kubectl apply -f 01-oddiy-pod.yaml
+# Tekshirish: kubectl get pod oddiy-nginx -o wide
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oddiy-nginx
+  labels:
+    app: nginx-namuna
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      ports:
+        - containerPort: 80
+      resources:
+        # Limit qo'yilmagan Pod node'ning butun xotirasini yeb qo'yishi mumkin.
+        requests:
+          memory: 32Mi
+          cpu: 50m
+        limits:
+          memory: 128Mi
+          cpu: 250m

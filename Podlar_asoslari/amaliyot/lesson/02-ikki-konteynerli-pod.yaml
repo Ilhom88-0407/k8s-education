@@ -1,0 +1,48 @@
+# Ikki konteynerli Pod — "sidecar" namunasi.
+#
+# Ikkala konteyner:
+#   * bitta IP manzilni bo'lishadi (bir-birini localhost orqali ko'radi);
+#   * bitta emptyDir volume'ini bo'lishadi (/umumiy papkasi).
+#
+# web konteyneri faylga yozadi, kuzatuvchi konteyner o'sha faylni o'qiydi —
+# Pod nima uchun konteynerdan katta birlik ekanini shu ko'rsatadi.
+#
+# Qo'llash:   kubectl apply -f 02-ikki-konteynerli-pod.yaml
+# Kuzatish:   kubectl logs sidecar-namuna -c kuzatuvchi -f
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-namuna
+  labels:
+    app: sidecar-namuna
+spec:
+  volumes:
+    # emptyDir Pod bilan birga tug'iladi va Pod bilan birga o'ladi.
+    - name: umumiy
+      emptyDir: {}
+
+  containers:
+    # 1-konteyner: har 5 soniyada faylga bitta qator yozadi
+    - name: yozuvchi
+      image: busybox:1.37
+      command:
+        - /bin/sh
+        - -c
+        - 'while true; do echo "$(date) - salom" >> /umumiy/jurnal.txt; sleep 5; done'
+      volumeMounts:
+        - name: umumiy
+          mountPath: /umumiy
+      resources:
+        requests: { memory: 16Mi, cpu: 10m }
+        limits: { memory: 64Mi, cpu: 100m }
+
+    # 2-konteyner: o'sha faylni o'qib, o'z logiga chiqaradi
+    - name: kuzatuvchi
+      image: busybox:1.37
+      command: ['/bin/sh', '-c', 'tail -f /umumiy/jurnal.txt']
+      volumeMounts:
+        - name: umumiy
+          mountPath: /umumiy
+      resources:
+        requests: { memory: 16Mi, cpu: 10m }
+        limits: { memory: 64Mi, cpu: 100m }
