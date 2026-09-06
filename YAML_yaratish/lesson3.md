@@ -1,4 +1,9 @@
 # K8S dokumentlari bilan ishlash
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - kubernetes.io hujjatlaridan tayyor manifest namunasini olish
+> - `kubectl explain` bilan maydon nomini topish
+> - Imtihonda hujjatlardan qanday tez foydalanish
 # https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
 K8S bo'yicha barcha ma'limotlarni quyidagi sayq orqali olsangiz bo'ladi:
 ```
@@ -87,6 +92,75 @@ strategy (DeploymentStrategy), bu Podlarni qanday qilib o'zgartirishini ko'rsata
             strategy.rollingUpdate.maxSurge (IntOrString), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
 
             strategy.rollingUpdate.maxUnavailable (IntOrString), bu Podlarni qanday qilib o'zgartirishini ko'rsatadi.
-            
 
+## 🧪 Mustaqil topshiriqlar
 
+> Taxminiy vaqt: 10 daqiqa.
+
+**1-topshiriq · oson.** `kubectl explain` bilan Pod'ning `spec` ichida
+qanday maydonlar borligini toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl explain pod.spec | head -30
+```
+</details>
+
+**2-topshiriq · o'rta.** Klasteringizda qaysi API versiyalari mavjudligini
+ro'yxatlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl api-resources | head -20
+kubectl api-versions | sort
+```
+</details>
+
+**3-topshiriq · qiyin.** `kubectl explain` bilan `livenessProbe` ning
+barcha ichki maydonlarini rekursiv chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl explain pod.spec.containers.livenessProbe --recursive
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** Imtihonda internetdan foydalanish mumkinmi?
+**Javob:** CKA imtihonida faqat `kubernetes.io/docs` va bir necha rasmiy
+sayt ochiq. Boshqa saytlar, StackOverflow va AI vositalari taqiqlangan.
+
+**Savol:** `kubectl explain` hujjatlardan tezroqmi?
+**Javob:** Ancha tezroq. U klasterning **o'z versiyasidagi** maydonlarni
+ko'rsatadi — hujjatlarda esa boshqa versiya bo'lishi mumkin.
+
+## 📌 CKA imtihon uchun maslahat
+
+Hujjatlardan namuna izlaganda qidiruv so'zini aniq yozing: "ingress
+example yaml", "networkpolicy example". Sahifadagi YAML blokini nusxa
+ko'chirib, keyin tahrirlash — noldan yozishdan tezroq.
+
+```bash
+kubectl explain <resurs>.<maydon>          # bitta maydon
+kubectl explain <resurs> --recursive       # butun daraxt
+```
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **`kubectl explain`** | Resurs maydonlarini klasterdan o'qib tushuntiruvchi buyruq |
+| **`kubectl api-resources`** | Klasterdagi barcha resurs turlari ro'yxati |
+| **`kubectl api-versions`** | Mavjud API guruh va versiyalari |
+
+## 🔗 Manbalar
+
+- [Kubernetes API Reference](https://kubernetes.io/docs/reference/kubernetes-api/)
+- [kubectl explain](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#explain)
+
+---
+⬅️ [Oldingi dars](lesson2.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson4.md](lesson4.md)
