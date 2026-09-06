@@ -1,111 +1,220 @@
-Bundan oldingi darsda biz ClusterIP turidagi servis yaratgan edik. Bu safar esa NodePort turidagi servis yaratamiz. NodePort turidagi servis, klaster ichidagi podlarga tashqi dunyo orqali kirish imkonini beradi. 
-Ularning farqini quida ko'rishingiz mumkin:
-```
-Bu 'NodePort' turidagi servisning holati:
-root@test-server-k8s-1:~# kubectl get service
-NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-kubernetes     ClusterIP   10.96.0.1     <none>        443/TCP          65m
-nginx-deploy   NodePort    10.97.78.89   <none>        8080:30690/TCP   9s
-root@test-server-k8s-1:~# kubectl describe service nginx-deploy -n default
-Name:                     nginx-deploy
-Namespace:                default
-Labels:                   app=nginx-deploy
-Annotations:              <none>
-Selector:                 app=nginx-deploy
-Type:                     NodePort          #### 'Bu yerda servisning turi NodePort ekanligini ko'rishingiz mumkin.'
+# NodePort — node porti orqali tashqariga chiqarish
 
-Bu yerda esa 'ClusterIP' turidagi servisning holati:
-root@test-server-k8s-1:~# kubectl get service
-Name:                     nginx-deploy
-Namespace:                default
-Labels:                   app=nginx-deploy
-Annotations:              <none>
-Selector:                 app=nginx-deploy
-Type:                     ClusterIP
-```
- 
-## NodePort turidagi servis yaratish
-Bundan oldingi darsdagi servisni o'chirib tashlaymiz va yangi servis yaratamiz. 
-Buning uchun quyidagi buyruqni ishlatamiz:
-```
-root@test-server-k8s-1:~# kubectl delete service nginx-deploy -n default
-service "nginx-deploy" deleted from default namespace
-```
-Endi bo'lsa yangi servis yaratamiz. Bu safar NodePort turidagi servis yaratamiz. NodePort turidagi servis, klaster ichidagi podlarga tashqi dunyo orqali kirish imkonini beradi. NodePort turidagi servis yaratish uchun quyidagi buyruqni ishlatamiz:
-```
-kubectl expose deployment nginx-deploy --type=NodePort --port=8080 --target-port=80 -n default
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - NodePort ClusterIP dan nimasi bilan farq qiladi
+> - `PORT(S)` ustunidagi `8080:30690/TCP` yozuvini o'qish
+> - NodePort oralig'i 30000–32767 nima uchun shunday
+> - Qachon NodePort ishlatiladi, qachon ishlatilmaydi
 
-misol uchun:
+## 💡 Hayotiy o'xshatish: binodagi yon eshik
 
-root@test-server-k8s-1:~# kubectl expose deployment nginx-deploy --type=NodePort --port=8080 --target-port=80 -n default
+ClusterIP — bino ichidagi ichki telefon. NodePort — **har bir binoning yon
+eshigi**: ko'chadan turib istalgan binoning yon eshigidan kirib, ichkaridagi
+kerakli xonaga tushishingiz mumkin.
+
+Eshik raqami g'alati bo'ladi (30690 kabi), lekin u **har binoda bir xil** —
+qaysi biriga kirsangiz ham bir joyga tushasiz.
+
+## ClusterIP va NodePort farqi
+
+Ikkalasi ham bir xil Deployment ustiga qo'yilgan:
+
+**NodePort:**
+
+```text
+NAME           TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+nginx-deploy   NodePort   10.97.78.89   <none>        8080:30690/TCP   9s
+```
+
+**ClusterIP:**
+
+```text
+NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+nginx-deploy   ClusterIP   10.101.7.48   <none>        8080/TCP   44s
+```
+
+Ikki farq ko'rinadi:
+
+1. `TYPE` ustuni;
+2. `PORT(S)` da NodePort ikkita raqam ko'rsatadi: `8080:30690/TCP`.
+
+⚠️ Diqqat: NodePort'da ham `CLUSTER-IP` bor. Chunki **NodePort ClusterIP'ni
+o'z ichiga oladi** — u ClusterIP ustiga qo'shimcha kirish yo'li qo'shadi,
+uni almashtirmaydi.
+
+## `8080:30690/TCP` ni o'qish
+
+```
+8080  :  30690  / TCP
+  ↑        ↑
+Service   Node porti
+ porti    (tashqaridan)
+```
+
+- **8080** — klaster ichidan: `http://nginx-deploy:8080`;
+- **30690** — tashqaridan: `http://<istalgan-node-IP>:30690`.
+
+Uchinchi raqam (`targetPort`) bu ustunda ko'rinmaydi — u Pod ichidagi port
+va `describe` da ko'rinadi.
+
+## NodePort Service yaratish
+
+Avvalgi Service'ni o'chiramiz:
+
+```bash
+kubectl delete service nginx-deploy
+```
+
+Yangisini yaratamiz:
+
+```bash
+kubectl expose deployment nginx-deploy --type=NodePort --port=8080 --target-port=80
+```
+
+```text
 service/nginx-deploy exposed
 ```
-natijani bu yerda ko'rishingiz mumkin:
-```
-root@test-server-k8s-1:~# kubectl get service
-NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-kubernetes     ClusterIP   10.96.0.1     <none>        443/TCP          65m
-nginx-deploy   NodePort    10.97.78.89   <none>        8080:30690/TCP   9s
-```
-Bu yerda `nginx-deploy` servisi NodePort turida yaratilganligini va tashqi dunyo orqali 30690 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
 
-`nginx-deploy` haqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
-```
-kubectl describe service nginx-deploy -n default
-```
-bu  yesda biz quyidagi ma'lumotlarni ko'rishimiz mumkin:
-```
-root@test-server-k8s-1:~# kubectl get service
-NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-kubernetes     ClusterIP   10.96.0.1     <none>        443/TCP          65m
-nginx-deploy   NodePort    10.97.78.89   <none>        8080:30690/TCP   9s
-root@test-server-k8s-1:~# kubectl describe service nginx-deploy -n default
-Name:                     nginx-deploy
-Namespace:                default
-Labels:                   app=nginx-deploy
-Annotations:              <none>
-Selector:                 app=nginx-deploy
-Type:                     NodePort
-IP Family Policy:         SingleStack
-IP Families:              IPv4
-IP:                       10.97.78.89
-IPs:                      10.97.78.89
-Port:                     <unset>  8080/TCP
-TargetPort:               80/TCP
-NodePort:                 <unset>  30690/TCP
-Endpoints:                172.16.91.66:80,172.16.91.65:80,172.16.78.129:80 + 2 more...
-Session Affinity:         None
-External Traffic Policy:  Cluster
-Internal Traffic Policy:  Cluster
-Events:                   <none>
-```
-Bu yerda `kubectl describe service nginx-deploy -n default` buyruq yordamida `nginx-deploy` servisining batafsil ma'lumotlarini ko'rishingiz mumkin. Bu, masalan, servisning turlarini tekshirish yoki uning qaysi podlarga bog'langanligini ko'rish uchun foydalidir. Bu yerda `Endpoints` qismida servisning bog'langan podlarning IP manzillari va portlari ko'rsatilgan. Bu, masalan, servisning qaysi podlarga bog'langanligini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rsatadi.
+> 📁 **Tayyor fayl:** [`amaliyot/servis_yaratish/03-nodeport.yaml`](amaliyot/servis_yaratish/03-nodeport.yaml)
 
-## ClusterIP va NodePort turidagi servislarni taqqoslash
-ClusterIP va NodePort turidagi servislarni taqqoslash uchun quyidagi jadvalni ko'rishingiz mumkin:
-| Xususiyat | ClusterIP | NodePort |    
-| --- | --- | --- |
-| Turi | ClusterIP | NodePort |
-| Kirish | Faqat klaster ichidan | Tashqi dunyo orqali |
-| Port | Faqat klaster ichida | Tashqi dunyo orqali |
-| Maqsad | Klaster ichidagi podlar orasida aloqa | Klaster ichidagi podlarga tashqi dunyo orqali kirish |
-Bu yerda `ClusterIP` turidagi servis faqat klaster ichidan kirish imkonini beradi, ya'ni faqat klaster ichidagi podlar orasida aloqa qilish uchun ishlatiladi. `NodePort` turidagi servis esa tashqi dunyo orqali kirish imkonini beradi, ya'ni klaster ichidagi podlarga tashqi dunyo orqali kirish uchun ishlatiladi. Bu, masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
+Manifest bilan aniq port belgilash:
 
-tekshirish uchun quyidagi buyruqni ishlatishingiz mumkin:
+```yaml
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080     # ixtiyoriy; yozmasangiz Kubernetes o'zi tanlaydi
 ```
-curl http://<node-ip>:<node-port>
-misol uchun:
-curl http://<node-ip>:30690   
-``` 
-'node-ip' bu sizning serveringizning IP manzili, node-port esa NodePort turidagi servisning porti. Agar siz Unicon.uz bulutli xizmatlaridan foydalanayotgan bo'lsangiz, node-ip bu sizning serveringizning public IP (elastic IP) manzili  yoki LoadBalancer ning eIP si bo'ladi.
-Agar siz Docker Desktop yoki minikube kabi lokal Kubernetes klasteridan foydalanayotgan bo'lsangiz, node-ip bu sizning lokal mashinangizning IP manzili bo'ladi. 
 
-Docker Desktopda siz local url yaratib servisingizni tekshirishingiz mumkin.
-Misol uchun:
+## Nima uchun 30000–32767
+
+Bu oraliq ataylab **yuqori** tanlangan: 1–1023 portlar tizim xizmatlari
+uchun (SSH 22, HTTP 80, HTTPS 443), 1024–29999 esa oddiy ilovalar uchun band
+bo'lishi mumkin.
+
+Oraliqni o'zgartirish mumkin (`--service-node-port-range` bayrog'i
+apiserver'da), lekin bunga deyarli hech qachon ehtiyoj bo'lmaydi.
+
+⚠️ **Har NodePort butun klaster bo'ylab noyob.** 30080 bandmi — ikkinchi
+Service uni ololmaydi.
+
+## Sinash
+
+```bash
+kubectl get nodes -o wide          # node IP'larini olamiz
+curl http://192.168.16.197:30690
 ```
+
+minikube'da qulay yorliq bor:
+
+```bash
 minikube service nginx-deploy --url
-http://1270.0.1:53787
-! Becource you are using a Docker driver on darwin, the terminal needs to be open to run it.
+minikube service nginx-deploy        # brauzerni ham ochadi
 ```
 
+**Muhim:** so'rovni **istalgan** node'ga yuborishingiz mumkin — hatto Pod
+o'sha node'da bo'lmasa ham. kube-proxy uni to'g'ri node'ga yo'naltiradi.
 
+## Qachon NodePort ishlatiladi
+
+| Holat | NodePort mosmi |
+|---|---|
+| Lokal sinov, demo, o'rganish | ✅ Ha |
+| Ichki tarmoqdagi kichik ilova | ✅ Ha |
+| Ommaviy veb-sayt | ❌ Yo'q — g'alati port raqami, TLS yo'q |
+| Ko'p sayt bitta klasterda | ❌ Yo'q — Ingress kerak |
+
+Ishlab chiqarishda odatda **Ingress** yoki **LoadBalancer** ishlatiladi.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** NodePort Service yarating va tayinlangan node portini
+toping.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get svc web-nodeport -o jsonpath='{.spec.ports[0].nodePort}{"\n"}'
+# 30000-32767 oralig'idagi raqam
+```
+</details>
+
+**2-topshiriq · o'rta.** Node IP va NodePort orqali brauzerdan yoki `curl`
+bilan nginx sahifasini oching.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+minikube service web-nodeport --url
+curl -s $(minikube service web-nodeport --url) | grep -o '<title>.*</title>'
+```
+</details>
+
+**3-topshiriq · qiyin.** Ikkinchi Service yarating va unga ham `nodePort: 30080`
+bering. **Avval ayting:** nima bo'ladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+# Xato: provided port is already allocated
+```
+</details>
+
+📁 To'liq yechimlar: [`amaliyot/servis_yaratish/YECHIM.md`](amaliyot/servis_yaratish/YECHIM.md)
+
+## ❓ Savol-Javob
+
+**Savol:** So'rovni Pod turgan node'ga yuborishim shartmi?
+**Javob:** Yo'q. Istalgan node javob beradi — kube-proxy so'rovni kerakli
+node'ga o'zi uzatadi.
+
+**Savol:** NodePort'da HTTPS qanday qilinadi?
+**Javob:** NodePort'ning o'zida TLS yo'q. TLS uchun Ingress yoki
+LoadBalancer + sertifikat kerak.
+
+**Savol:** `externalTrafficPolicy: Local` nima qiladi?
+**Javob:** So'rovni faqat **o'sha node'dagi** Pod'ga yuboradi. Mijozning
+haqiqiy IP'sini saqlab qoladi, lekin node'da Pod bo'lmasa so'rov yo'qoladi.
+
+**Savol:** NodePort Service'ni tashqi tarmoqdan ochish xavfsizmi?
+**Javob:** Portni to'g'ridan-to'g'ri internetga ochmang. Uning oldiga
+firewall yoki tashqi balanslovchi qo'ying.
+
+## 📌 CKA imtihon uchun maslahat
+
+```bash
+kubectl expose deploy web --type=NodePort --port=80
+kubectl create service nodeport web --tcp=80:80 --node-port=30080
+```
+
+Imtihonda `nodePort` aniq raqam bilan so'ralsa, `kubectl expose` yetmaydi —
+manifest yozing yoki `kubectl edit svc <nom>` bilan qo'shing.
+
+Tekshirish:
+
+```bash
+kubectl get svc -o wide
+curl http://$(kubectl get node -o jsonpath='{.items[0].status.addresses[0].address}'):30080
+```
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **NodePort** | Har node'ning IP va yuqori porti orqali ochadigan Service turi |
+| **NodePort oralig'i** | 30000–32767; klaster bo'ylab noyob |
+| **`nodePort`** | Aniq port raqamini qo'lda belgilovchi maydon |
+| **`externalTrafficPolicy`** | `Cluster` (standart) yoki `Local` — so'rov qaysi Pod'ga borishini belgilaydi |
+
+## 🔗 Manbalar
+
+- [Service Type NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+- [Source IP for Services](https://kubernetes.io/docs/tutorials/services/source-ip/)
+- [minikube service](https://minikube.sigs.k8s.io/docs/commands/service/)
+
+---
+⬅️ [Oldingi dars](service_ClusterIP.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson31.md](lesson31.md)

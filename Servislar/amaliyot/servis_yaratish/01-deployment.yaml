@@ -1,0 +1,31 @@
+# Servis darslarida ishlatiladigan Deployment.
+#
+# Barcha uch xil Service turi (ClusterIP, NodePort, LoadBalancer) aynan shu
+# Deployment ustiga qo'yiladi — shunda farq faqat Service turida ekani
+# aniq ko'rinadi.
+#
+# Qo'llash: kubectl apply -f 01-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests: { memory: 32Mi, cpu: 50m }
+            limits: { memory: 128Mi, cpu: 250m }

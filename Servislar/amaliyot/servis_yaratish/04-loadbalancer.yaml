@@ -1,0 +1,19 @@
+# LoadBalancer — bulut provayderidan haqiqiy tashqi IP so'raydi.
+#
+# minikube'da haqiqiy balanslovchi yo'q, shuning uchun EXTERNAL-IP ustuni
+# <pending> holatida qotib qoladi. Uni ishga tushirish uchun alohida
+# terminalda `minikube tunnel` buyrug'ini ochiq qoldiring.
+#
+# Qo'llash: kubectl apply -f 04-loadbalancer.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
