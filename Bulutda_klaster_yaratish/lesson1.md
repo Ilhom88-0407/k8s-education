@@ -1,4 +1,10 @@
-## DigitalOcean'da Kubernetes Klaster Yaratish
+# DigitalOcean'da Kubernetes klaster yaratish
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Bulutda boshqariladigan (managed) klaster nima uchun qulay
+> - Node pool va uning o'lchamini tanlash
+> - kubeconfig faylini olish va kubectl'ni sozlash
+> - kubeconfig bilan xavfsiz ishlash
 ### 1. DigitalOcean'da hisob yaratish
 Agar sizda DigitalOcean hisobingiz bo'lmasa, [DigitalOcean](https://www.digitalocean.com/) saytiga o'ting va ro'yxatdan o'ting. Hisob yaratish uchun elektron pochta manzilingiz va parol kerak bo'ladi.
 ![bu yerda ko'rishingiz mumkin](image.png)
@@ -140,3 +146,120 @@ sudo kubectl --kubeconfig=/etc/kubernetes/admin.conf -n kube-system get cm kubea
 ```
 Yuqoridagi buyruqlardan birini bajarish orqali API Server manzilining Public IP bo'lishini tekshirishingiz mumkin. Agar manzil Public IP bo'lsa, demak siz muvaffaqiyatli klasteringizga Public IP qo'shganingizni anglatadi.
 
+## 🔐 kubeconfig — maxfiy fayl
+
+Klasterni yaratganingizdan keyin provayder sizga **kubeconfig** faylini
+beradi. Bu fayl ichida klasterning manzili va **shaxsiy kalitingiz** bo'ladi.
+
+⚠️ **Bu faylni hech qachon:**
+
+- git repozitoriyaga kommit qilmang;
+- chatga, screenshot'ga yoki hujjatga qo'ymang;
+- boshqa kishiga yubormang.
+
+Uni ko'rgan har kim klasteringizga **to'liq admin** bo'ladi. Standart
+joyi — `~/.kube/config`, huquqi `chmod 600`.
+
+Tasodifan kommit qilib qo'ysangiz, faylni o'chirish **yetarli emas** —
+u git tarixida qoladi. Sertifikatlarni **rotatsiya qilish** kerak.
+
+## kubectl'ni sozlash
+
+```bash
+# kubeconfig ni standart joyga qo'yamiz
+mkdir -p ~/.kube
+mv ~/Downloads/klaster-kubeconfig.yaml ~/.kube/config
+chmod 600 ~/.kube/config
+
+kubectl cluster-info
+kubectl get nodes
+```
+
+Bir necha klaster bilan ishlasangiz, kontekstlar orqali almashing:
+
+```bash
+kubectl config get-contexts
+kubectl config use-context <nom>
+kubectl config current-context
+```
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Klasteringizdagi node'lar sonini va versiyasini
+aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get nodes -o wide
+```
+</details>
+
+**2-topshiriq · o'rta.** `kubectl config get-contexts` bilan mavjud
+kontekstlarni ko'ring va joriy kontekstni aniqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl config current-context
+```
+</details>
+
+**3-topshiriq · qiyin.** minikube va bulut klasteri o'rtasida
+almashing. **Avval ayting:** `kubectl get pods` natijasi o'zgaradimi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl config use-context minikube
+kubectl get pods
+# Butunlay boshqa ro'yxat — chunki bu boshqa klaster
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** Managed klaster va o'zim o'rnatgan klaster farqi nima?
+**Javob:** Managed'da control plane (apiserver, etcd, scheduler) provayder
+zimmasida: yangilanish, zaxira nusxa, mavjudlik — hammasi ular tomonda.
+Siz faqat worker node'lar va ilovalar uchun javob berasiz.
+
+**Savol:** Bulut klasteri qancha turadi?
+**Javob:** Ko'p provayderda control plane bepul, faqat worker node'lar
+va LoadBalancer'lar uchun to'lanadi. Sinovdan keyin klasterni
+**o'chirishni unutmang**.
+
+**Savol:** `kubectl` bir vaqtda ikki klasterga ulana oladimi?
+**Javob:** Yo'q, bir vaqtda faqat bitta kontekst faol. Lekin `--context`
+bayrog'i bilan bitta buyruqni boshqa klasterda bajarish mumkin.
+
+## 📌 CKA imtihon uchun maslahat
+
+Imtihonda har masala boshida **kontekstni almashtirish** so'raladi:
+
+```bash
+kubectl config use-context <masalada-berilgan-nom>
+```
+
+Buni bajarmasangiz, ish boshqa klasterda ketadi va masala hisobga olinmaydi.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Managed Kubernetes** | Bulut provayderi control plane'ni o'zi boshqaradigan xizmat |
+| **Node pool** | Bir xil sozlamali worker node'lar guruhi |
+| **kubeconfig** | Klasterga ulanish ma'lumotlari saqlanadigan fayl |
+| **Kontekst (context)** | kubeconfig ichidagi "qaysi klaster + qaysi foydalanuvchi" juftligi |
+| **NAT** | Ichki manzillarni tashqi IP orqali ko'rsatuvchi tarmoq mexanizmi |
+
+## 🔗 Manbalar
+
+- [Kubernetes on Cloud Providers](https://kubernetes.io/docs/setup/production-environment/turnkey-solutions/)
+- [Organizing Cluster Access Using kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
+- [DigitalOcean Kubernetes](https://docs.digitalocean.com/products/kubernetes/)
+
+---
+⬅️ [Bo'lim indeksi](README.md) · ➡️ [lesson2.md](lesson2.md)

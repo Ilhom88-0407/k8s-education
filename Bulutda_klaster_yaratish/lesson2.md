@@ -1,4 +1,8 @@
 # Klasterda yangi deploymentlarni yaratish va boshqarish
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Bulut klasterida Deployment yaratish
+> - Lokal va bulut klasteri orasidagi farqlar
 1. Birinchi bo'lib bizda mavjud barcha deloymentlarni o'chirib tashlaymiz:
 bizda mavjud deployment va servislarni tekshirib olaminz
 ## Endi bo'lsa quyidagi buyruqni kiriting va barcha deployment va servislarni o'chirib tashlaymiz
@@ -69,3 +73,41 @@ replicaset.apps/nginx-86d76f4b8               5         5         5       7s
 PS D:\project AI\k8s\2_xil_YAML_yaratish> 
 ```
 Yuqoridagi natijada ko'rishimiz mumkinki, barcha podlar `Running` holatida va kerakli sonlarda mavjud. Servislar ham muvaffaqiyatli yaratilgan va `kubernetes` servisi bundan mustasno, u hali ham mavjud. ✅
+
+## 🧪 Mustaqil topshiriq
+
+**Topshiriq.** Bulut klasteringizda 3 replikali nginx Deployment yarating
+va Pod'lar turli node'larga tushganini tekshiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -o wide
+# NODE ustunida kamida ikkita har xil node bo'lishi kerak
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** Lokal minikube'dagi manifest bulutda ham ishlaydimi?
+**Javob:** Deyarli har doim ha. Farq faqat LoadBalancer (bulutda haqiqiy
+IP beriladi) va StorageClass (har provayderda o'zining nomi bor) da.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Managed Kubernetes** | Bulut provayderi control plane'ni o'zi boshqaradigan xizmat |
+| **Node pool** | Bir xil sozlamali worker node'lar guruhi |
+| **kubeconfig** | Klasterga ulanish ma'lumotlari saqlanadigan fayl |
+| **Kontekst (context)** | kubeconfig ichidagi "qaysi klaster + qaysi foydalanuvchi" juftligi |
+| **NAT** | Ichki manzillarni tashqi IP orqali ko'rsatuvchi tarmoq mexanizmi |
+
+## 🔗 Manbalar
+
+- [Kubernetes on Cloud Providers](https://kubernetes.io/docs/setup/production-environment/turnkey-solutions/)
+- [Organizing Cluster Access Using kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
+- [DigitalOcean Kubernetes](https://docs.digitalocean.com/products/kubernetes/)
+
+---
+⬅️ [Oldingi dars](lesson1.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson3.md](lesson3.md)

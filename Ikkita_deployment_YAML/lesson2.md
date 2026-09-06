@@ -1,5 +1,10 @@
 # Ikkita deployment yaratish plani
 
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Ilova kodida boshqa servisga qanday murojaat qilinadi
+> - `/nginx` yo'li ichkarida nima qiladi
+> - Xatolarni ushlash nima uchun muhim
+
 # Bu rasmda ikkita deployment yaratilganligini ko'rishimiz mumkin
 
 1. deployment <k8s-web-to-ngnix>
@@ -52,24 +57,24 @@ app.listen(PORT, () => {
 - PORT → Server 3000-portda ishlaydi.
 
 - / route
-```
+```javascript
 app.get("/", (req, res) => {
 ```
 Browserda / ochilganda ishlaydi.
-```
+```javascript
 const helloMessage = `<h1>Hello from the ${os.hostname()}</h1>`
 res.send(helloMessage)
 ```
 Server nomini (hostname) olib HTML ko'rinishda chiqaradi va javob yuboradi.
 
 Misol:
-```
+```text
 Hello from the ubuntu-server
 ```
 - /nginx route
-```
+```javascript
 app.get("/nginx", async (req, res) => {
-    ```
+```
 Bu route boshqa service'ga request yuboradi.
 
 Misol:
@@ -127,3 +132,46 @@ docker build -t k8s-web-to-nginx .mrpocker88/k8s-web-to-nginx
 ```bash
 docker push k8s-web-to-nginx
 ```
+
+## 🧪 Mustaqil topshiriq
+
+**Topshiriq.** Shu darsdagi buyruqlarni o'z klasteringizda qaytaring va
+natijani `kubectl get all` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deploy,svc,pods -o wide
+```
+</details>
+
+📁 Tayyor fayllar: [`amaliyot/`](amaliyot/)
+
+## ❓ Savol-Javob
+
+**Savol:** `kubectl apply -f` ga bir necha faylni birdan berish mumkinmi?
+**Javob:** Ha: `kubectl apply -f a.yaml -f b.yaml`. Butun papkani ham:
+`kubectl apply -f amaliyot/`.
+
+**Savol:** Bitta faylda bir necha obyekt bo'lishi mumkinmi?
+**Javob:** Ha. Ular `---` qatori bilan ajratiladi. Bu bog'liq obyektlarni
+(Service + Deployment) birga saqlashda qulay.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Service DNS nomi** | Klaster ichida servisga murojaat qilish uchun nom |
+| **ClusterIP** | Faqat klaster ichidan ko'rinadigan Service turi |
+| **CoreDNS** | Service nomlarini IP'ga aylantiruvchi klaster DNS serveri |
+| **FQDN** | `<servis>.<namespace>.svc.cluster.local` — to'liq nom |
+| **Ko'p hujjatli YAML** | Bitta faylda `---` bilan ajratilgan bir necha obyekt |
+
+## 🔗 Manbalar
+
+- [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+- [Connecting Applications with Services](https://kubernetes.io/docs/tutorials/services/connect-applications-service/)
+- [Service — kubernetes.io](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+---
+⬅️ [Bo'lim indeksi](README.md) · ➡️ [lesson4.md](lesson4.md)

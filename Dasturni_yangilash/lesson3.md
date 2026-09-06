@@ -1,4 +1,9 @@
-## Klein endi yaratilgan deploymentni analiz qilib chiqamiz.
+# Yangilangan Deployment'ni tahlil qilish
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Yangilanishdan keyin `describe` da nima o'zgarganini o'qish
+> - ReplicaSet'lar tarixi va `rollout history`
+> - Orqaga qaytish (`rollout undo`)
 Analiz uchun quyidagi komandadan foydalanamiz:
 ```
 root@test-server-k8s-1:~# kubectl describe deployment k8s-web-hello
@@ -84,3 +89,80 @@ k8s-web-hello-554b8c5484-s8tjt   1/1     Running   0          12s
 k8s-web-hello-554b8c5484-xvl9w   1/1     Running   0          87m
 k8s-web-hello-554b8c5484-z8dsw   1/1     Running   0          12s
 ```
+
+## Orqaga qaytish
+
+```bash
+kubectl rollout history deployment k8s-web-hello
+kubectl rollout undo deployment k8s-web-hello
+kubectl rollout undo deployment k8s-web-hello --to-revision=2
+```
+
+`undo` yangi ReplicaSet yaratmaydi — u **eski ReplicaSet'ni qayta
+masshtablaydi**. Shuning uchun u juda tez ishlaydi.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `rollout history` bilan revizyalar ro'yxatini
+chiqaring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl rollout history deployment k8s-web-hello
+```
+</details>
+
+**2-topshiriq · o'rta.** Oldingi versiyaga qayting va Pod'lardagi image
+tegi o'zgarganini tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deployment k8s-web-hello \
+  -o jsonpath='{.spec.template.spec.containers[0].image}{"\n"}'
+```
+</details>
+
+**3-topshiriq · qiyin.** `revisionHistoryLimit` ni 2 ga tushiring va uch
+marta yangilang. **Avval ayting:** nechta eski ReplicaSet qoladi?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get rs -l app=k8s-web-hello
+# 2 ta eski + 1 ta joriy
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** `rollout undo` dan keyin revision raqami nima bo'ladi?
+**Javob:** U kamaymaydi — yangi raqam qo'shiladi. Masalan 3-revizyadan
+2-ga qaytsangiz, natija 4-revizya bo'ladi.
+
+**Savol:** Barcha eski ReplicaSet'lar 0 replika bilan turibdi. O'chiraymi?
+**Javob:** Kerak emas, ular resurs yemaydi. Lekin ularni o'chirsangiz,
+o'sha revizyalarga `undo` qila olmaysiz.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Rolling update** | Pod'larni bittalab almashtirib, uzilishsiz yangilash |
+| **`kubectl set image`** | Deployment'dagi image'ni almashtiruvchi buyruq |
+| **`kubectl rollout status`** | Yangilanish tugadimi yoki qotib qoldimi |
+| **`kubectl rollout undo`** | Oldingi revizyaga qaytish |
+| **Revision** | Deployment shablonining versiya raqami |
+| **`maxSurge` / `maxUnavailable`** | Yangilanish paytidagi qo'shimcha va yo'q Pod'lar chegarasi |
+
+## 🔗 Manbalar
+
+- [Updating a Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment)
+- [kubectl rollout](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#rollout)
+- [Rolling Back a Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment)
+
+---
+⬅️ [Oldingi dars](lesson2.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson4.md](lesson4.md)

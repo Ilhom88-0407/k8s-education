@@ -1,4 +1,10 @@
-### NodeJS dasturi uchun Dockerfile yaratish
+# NodeJS ilovasi uchun Dockerfile yozish
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Dockerfile buyruqlari: FROM, WORKDIR, COPY, RUN, EXPOSE, CMD
+> - Qatlamlar tartibi build tezligiga qanday ta'sir qiladi
+> - Nima uchun base image versiya tegi bilan yoziladi
+> - Image'ni qurish va Docker Hub'ga yuklash
 Dockerfile yaratamiz. Dockerfile bu bizning dasturimiz uchun Docker image yaratish uchun kerak bo'lgan ko'rsatmalarni o'z ichiga olgan fayl. Biz Dockerfile ni k8s-web-hello papkasida yaratamiz va unga quyidagi kodni yozamiz:
 ```bash
 root@test-server-k8s-1:~# nano Dockerfile
@@ -63,3 +69,131 @@ docker push <dockerhub_username>/k8s-web-hello:*
 yoki 
 docker push <dockerhub_username>/k8s-web-hello --all-tags
 ```
+
+## ⚠️ Darsdagi Dockerfile eskirgan
+
+Yuqorida `FROM node:18` yozilgan. **Node.js 18 qo'llab-quvvatlashdan
+chiqqan** — unga xavfsizlik yangilanishlari kelmaydi.
+
+`amaliyot/` dagi tayyor fayl yangilangan:
+
+> 📁 [`amaliyot/k8s-web-hello/Dockerfile`](amaliyot/k8s-web-hello/Dockerfile)
+
+```dockerfile
+FROM node:22-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+COPY . ./
+
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+Uchta farq bor:
+
+| Nima o'zgardi | Nima uchun |
+|---|---|
+| `node:18` → `node:22-alpine` | 18 eskirgan; `alpine` variant ~10 barobar kichik |
+| `npm install` → `npm ci --omit=dev` | `ci` lockfile'ga qat'iy amal qiladi — build takrorlanadigan bo'ladi |
+| `COPY package*.json` avval, kod keyin | Kod o'zgarganda `npm ci` qatlami kesh'dan olinadi |
+
+## Qatlamlar keshi — nima uchun tartib muhim
+
+Docker har buyruqni alohida **qatlam** qilib saqlaydi. Qatlam o'zgarmasa,
+u kesh'dan olinadi.
+
+```dockerfile
+COPY package.json package-lock.json ./   # kamdan-kam o'zgaradi
+RUN npm ci --omit=dev                    # -> kesh'dan olinadi
+COPY . ./                                # har o'zgarishda yangilanadi
+```
+
+Agar `COPY . ./` ni yuqoriga qo'ysangiz, kodning bitta harfini
+o'zgartirganingizda ham `npm ci` boshidan ishlaydi — bu har build'da
+qo'shimcha daqiqalar.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 20 daqiqa.
+
+**1-topshiriq · oson.** Image'ni qurib, hajmini o'lchang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+cd amaliyot/k8s-web-hello
+docker build -t k8s-web-hello:1.0.3 .
+docker images k8s-web-hello
+```
+</details>
+
+**2-topshiriq · o'rta.** `node:22-alpine` va `node:22` bilan qurib,
+hajmlarni solishtiring.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+docker images | grep k8s-web-hello
+# alpine ~150 MB, to'liq variant ~1.1 GB atrofida
+```
+</details>
+
+**3-topshiriq · qiyin.** `COPY . ./` ni `RUN npm ci` dan **oldinga**
+ko'chiring va kodni o'zgartirib qayta quring. **Avval ayting:** build
+tezroqmi yoki sekinroq?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+time docker build -t sinov .
+# Sekinroq: npm ci endi har safar boshidan ishlaydi
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** `EXPOSE 3000` portni ochadimi?
+**Javob:** Yo'q. U faqat hujjat — "bu konteyner shu portda tinglaydi".
+Portni ochish uchun `docker run -p 3000:3000` yoki Kubernetes'da Service kerak.
+
+**Savol:** `CMD` va `ENTRYPOINT` farqi nima?
+**Javob:** `CMD` — standart buyruq, `docker run` da uni almashtirish oson.
+`ENTRYPOINT` — doim bajariladigan qism, `CMD` unga argument bo'lib qo'shiladi.
+
+**Savol:** `alpine` variantida muammo bo'ladimi?
+**Javob:** Ba'zan. Alpine `musl` libc ishlatadi (`glibc` emas), shuning
+uchun ba'zi native modullar qayta kompilyatsiya talab qiladi.
+
+## 📌 CKA imtihon uchun maslahat
+
+CKA'da Docker image qurish so'ralmaydi — lekin `imagePullBackOff`
+nosozligi ko'p uchraydi. Sabablari: teg xato, registry xususiy va
+`imagePullSecrets` yo'q, yoki node'da tarmoq yo'q.
+
+```bash
+kubectl describe pod <nom> | grep -A5 Events
+```
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Image** | Ilova va uning muhitidan iborat o'zgarmas qolip |
+| **Konteyner** | Ishga tushirilgan image nusxasi |
+| **Dockerfile** | Image qanday qurilishini tasvirlovchi fayl |
+| **Registry** | Image'lar saqlanadigan omborxona (Docker Hub, GHCR, ECR) |
+| **Teg (tag)** | Image versiyasini bildiruvchi belgi: `:1.0.3` |
+| **Qatlam (layer)** | Dockerfile'ning har bir buyrug'i hosil qiladigan bo'lak |
+
+## 🔗 Manbalar
+
+- [Dockerfile reference](https://docs.docker.com/reference/dockerfile/)
+- [Images — kubernetes.io](https://kubernetes.io/docs/concepts/containers/images/)
+- [Node.js Docker best practices](https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md)
+
+---
+⬅️ [Oldingi dars](lesson1_2.md) · [Bo'lim indeksi](README.md) · ➡️ [lesson4.md](lesson4.md)

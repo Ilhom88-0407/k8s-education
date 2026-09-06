@@ -1,4 +1,9 @@
 # Yaratgan servisimizdan foydalanish uchun DNS nomidan foydalanishimiz mumkin. Bizning servisimizning nomi nginx va u default namespace'da joylashgan, shuning uchun biz unga nginx deb murojaat qilishimiz mumkin.
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Service'ga DNS nomi orqali murojaat qilish
+> - Qisqa nom va to'liq FQDN farqi
+> - DNS ishlayotganini tekshirish
 ```bash
 kubectl get svc nginx
 ```
@@ -49,4 +54,45 @@ security features and capabilities please refer to
 ```
 Bu yerda biz nginx servisining IP manzilini ko'rishimiz mumkin, bulardan foydalanib servisimizga murojaat qilishimiz mumkin. Bu yerda biz nginx servisining IP manzilini ko'rishimiz mumkin, bulardan foydalanib servisimizga murojaat qilishimiz mumkin.
 
+## 🧪 Mustaqil topshiriq
 
+**Topshiriq.** Shu darsdagi buyruqlarni o'z klasteringizda qaytaring va
+natijani `kubectl get all` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deploy,svc,pods -o wide
+```
+</details>
+
+📁 Tayyor fayllar: [`amaliyot/`](amaliyot/)
+
+## ❓ Savol-Javob
+
+**Savol:** `kubectl apply -f` ga bir necha faylni birdan berish mumkinmi?
+**Javob:** Ha: `kubectl apply -f a.yaml -f b.yaml`. Butun papkani ham:
+`kubectl apply -f amaliyot/`.
+
+**Savol:** Bitta faylda bir necha obyekt bo'lishi mumkinmi?
+**Javob:** Ha. Ular `---` qatori bilan ajratiladi. Bu bog'liq obyektlarni
+(Service + Deployment) birga saqlashda qulay.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Service DNS nomi** | Klaster ichida servisga murojaat qilish uchun nom |
+| **ClusterIP** | Faqat klaster ichidan ko'rinadigan Service turi |
+| **CoreDNS** | Service nomlarini IP'ga aylantiruvchi klaster DNS serveri |
+| **FQDN** | `<servis>.<namespace>.svc.cluster.local` — to'liq nom |
+| **Ko'p hujjatli YAML** | Bitta faylda `---` bilan ajratilgan bir necha obyekt |
+
+## 🔗 Manbalar
+
+- [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+- [Connecting Applications with Services](https://kubernetes.io/docs/tutorials/services/connect-applications-service/)
+- [Service — kubernetes.io](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+---
+⬅️ [Bo'lim indeksi](README.md) · ➡️ [lesson6.md](lesson6.md)

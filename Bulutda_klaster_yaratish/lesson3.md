@@ -1,4 +1,8 @@
 # LoadBalancer servisiga publik IP manzilini tayinlash
+
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - Bulutda LoadBalancer servis haqiqiy tashqi IP olishi
+> - Tashqi IP'ni tekshirish va ilovaga kirish
 Kubernetes klasterida LoadBalancer turidagi servis yaratganingizda, odatda bulut provayderi avtomatik ravishda publik IP manzilini tayinlaydi. Biroq, ba'zi hollarda siz o'zingizning IP manzilingizni belgilashni xohlashingiz mumkin. Bu holatda, siz LoadBalancer servisining `loadBalancerIP` maydonini ishlatishingiz mumkin.  Quyidagi misolda, `my-loadbalancer-service` nomli LoadBalancer turidagi servis yaratilmoqda va unga `194.107.115.75` IP manzili tayinlanadi:
 
 ```yaml
@@ -128,3 +132,47 @@ NAT qoidalari:
 
 > 📅 **2026-yil 13-may** · Klaster: kubeadm v1.35.4 · Public IP: 194.107.115.75
 # Kubernetes LoadBalancer Bare-Metal Klasterda
+
+## 🧪 Mustaqil topshiriq
+
+**Topshiriq.** LoadBalancer servis yarating va `EXTERNAL-IP` to'lishini
+kuting (odatda 1-3 daqiqa).
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get svc -w
+# EXTERNAL-IP <pending> dan haqiqiy IP ga o'zgaradi
+```
+</details>
+
+## ❓ Savol-Javob
+
+**Savol:** `EXTERNAL-IP` juda uzoq `<pending>` turibdi.
+**Javob:** Bulutda odatda 1-3 daqiqa. Uzoq davom etsa: kvota tugagan
+bo'lishi mumkin yoki provayder LoadBalancer'ni qo'llab-quvvatlamaydi.
+`kubectl describe svc <nom>` dagi Events'ni o'qing.
+
+**Savol:** LoadBalancer'ni o'chirsam, bulutdagi resurs ham o'chadimi?
+**Javob:** Ha, Service o'chirilganda provayder balanslovchini ham
+o'chiradi. Lekin tekshirib turing — hisobingizda unutilgan balanslovchi
+qolib ketmasin.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Managed Kubernetes** | Bulut provayderi control plane'ni o'zi boshqaradigan xizmat |
+| **Node pool** | Bir xil sozlamali worker node'lar guruhi |
+| **kubeconfig** | Klasterga ulanish ma'lumotlari saqlanadigan fayl |
+| **Kontekst (context)** | kubeconfig ichidagi "qaysi klaster + qaysi foydalanuvchi" juftligi |
+| **NAT** | Ichki manzillarni tashqi IP orqali ko'rsatuvchi tarmoq mexanizmi |
+
+## 🔗 Manbalar
+
+- [Kubernetes on Cloud Providers](https://kubernetes.io/docs/setup/production-environment/turnkey-solutions/)
+- [Organizing Cluster Access Using kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
+- [DigitalOcean Kubernetes](https://docs.digitalocean.com/products/kubernetes/)
+
+---
+⬅️ [Oldingi dars](lesson2.md) · [Bo'lim indeksi](README.md) · ➡️ [k8s-public-ip-qollanma.md](k8s-public-ip-qollanma.md)
