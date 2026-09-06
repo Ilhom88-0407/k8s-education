@@ -1,6 +1,6 @@
-# Web dasturlar yaratsih
+# Web dasturlar yaratish
 ## Kerakli bo'lgan dasturlarni o'rnatish
-Xozir biz NodeJS dasturini o'rnatamiz. NodeJS bu JavaScript dasturlash tilida yozilgan server tomon dasturlarni yaratish uchun ishlatiladigan platformadir. 
+Hozir biz NodeJS dasturini o'rnatamiz. NodeJS bu JavaScript dasturlash tilida yozilgan server tomon dasturlarni yaratish uchun ishlatiladigan platformadir. 
 
 ### NodeJS dastur yordamida Web server yaratish va ishga tushurish
 
@@ -17,7 +17,7 @@ root@test-server-k8s-1:~# npm --version
 9.2.0
 ```
 Endi k8s-web-hello nomli papka yaratib olamiz. 
-va cli daquidagi komandani bajaramiz:
+va cli da quyidagi komandani bajaramiz:
 ```bash
 mkdir k8s-web-hello
 cd k8s-web-hello
@@ -64,7 +64,7 @@ app.listen(PORT, () => {
   console.log(`Web server is listening at port ${PORT}`)
 })
 ```
-Ushbu index.mjs faylida biz express kutubxonasini import qilamiz va web server yaratamiz. Bizning web serverimiz 3000 portda ishlaydi va serverga ulanngan xar bir foydalanuvchiga "Hello from the [hostname]"  xaqida xabar yuboradi.
+Ushbu index.mjs faylida biz express kutubxonasini import qilamiz va web server yaratamiz. Bizning web serverimiz 3000 portda ishlaydi va serverga ulanngan xar bir foydalanuvchiga "Hello from the [hostname]"  haqida xabar yuboradi.
 
 Endi biz serverni ishga tushiramiz:
 ```bash

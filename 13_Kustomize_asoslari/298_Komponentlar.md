@@ -129,7 +129,7 @@ Endi eng oson qismi. Dev varianti tashqi baza feature'ini ishlatadi — demak `d
 
 ```yaml
 # k8s/overlays/dev/kustomization.yaml
-bases:
+resources:
   - ../../base             # odatdagi base import
 
 components:
@@ -140,7 +140,7 @@ Premium ikkala feature'ni oladi:
 
 ```yaml
 # k8s/overlays/premium/kustomization.yaml
-bases:
+resources:
   - ../../base
 
 components:
@@ -152,7 +152,7 @@ Self-hosted faqat caching oladi:
 
 ```yaml
 # k8s/overlays/standalone/kustomization.yaml
-bases:
+resources:
   - ../../base
 
 components:

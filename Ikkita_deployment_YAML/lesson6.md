@@ -9,9 +9,10 @@ Bu buyruqni bajarishimiz bilan biz deploymentni tahrirlash uchun editor ochiladi
 spec:
   replicas: 3
 ```
-Shu bilan birga deploymnt k8s-web-to-nginx.yaml faylida ham podlarni sonini 3 ga o'zgartiramiz va saqlaymiz.
+Shu bilan birga deployment k8s-web-to-nginx.yaml faylida ham podlarni sonini 3 ga o'zgartiramiz va saqlaymiz.
 
-```yamlspec:
+```yaml
+spec:
   replicas: 3
 ``` 
 
@@ -36,4 +37,4 @@ Yuqoridagi buyruqni bajarishimiz bilan biz clusterimizda mavjud bo'lgan deployme
 ```bash
 kubectl get pods
 ```
-Yuqoridagi buyruqни bajarishimiz bilan biz clusterimizda mavjud bo'lgan podlarni ko'ra olamiz. Bu buyruqни bajarishimiz bilan biz k8s-web-to-nginx deploymentiga tegishli podlarni va ularning holatini ko'ra olamiz.
+Yuqoridagi buyruqni bajarishimiz bilan biz clusterimizda mavjud bo'lgan podlarni ko'ra olamiz. Bu buyruqni bajarishimiz bilan biz k8s-web-to-nginx deploymentiga tegishli podlarni va ularning holatini ko'ra olamiz.

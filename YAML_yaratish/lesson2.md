@@ -1,8 +1,8 @@
-# YAML faylning kubernetis klastorida qo'llanilishi
+# YAML faylning Kubernetes klasterida qo'llanilishi
 
-Kubernetis klastorida `Deployment` yaratish uchun `YAML` fayl yaratishni o'rganishga mo'ljallangan.
-Xozirda biz yaratgan <deployment.yaml> fayli mavjud va biz uni kubernetes klasterida ishga tushiramiz:
-buning uchun quidagi buyruqni ishlatamiz:
+Kubernetes klasterida `Deployment` yaratish uchun `YAML` fayl yaratishni o'rganishga mo'ljallangan.
+Hozirda biz yaratgan <deployment.yaml> fayli mavjud va biz uni kubernetes klasterida ishga tushiramiz:
+buning uchun quyidagi buyruqni ishlatamiz:
 
 ```bash
 kubectl apply -f deployment.yaml
@@ -62,13 +62,13 @@ Events:
   ----    ------             ----  ----                   -------
   Normal  ScalingReplicaSet  46s   deployment-controller  Scaled up replica set k8s-web-hello-7c47cb8cd8 from 0 to 5
 ```
-bu yerda biz deploymentni kubernetis klastorida yaratdik va uning holatini tekshirib oldik.
+bu yerda biz deploymentni Kubernetes klasterida yaratdik va uning holatini tekshirib oldik.
 
-Agarda biz yaml fayilida o'zgartirishlar kiritgan bo'lsak quidagi buyruqni ishlatamiz:
+Agarda biz yaml fayilida o'zgartirishlar kiritgan bo'lsak quyidagi buyruqni ishlatamiz:
 ```bash 
-kubectl applay -f deployment.yaml
+kubectl apply -f deployment.yaml
 ```
-misol uchun bizning `deployment.yaml` faylida <replicas: 5> ni <replicas: 10> ga <image: mrpocker88/k8s-web-hello:1.0.2> ni esa <image: mrpocker88/k8s-web-hello:1.0.3> ga o'zgartirdik va uni kubernetis klastorida yaratishimiz mumkin.
+misol uchun bizning `deployment.yaml` faylida <replicas: 5> ni <replicas: 10> ga <image: mrpocker88/k8s-web-hello:1.0.2> ni esa <image: mrpocker88/k8s-web-hello:1.0.3> ga o'zgartirdik va uni Kubernetes klasterida yaratishimiz mumkin.
 Edi bo'lsa analiz qilib ko'ramiz o'zgarishlarni
 ```bash
 root@test-server-k8s-1:~# kubectl apply -f deployment.yaml

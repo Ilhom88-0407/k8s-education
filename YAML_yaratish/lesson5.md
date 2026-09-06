@@ -1,10 +1,10 @@
 ### Web interfacelik dashbor servisi
-agar siz minikube ishlatayotgan bo'lsandiz quidagi buyruqni ishlatishingiz mumkin:
+agar siz minikube ishlatayotgan bo'lsandiz quyidagi buyruqni ishlatishingiz mumkin:
 ```bash
 minikube dashboard
 ```
-va siz ekraningizda quidagi ma'lumotni ko'rishingiz mumkin.
-![alt text](image-2.png)
+va siz ekraningizda quyidagi ma'lumotni ko'rishingiz mumkin.
+![minikube dashboard buyrug'ining chiqishi: dashboard va metrics-scraper image'lari yuklanmoqda, so'ng proxy ishga tushirilmoqda](image-2.png)
 
 Kubernetes Dashboard-ni ishga tushirish qo'llanmasi
 Kubernetes-da grafik interfeysni (Dashboard) ishga tushirish uchun (agar siz minikube ishlatmayotgan bo'lsangiz), uni alohida o'rnatish va kirish huquqini sozlash kerak. Quyida buni amalga oshirishning qadamma-qadam yo'riqnomasi keltirilgan.
@@ -69,10 +69,10 @@ Token bilan kirish
 ```bash
 kubectl -n kubernetes-dashboard create token admin-user
 ```
-![alt text](image-3.png)
+![kubectl patch svc bilan kubernetes-dashboard servisi NodePort turiga o'tkazildi (443:31560/TCP), keyin kubectl create token admin-user buyrug'i kirish uchun JWT token chiqardi](image-3.png)
 Dashboard-ga quyidagi havola orqali kirishingiz mumkin:
 
-![alt text](image-4.png)
+![Kubernetes Dashboard'ning Workloads sahifasi: 1 ta Deployment, 10 ta Pod va 2 ta ReplicaSet ishlayapti; quyida k8s-web-hello deployment'i mrpocker88/k8s-web-hello:1.0.2 image'i bilan 10/10 pod holatida](image-4.png)
 
 
 Minikube va oddiy Kubernetes o'rtasidagi farqlar:

@@ -1,4 +1,4 @@
-# Endi bo'lsa biz yaratgan deploymant uchun service yaratamiz va podlarni sonini5 ga ko'paytiramiz (scaling):
+# Endi bo'lsa biz yaratgan deployment uchun service yaratamiz va podlarni sonini5 ga ko'paytiramiz (scaling):
 ```bash
 kubectl expose deployment k8s-web-hello --type=LoadBalancer --port=3333 --target-port=3000
 service/k8s-web-hello exposed
@@ -7,7 +7,7 @@ Servis ishga tushganini tekshirish uchun quyidagi buyruqni bajarishimiz kerak:
 ```bash
 kubectl get services
 ```
-endi bo'lsa biz deploymantni scaling qilamiz, ya'ni podlar sonini 5 ga ko'paytiramiz:
+endi bo'lsa biz deployment'ni scaling qilamiz, ya'ni podlar sonini 5 ga ko'paytiramiz:
 ```bash
 kubectl scale deployment k8s-web-hello --replicas=5
 deployment.apps/k8s-web-hello scaled

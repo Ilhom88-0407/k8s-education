@@ -29,8 +29,11 @@ obraz	image
 # --- Mavjud bo'lmagan yoki eskirgan buyruqlar ---
 kubectl applay	kubectl apply
 kubectl ger	kubectl get
-kubectl ssh	kubectl debug node/<nom> yoki minikube ssh
-kubectl create -f	kubectl apply -f
 
-# --- Eskirgan API/sintaksis ---
-bases:	resources: (Kustomize'da bases: olib tashlangan)
+# --- FAQAT KOD BLOKIDA taqiqlanadi ---
+# Bu yozuvlarni dars PROZADA nomlashi mumkin ("bases: eskirgan, ishlatmang"),
+# lekin kod blokida ular o'quvchi ko'chirib ishlatadigan buyruqqa aylanadi.
+# Shuning uchun ular faqat ``` ichida tekshiriladi.
+KOD	kubectl ssh	kubectl debug node/<nom> yoki minikube ssh
+KOD	kubectl create -f	kubectl apply -f
+KOD	bases:	resources: (Kustomize v5 da bases: olib tashlangan)

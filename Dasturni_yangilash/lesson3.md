@@ -1,5 +1,5 @@
 ## Klein endi yaratilgan deploymentni analiz qilib chiqamiz.
-Analiz uchun quidagi komandadan foydalanamiz:
+Analiz uchun quyidagi komandadan foydalanamiz:
 ```
 root@test-server-k8s-1:~# kubectl describe deployment k8s-web-hello
 Name:                   k8s-web-hello

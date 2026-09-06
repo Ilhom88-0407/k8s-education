@@ -30,7 +30,7 @@ complete -o default -F __start_kubectl k   # alias uchun ham avtoto'ldirish
 
 ---
 
-## ### Masala 1 — Pod Pending: scheduler manifestida buyruq xato
+## Masala 1 — Pod Pending: scheduler manifestida buyruq xato
 
 **Muammo:** klaster "buzilgan" — ilova deploy qilingan, lekin ishlamayapti.
 
@@ -83,7 +83,7 @@ kubectl get deploy                        # app 1/1 Ready
 
 ---
 
-## ### Masala 2 — Scale ishlamayapti: controller-manager'da kubeconfig yo'li xato
+## Masala 2 — Scale ishlamayapti: controller-manager'da kubeconfig yo'li xato
 
 **Muammo:** avval topshiriq bo'yicha deployment'ni 2 ta replikaga oshiramiz:
 
@@ -143,7 +143,7 @@ kubectl get deploy                        # 2/2 Ready
 
 ---
 
-## ### Masala 3 — Yana scale ishlamayapti: volume'dagi hostPath noto'g'ri
+## Masala 3 — Yana scale ishlamayapti: volume'dagi hostPath noto'g'ri
 
 **Muammo:** deployment 3 replikaga scale qilingan, lekin pod'lar 2 ta ligicha qolgan (`kubectl get deploy` → `2/3`).
 

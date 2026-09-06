@@ -1,5 +1,5 @@
 Bundan oldingi darsda biz ClusterIP turidagi servis yaratgan edik. Bu safar esa NodePort turidagi servis yaratamiz. NodePort turidagi servis, klaster ichidagi podlarga tashqi dunyo orqali kirish imkonini beradi. 
-Ularning faqrini quida ko'rishingiz mumkin:
+Ularning farqini quida ko'rishingiz mumkin:
 ```
 Bu 'NodePort' turidagi servisning holati:
 root@test-server-k8s-1:~# kubectl get service
@@ -49,11 +49,11 @@ nginx-deploy   NodePort    10.97.78.89   <none>        8080:30690/TCP   9s
 ```
 Bu yerda `nginx-deploy` servisi NodePort turida yaratilganligini va tashqi dunyo orqali 30690 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
 
-`nginx-deploy` xaqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
+`nginx-deploy` haqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
 ```
 kubectl describe service nginx-deploy -n default
 ```
-bu  yesda biz quidagi ma'lumotlarni ko'rishimiz mumkin:
+bu  yesda biz quyidagi ma'lumotlarni ko'rishimiz mumkin:
 ```
 root@test-server-k8s-1:~# kubectl get service
 NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
@@ -79,7 +79,7 @@ External Traffic Policy:  Cluster
 Internal Traffic Policy:  Cluster
 Events:                   <none>
 ```
-Bu yerda `kubectl describe service nginx-deploy -n default` buyruq yordamida `nginx-deploy` servisining batafsil ma'lumotlarini ko'rishingiz mumkin. Bu, masalan, servisning turlarini tekshirish yoki uning qaysi podlarga bog'langanligini ko'rish uchun foydalidir. Bu yerda `Endpoints` qismida servisning bog'langan podlarning IP manzillari va po'rtlari ko'rsatilgan. Bu, masalan, servisning qaysi podlarga bog'langanligini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rsatadi.
+Bu yerda `kubectl describe service nginx-deploy -n default` buyruq yordamida `nginx-deploy` servisining batafsil ma'lumotlarini ko'rishingiz mumkin. Bu, masalan, servisning turlarini tekshirish yoki uning qaysi podlarga bog'langanligini ko'rish uchun foydalidir. Bu yerda `Endpoints` qismida servisning bog'langan podlarning IP manzillari va portlari ko'rsatilgan. Bu, masalan, servisning qaysi podlarga bog'langanligini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rsatadi.
 
 ## ClusterIP va NodePort turidagi servislarni taqqoslash
 ClusterIP va NodePort turidagi servislarni taqqoslash uchun quyidagi jadvalni ko'rishingiz mumkin:

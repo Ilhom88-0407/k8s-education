@@ -1,5 +1,5 @@
 # Ikkita deployment yaratish plani
-a![alt text](image.png)
+![Ikki deployment sxemasi: tashqi IP LoadBalancer orqali k8s-web-to-nginx podiga kiradi; o'sha pod /nginx yo'liga so'rov kelganda ikkinchi ClusterIP servis orqali nginx podiga murojaat qiladi va javobni qaytaradi](image.png)
 - bu rasmda bi 2 ta deployment yaratilganligini ko'rishimiz mumkin
 1. deployment <k8s-web-to-ngnix>
 -- bu yerda bizda 2 ta derektoriya bo'ladi 

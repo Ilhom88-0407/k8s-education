@@ -4,7 +4,7 @@ Podlarni qayta yaratish va o'chirish uchun quyidagi buyruqlarni ishlatishingiz m
 kubectl delete pod <pod-name> -n <namespace>
 kubectl apply -f <pod-definition.yaml>
 ``` 
-Bu buyruqlar yordamida siz podlarni o'chirib, ularni yangilangan konfiguratsiya bilan qayta yaratishingiz mumkin. Bu, masalan, yangi imidj versiyasini sinash yoki resurslarni yangilash uchun foydalidir.
+Bu buyruqlar yordamida siz podlarni o'chirib, ularni yangilangan konfiguratsiya bilan qayta yaratishingiz mumkin. Bu, masalan, yangi image versiyasini sinash yoki resurslarni yangilash uchun foydalidir.
 ### Podlarni ko'rish
 Podlarni ko'rish uchun quyidagi buyruqlarni ishlatishingiz mumkin:
 ``` 

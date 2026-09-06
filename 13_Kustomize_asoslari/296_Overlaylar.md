@@ -3,7 +3,7 @@
 > 🎯 **Bu darsda nimani o'rganamiz:**
 > - Kustomize'ning asosiy vazifasi: base + overlay arxitekturasi
 > - `base/` va `overlays/dev|staging|production` katalog tuzilishi
-> - `bases:` orqali base konfiglarni import qilish va patch berish
+> - `resources:` orqali base konfiglarni import qilish va patch berish
 > - Overlay'da yangi (base'da yo'q) resurslar qo'shish
 
 ## Hayotiy o'xshatish
@@ -74,13 +74,13 @@ spec:
   ...
 ```
 
-## Overlay kustomization.yaml — bases va patchlar
+## Overlay kustomization.yaml — resources va patchlar
 
 Qiziq narsalar overlay'da boshlanadi. `dev` papkasidagi fayl:
 
 ```yaml
 # k8s/overlays/dev/kustomization.yaml
-bases:
+resources:
   - ../../base       # base katalogiga nisbiy yo'l
 
 patches:
@@ -93,7 +93,7 @@ patches:
         replicas: 2   # dev uchun qiymat
 ```
 
-Yangi narsa — **`bases:`** xususiyati. U "base konfiglar qayerda?" degan savolga **nisbiy yo'l** (relative path) bilan javob beradi:
+Yangi narsa — **`resources:`** ichida katalogga yo'l ko'rsatish. U "base konfiglar qayerda?" degan savolga **nisbiy yo'l** (relative path) bilan javob beradi:
 
 - `../` — bir katalog yuqoriga chiqish degani;
 - biz `dev/` ichidamiz → `../` bizni `overlays/` ga chiqaradi → yana `../` bizni `k8s/` ga chiqaradi → `base` — base katalogiga kiramiz. Jami: `../../base`.
@@ -104,7 +104,7 @@ Production uchun ham xuddi shunday, faqat qiymat boshqa:
 
 ```yaml
 # k8s/overlays/production/kustomization.yaml
-bases:
+resources:
   - ../../base
 
 patches:
@@ -125,10 +125,8 @@ Muhim nuqta: overlay faqat patchlardan iborat bo'lishi shart emas. Overlay papka
 
 ```yaml
 # k8s/overlays/production/kustomization.yaml
-bases:
-  - ../../base
-
 resources:
+  - ../../base          # base katalogi
   - grafana-depl.yaml   # faqat shu muhitda bor yangi resurs
 
 patches:
@@ -164,11 +162,14 @@ Yagona shart: har bir `kustomization.yaml` o'z resurslarini to'g'ri import qilsi
 
 ## ❓ Savol-Javob
 
-**Savol:** `bases: ../../base` dagi `../../` nima degani?
+**Savol:** `resources: ../../base` dagi `../../` nima degani?
 **Javob:** Nisbiy yo'l: har bir `../` bir katalog yuqoriga chiqishni bildiradi. `dev/` dan ikki pog'ona yuqoriga (`overlays/` → `k8s/`) chiqib, `base/` katalogiga kiriladi.
 
 **Savol:** Overlay'da base'da bo'lmagan yangi resurs qo'shsam bo'ladimi?
-**Javob:** Ha! Overlay papkasiga yangi YAML qo'yib, `resources:` orqali import qilasiz. U faqat shu muhitda deploy bo'ladi (masalan, faqat production'dagi Grafana).
+**Javob:** Ha! Overlay papkasiga yangi YAML qo'yib, uni ham shu `resources:` ro'yxatiga qo'shasiz — base katalogi bilan yonma-yon. U faqat shu muhitda deploy bo'ladi (masalan, faqat production'dagi Grafana).
+
+**Savol:** Eski qo'llanmalarda `bases:` degan xususiyatni ko'rdim. U nima?
+**Javob:** `bases:` — `resources:` ning eski, alohida varianti edi. Kustomize v5 (2023) da u **butunlay olib tashlandi**. kubectl 1.27 va undan yuqorisi o'zida kustomize v5 ni olib yuradi, shuning uchun `bases:` bilan yozilgan fayl bugun `error: json: unknown field "bases"` xatosini beradi. Eski loyihani uchratsangiz — `bases:` ostidagi yo'llarni `resources:` ro'yxatiga ko'chiring, boshqa hech narsa o'zgarmaydi.
 
 **Savol:** Overlay uchun qandaydir yangi patch sintaksisi bormi?
 **Javob:** Yo'q. Overlay — bu oddiy `kustomization.yaml`: base'ni import qiladi va oldin o'rgangan JSON 6902 yoki strategic merge patchlarimizni qo'llaydi.
@@ -178,7 +179,9 @@ Yagona shart: har bir `kustomization.yaml` o'z resurslarini to'g'ri import qilsi
 
 ## 📌 CKA imtihon uchun maslahat
 
-Imtihonda tayyor base/overlays loyihasi berilishi mumkin. Muhitga o'zgarish kiritish so'ralsa — base'ni EMAS, tegishli overlay'ning `kustomization.yaml` faylini tahrirlang (base'dagi o'zgarish barcha muhitlarga ta'sir qiladi!). Deploy uchun `kubectl apply -k <overlay-katalogi>` ishlating. Eslatma: `bases:` eski, lekin ishlaydigan sintaksis; yangi versiyalarda uni `resources:` ichida ham yozish mumkin (`resources: [../../base]`).
+Imtihonda tayyor base/overlays loyihasi berilishi mumkin. Muhitga o'zgarish kiritish so'ralsa — base'ni EMAS, tegishli overlay'ning `kustomization.yaml` faylini tahrirlang (base'dagi o'zgarish barcha muhitlarga ta'sir qiladi!). Deploy uchun `kubectl apply -k <overlay-katalogi>` ishlating.
+
+⚠️ **Faqat `resources:` yozing.** Eski `bases:` xususiyati Kustomize v5 da olib tashlangan va imtihon muhitidagi kubectl'da xato beradi. Agar `unknown field "bases"` xatosini ko'rsangiz — o'sha yo'llarni `resources:` ga ko'chiring.
 
 ## 📖 Asosiy atamalar
 
@@ -186,7 +189,8 @@ Imtihonda tayyor base/overlays loyihasi berilishi mumkin. Muhitga o'zgarish kiri
 |---|---|
 | Base | Barcha muhitlar uchun umumiy va default Kubernetes konfiglar to'plami |
 | Overlay | Bitta muhitning base'dan farqlarini (patchlar, qo'shimcha resurslar) saqlovchi qatlam |
-| `bases:` | Overlay'da base katalogiga yo'l ko'rsatuvchi xususiyat |
+| `resources:` | Import qilinadigan fayl va kataloglar ro'yxati; overlay'da base katalogiga yo'l shu yerda ko'rsatiladi |
+| `bases:` (eskirgan) | `resources:` ning eski varianti. Kustomize v5 da olib tashlangan — ishlatilmaydi |
 | Nisbiy yo'l (relative path) | Joriy fayldan boshlab hisoblanadigan yo'l; `../` — bir pog'ona yuqoriga |
 | Environment (muhit) | Ilova ishlaydigan alohida sharoit: dev, staging, production |
 

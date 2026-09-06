@@ -1,5 +1,5 @@
 ## ClusterIP va servis yaratamiz.
-Bizda xozir nginx-deploy nomli deploymant mavjud va biz unga bog'langan servis yaratamiz. Servis yaratish uchun quyidagi buyruqni ishlatamiz:
+Bizda hozir nginx-deploy nomli deployment mavjud va biz unga bog'langan servis yaratamiz. Servis yaratish uchun quyidagi buyruqni ishlatamiz:
 ```
 root@test-server-k8s-1:~# kubectl expose deploy nginx-deploy --port=8080 --target-port=80
 service/nginx-deploy exposed  ## yu servis to'g'ri yaratilganligini bildiradi.

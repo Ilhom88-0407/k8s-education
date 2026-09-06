@@ -1,5 +1,5 @@
-### Nginx deploymentni mashtablash bo'yicha yakuniy qo'llanma
-Biz sizlar bilan Nginx deployment yaratdik va uni Kubernetes klasterida ishga tushirdik. xozir esa ushbu deploymentni ko'rib chiqamiz.
+### Nginx deploymentni masshtablash bo'yicha yakuniy qo'llanma
+Biz sizlar bilan Nginx deployment yaratdik va uni Kubernetes klasterida ishga tushirdik. hozir esa ushbu deploymentni ko'rib chiqamiz.
 ```
 root@test-server-k8s-1:~# kubectl get deployments
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
@@ -45,7 +45,7 @@ kubectl delete pod <pod-name> -n <namespace>
 misol uchun:
 kubectl delete pod nginx-deploy-5c689d4b9f-5l6j8 -n default
 ```
-Bu buyruq yordamida siz `nginx-deploy-5c689d4b9f-5l6j8` nomli podni o'chirishingiz mumkin. Bu, masalan, deploymantning yangilanishini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rish uchun foydalidir. O'chirilgan pod avtomatik ravishda deploymant tomonidan yangilari bilan almashtiriladi, bu esa deploymantning doimiy ravishda ishlashini ta'minlaydi.
+Bu buyruq yordamida siz `nginx-deploy-5c689d4b9f-5l6j8` nomli podni o'chirishingiz mumkin. Bu, masalan, deployment'ning yangilanishini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rish uchun foydalidir. O'chirilgan pod avtomatik ravishda deployment tomonidan yangilari bilan almashtiriladi, bu esa deployment'ning doimiy ravishda ishlashini ta'minlaydi.
 ## Natijani bu yerda ko'rishingiz mumkin: 
 ```
 root@test-server-k8s-1:~# kubectl get pods -n default

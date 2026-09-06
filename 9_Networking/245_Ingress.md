@@ -203,7 +203,7 @@ spec:
 Yaratamiz va tekshiramiz:
 
 ```bash
-kubectl create -f ingress-wear.yaml
+kubectl apply -f ingress-wear.yaml
 # ingress.networking.k8s.io/ingress-wear created
 
 kubectl get ingress
@@ -262,7 +262,7 @@ spec:
 ```
 
 ```bash
-kubectl create -f ingress-wear-watch.yaml
+kubectl apply -f ingress-wear-watch.yaml
 
 kubectl describe ingress ingress-wear-watch
 # Name:             ingress-wear-watch

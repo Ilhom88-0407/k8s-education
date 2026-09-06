@@ -1,6 +1,6 @@
 # K8S dokumentlari bilan ishlash
 # https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
-K8S bo'yicha barcha ma'limotlarni quidagi sayq orqali olsangiz bo'ladi:
+K8S bo'yicha barcha ma'limotlarni quyidagi sayq orqali olsangiz bo'ladi:
 ```
 https://kubernetes.io/ru/docs/home/
 ```
@@ -12,7 +12,7 @@ Deployment dokumentlari bilan ishlash:
 ``` 
 https://kubernetes.io/docs/concepts/workloads/controllers/deployments/
 ```
-bu yerda quidagi malimotlarni ko'rishimiz mumkin:
+bu yerda quyidagi malimotlarni ko'rishimiz mumkin:
 ```
 - apiVersion: apps/v1 - bu API versiyasi
 - kind: Deployment - bu Deployment tipi

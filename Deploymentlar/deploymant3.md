@@ -65,7 +65,7 @@ security features and capabilities please refer to
 </body>
 </html>
 ```
-POD lardagi IP manzillar kubernetis tomonidan avtomatik tarzda taqsimlanadi va ular klaster ichida noyob bo'ladi. Har bir POD o'zining IP manziliga ega bo'ladi, bu esa PODlarga to'g'ridan-to'g'ri murojaat qilish imkonini beradi. Biroq, tashqaridan kirish uchun siz Service yoki Ingress resurslarini yaratishingiz kerak bo'ladi.
+POD lardagi IP manzillar Kubernetes tomonidan avtomatik tarzda taqsimlanadi va ular klaster ichida noyob bo'ladi. Har bir POD o'zining IP manziliga ega bo'ladi, bu esa PODlarga to'g'ridan-to'g'ri murojaat qilish imkonini beradi. Biroq, tashqaridan kirish uchun siz Service yoki Ingress resurslarini yaratishingiz kerak bo'ladi.
 
 Klasterni ichidagi barcha 'nginx-deploy-75c8b7c74b' nomli PODlarga replika xisoblanadi va ular har doim bix vazifabi bajaradi, bu esa yuqoridagi misolda ko'rsatilganidek, har bir PODning IP manziliga to'g'ridan-to'g'ri murojaat qilish orqali tekshiriladi.
 

@@ -1,15 +1,15 @@
-# kubernetis service yaml fayl yaratish va ishga tushirish
+# Kubernetes service yaml fayl yaratish va ishga tushirish
 
-Kubernetis klastorida `Service` yaratish uchun `YAML` fayl yaratishni o'rganishga mo'ljallangan.
-Xozirda biz yaratgan <service.yaml> fayli mavjud va biz uni kubernetes klasterida ishga tushiramiz:
-buning uchun quidagi buyruqni ishlatamiz:
+Kubernetes klasterida `Service` yaratish uchun `YAML` fayl yaratishni o'rganishga mo'ljallangan.
+Hozirda biz yaratgan <service.yaml> fayli mavjud va biz uni kubernetes klasterida ishga tushiramiz:
+buning uchun quyidagi buyruqni ishlatamiz:
 ```bash
 kubectl apply -f service.yaml
 ```
 Bu buyruq yordamida siz kubernetes klasteriga `service` yaratishingiz mumkin.   
 Servis yaratish uchun quyidagi buyruqni ishlatishingiz mumkin:
 
-```VScode
+```yaml
 apiVersion: v1
 kind: Service
 metadata:

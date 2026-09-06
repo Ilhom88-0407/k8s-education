@@ -1,9 +1,9 @@
-## DigitalOcean’da Kubernetes Kluster Yaratish
-### 1. DigitalOcean’da hisob yaratish
+## DigitalOcean'da Kubernetes Klaster Yaratish
+### 1. DigitalOcean'da hisob yaratish
 Agar sizda DigitalOcean hisobingiz bo'lmasa, [DigitalOcean](https://www.digitalocean.com/) saytiga o'ting va ro'yxatdan o'ting. Hisob yaratish uchun elektron pochta manzilingiz va parol kerak bo'ladi.
 ![bu yerda ko'rishingiz mumkin](image.png)
 
-Birinchi bo'lib, biz o'zimizning kompyuterimizda kubectl o'rnatishimiz kerak. Kubectl - bu Kubernetes klusterlarini boshqarish uchun ishlatiladigan komanda qatori vositasi. Kubectl'ni o'rnatish uchun quyidagi buyruqni terminalga kiriting:
+Birinchi bo'lib, biz o'zimizning kompyuterimizda kubectl o'rnatishimiz kerak. Kubectl - bu Kubernetes klasterlarini boshqarish uchun ishlatiladigan komanda qatori vositasi. Kubectl'ni o'rnatish uchun quyidagi buyruqni terminalga kiriting:
 
 ```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -19,20 +19,20 @@ kubectl version --client
 ``` 
 Agar siz kubectl versiyasini ko'rsangiz, demak kubectl muvaffaqiyatli o'rnatilgan.
 
-## biz DigitalOceandagi kubernetes klusteriga ulanishimiz uchun quidagilarni bajarishimiz kerak:
+## biz DigitalOceandagi kubernetes klasteriga ulanishimiz uchun quyidagilarni bajarishimiz kerak:
 1. DigitalOcean hisobingizga kiring.
 2. "Kubernetes" bo'limiga o'ting.   
 3. "Create Kubernetes Cluster" tugmasini bosing.
-4. Kluster sozlamalarini tanlang
-5. Kluster nomini kiriting va kerakli konfiguratsiyani tanlang (masalan, kluster o'lchami, mintaqa, va boshqalar).
-6. "Create Cluster" tugmasini bosing va kluster yaratilishini kuting. Bu bir necha daqiqa davom etishi mumkin.
-7. Kluster yaratilgandan so'ng, "Kubeconfig" faylini yuklab oling. Bu fayl sizning klusterga ulanish uchun kerak bo'ladi.
+4. Klaster sozlamalarini tanlang
+5. Klaster nomini kiriting va kerakli konfiguratsiyani tanlang (masalan, klaster o'lchami, mintaqa, va boshqalar).
+6. "Create Cluster" tugmasini bosing va klaster yaratilishini kuting. Bu bir necha daqiqa davom etishi mumkin.
+7. Klaster yaratilgandan so'ng, "Kubeconfig" faylini yuklab oling. Bu fayl sizning klasterga ulanish uchun kerak bo'ladi.
 8. Terminalda quyidagi buyruqni kiriting va yuklab olingan kubeconfig faylini ko'rsating:
 
 ```bash
 export KUBECONFIG=~/.kube/config
 ```
-9. Endi siz kubectl yordamida klusterga ulanish va boshqarish imkoniyatiga egasiz. Masalan, klusterdagi tugunlarni ko'rish uchun quyidagi buyruqni kiriting:
+9. Endi siz kubectl yordamida klasterga ulanish va boshqarish imkoniyatiga egasiz. Masalan, klasterdagi tugunlarni ko'rish uchun quyidagi buyruqni kiriting:
 
 ```bash
 kubectl get nodes
@@ -62,24 +62,24 @@ k8s-web-to-nginx   LoadBalancer   10.96.157.129   <pending>     3333:30807/TCP  
 kubernetes         ClusterIP      10.96.0.1       <none>        443/TCP          8d
 nginx              ClusterIP      10.109.39.5     <none>        80/TCP           19h
 ```
-Shunday qilibz biz o'zimiznug windows terminalimizda kubectl yordamida klusterimizga ulanish va boshqarish imkoniyatiga egamiz. Endi siz klusteringizda podlarni yaratish, xizmatlarni boshqarish va boshqa Kubernetes resurslarini boshqarish uchun kubectl'ni ishlatishingiz mumkin.
-## DigitalOcean’da Kubernetes Kluster Yaratish va Public IP Qo'shish
-### 1-bosqich: Kluster yaratish
-DigitalOcean’da Kubernetes kluster yaratish uchun quyidagi amallarni bajaring:
+Shunday qilibz biz o'zimiznug windows terminalimizda kubectl yordamida klasterimizga ulanish va boshqarish imkoniyatiga egamiz. Endi siz klasteringizda podlarni yaratish, xizmatlarni boshqarish va boshqa Kubernetes resurslarini boshqarish uchun kubectl'ni ishlatishingiz mumkin.
+## DigitalOcean'da Kubernetes Klaster Yaratish va Public IP Qo'shish
+### 1-bosqich: Klaster yaratish
+DigitalOcean'da Kubernetes klaster yaratish uchun quyidagi amallarni bajaring:
 1. DigitalOcean hisobingizga kiring.
 2. "Kubernetes" bo'limiga o'ting.
 3. "Create Kubernetes Cluster" tugmasini bosing.
-4. Kluster sozlamalarini tanlang (masalan, kluster o'lchami, mintaqa, va boshqalar).
-5. Kluster nomini kiriting.
-6. "Create Cluster" tugmasini bosing va kluster yaratilishini kuting (bu bir necha daqiqa davom etishi mumkin).
+4. Klaster sozlamalarini tanlang (masalan, klaster o'lchami, mintaqa, va boshqalar).
+5. Klaster nomini kiriting.
+6. "Create Cluster" tugmasini bosing va klaster yaratilishini kuting (bu bir necha daqiqa davom etishi mumkin).
 ### 2-bosqich: Kubeconfig faylini yuklab olish
-Kluster yaratilgandan so'ng, "Kubeconfig" faylini yuklab oling. Bu fayl sizning klusterga ulanish uchun kerak bo'ladi.
-### 3-bosqich: Kluster holatini tekshirish
+Klaster yaratilgandan so'ng, "Kubeconfig" faylini yuklab oling. Bu fayl sizning klasterga ulanish uchun kerak bo'ladi.
+### 3-bosqich: Klaster holatini tekshirish
 Terminalda quyidagi buyruqni kiriting va yuklab olingan kubeconfig faylini ko'rsating:
 ```bash
 export KUBECONFIG=~/.kube/config
 ```
-Endi siz kubectl yordamida klusterga ulanish va boshqarish imkoniyatiga egasiz. Kluster holatini tekshirish uchun quyidagi buyruqni kiriting:
+Endi siz kubectl yordamida klasterga ulanish va boshqarish imkoniyatiga egasiz. Klaster holatini tekshirish uchun quyidagi buyruqni kiriting:
 ```bash
 kubectl get nodes
 kubectl get pods -A
@@ -115,8 +115,8 @@ kube-system   kube-scheduler-test-server-k8s-2         1/1     Running   0      
 kube-system   kube-scheduler-test-server-k8s-3         1/1     Running   0          8d
 ``` 
 ### 3-bosqich: Public IP qo'shish
-Agar siz klusteringizga Public IP qo'shmoqchi bo'lsangiz, quyidagi amallarni bajaring:
-1. DigitalOcean’da klusteringizni tanlang.
+Agar siz klasteringizga Public IP qo'shmoqchi bo'lsangiz, quyidagi amallarni bajaring:
+1. DigitalOcean'da klasteringizni tanlang.
 2. "Network" bo'limiga o'ting.  
 3. "Public IP" bo'limida "Add Public IP" tugmasini bosing.
 4. Public IP manzilini tanlang va "Add" tugmasini bosing.
@@ -138,5 +138,5 @@ Yoki kubeadm konfiguratsiyasida API Server manzilini tekshirish uchun quyidagi b
 ```bash
 sudo kubectl --kubeconfig=/etc/kubernetes/admin.conf -n kube-system get cm kubeadm-config -o yaml | grep -A 10 apiServer
 ```
-Yuqoridagi buyruqlardan birini bajarish orqali API Server manzilining Public IP bo'lishini tekshirishingiz mumkin. Agar manzil Public IP bo'lsa, demak siz muvaffaqiyatli klusteringizga Public IP qo'shganingizni anglatadi.
+Yuqoridagi buyruqlardan birini bajarish orqali API Server manzilining Public IP bo'lishini tekshirishingiz mumkin. Agar manzil Public IP bo'lsa, demak siz muvaffaqiyatli klasteringizga Public IP qo'shganingizni anglatadi.
 

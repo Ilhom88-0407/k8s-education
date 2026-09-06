@@ -56,7 +56,7 @@ CNI ikki tomonga aniq mas'uliyat belgilaydi:
 
 ### Plugin zimmasida:
 
-- `add`, `del`, `check` buyruq qatори argumentlarini qo'llab-quvvatlash;
+- `add`, `del`, `check` buyruq qatori argumentlarini qo'llab-quvvatlash;
 - Container ID va network namespace kabi parametrlarni qabul qilish;
 - Pod/container'ga **IP manzil berish**;
 - Container'lar tarmoqdagi boshqa container'larga yeta olishi uchun kerakli **route'larni sozlash**;

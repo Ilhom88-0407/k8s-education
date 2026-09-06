@@ -7,7 +7,7 @@ Bu buyruq k8s-web-hello nomli pod yaratadi va unga <dockerhub_username>/k8s-web-
 ```bash 
 kubectl get pods
 ```
-Yuqoridagi buyruqda biz quidagilarni ko'rshimiz mumkin:
+Yuqoridagi buyruqda biz quyidagilarni ko'rshimiz mumkin:
 ```bash
 root@test-server-k8s-1:~# kubectl run k8s-web-hello --image=<dockerhub_username>/k8s-web-hello:1.0.0 --port=3000
 pod/k8s-web-hello created
@@ -80,11 +80,11 @@ Agar biz yaratgan podimizni toxtatmoqchi bo'lsak, quyidagi buyruqni bajarishimiz
 ```bash
 kubectl delete pod k8s-web-hello
 ```
-Endi bo'lsa biz PODni deploymant orqali yaratamiz. Deploymant bu Kubernetes resursi bo'lib, u bizning PODlarimizni boshqarish uchun ishlatiladi. Deploymant yordamida biz PODlarimizni avtomatik ravishda yangilash, ko'paytirish yoki kamaytirish imkoniyatiga ega bo'lamiz. Deploymant yaratish uchun quyidagi buyruqni bajarishimiz kerak:
+Endi bo'lsa biz PODni deployment orqali yaratamiz. Deployment bu Kubernetes resursi bo'lib, u bizning PODlarimizni boshqarish uchun ishlatiladi. Deployment yordamida biz PODlarimizni avtomatik ravishda yangilash, ko'paytirish yoki kamaytirish imkoniyatiga ega bo'lamiz. Deployment yaratish uchun quyidagi buyruqni bajarishimiz kerak:
 ```bash
 kubectl create deployment k8s-web-hello --image=<dockerhub_username>/k8s-web-hello:1.0.0
 ```
-Bu buyruq k8s-web-hello nomli deploymant yaratadi va unga <dockerhub_username>/k8s-web-hello:1.0.0 nomli Docker image ni ishlatadi. Endi biz deploymant yaratdik, endi biz uning holatini tekshirishimiz kerak. Deploymant holatini tekshirish uchun quyidagi buyruqni bajarishimiz kerak:
+Bu buyruq k8s-web-hello nomli deployment yaratadi va unga <dockerhub_username>/k8s-web-hello:1.0.0 nomli Docker image ni ishlatadi. Endi biz deployment yaratdik, endi biz uning holatini tekshirishimiz kerak. Deployment holatini tekshirish uchun quyidagi buyruqni bajarishimiz kerak:
 ```bash
 kubectl get deployments
 ```

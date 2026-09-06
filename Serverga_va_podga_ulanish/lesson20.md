@@ -29,13 +29,13 @@ kubectl exec -it -n <namespace> <pod-name> -- /bin/sh
 ```
 ## 4. Agar siz Kubernetes debug qilish uchun node ichiga kirish kerak bo'lsa
 
-Ushbu komndadan foydalanishingiz mumkin:
+Ushbu komandadan foydalanishingiz mumkin:
 ```
 kubectl debug node/<node-name> -it --image=busybox
 ```
-Официально kubectl debug node/... используется для отладки нodы, контейнер запускается с доступом к host namespaces, а файловая система нodы монтируется в /host.
+Rasmiy hujjatlarga ko'ra `kubectl debug node/...` node'ni tekshirish uchun ishlatiladi. U node'da vaqtinchalik konteyner ishga tushiradi: konteyner node'ning host namespace'lariga kirish huquqiga ega bo'ladi, node'ning fayl tizimi esa konteyner ichidagi `/host` katalogiga ulanadi.
 
-После входа:
+Konteynerga kirgandan keyin:
 ```
 chroot /host
 ```

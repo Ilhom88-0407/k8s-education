@@ -43,7 +43,7 @@ spec:
           ports:
             - containerPort: 3000
 ```
-![deploymant](image.png)
+![deployment](image.png)
 
 📖 Qatorlar bo'yicha lug'at
 apiVersion

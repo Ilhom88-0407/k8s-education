@@ -1,7 +1,7 @@
-# Klusterda yangi deploymentlarni yaratish va boshqarish
+# Klasterda yangi deploymentlarni yaratish va boshqarish
 1. Birinchi bo'lib bizda mavjud barcha deloymentlarni o'chirib tashlaymiz:
 bizda mavjud deployment va servislarni tekshirib olaminz
-## Endi bo'lsa quidagi buyruqni kiriting va barcha deployment va servislarni o'chirib tashlaymiz
+## Endi bo'lsa quyidagi buyruqni kiriting va barcha deployment va servislarni o'chirib tashlaymiz
 ```bash
 PS D:\project AI\k8s> kubectl.exe delete all --all 
 pod "k8s-web-to-nginx-7b4dbf47f8-6pqgw" deleted from default namespace

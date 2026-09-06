@@ -30,7 +30,7 @@ graph TB
 
 ---
 
-## ### Masala 1 — kubelet shunchaki to'xtab qolgan
+## Masala 1 — kubelet shunchaki to'xtab qolgan
 
 **Muammo:** klaster buzilgan — `node01` NotReady holatda.
 
@@ -67,7 +67,7 @@ kubectl get nodes
 
 ---
 
-## ### Masala 2 — config.yaml'da noto'g'ri CA fayl yo'li
+## Masala 2 — config.yaml'da noto'g'ri CA fayl yo'li
 
 **Muammo:** klaster yana buzilgan, `node01` yana NotReady.
 
@@ -125,7 +125,7 @@ kubectl get nodes                # node01   Ready   ✅
 
 ---
 
-## ### Masala 3 — kubelet.conf'da apiserver porti noto'g'ri
+## Masala 3 — kubelet.conf'da apiserver porti noto'g'ri
 
 **Muammo:** klaster yana buzilgan, `node01` NotReady. Lekin bu safar kubelet **ishlab turibdi**:
 

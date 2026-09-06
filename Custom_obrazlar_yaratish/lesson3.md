@@ -31,7 +31,7 @@ docker tag k8s-web-hello:1.0.0 <dockerhub_username>/k8s-web-hello:1.0.0
 docker push <dockerhub_username>/k8s-web-hello:1.0.0
 ```
 Bu buyruqlar birinchi navbatda Docker image ni <dockerhub_username>/k8s-web-hello:1.0.0 nomi bilan belgilaydi va keyin uni Docker Hub ga yuklaydi. Endi biz Docker image ni yaratdik va uni Docker Hub ga yukladik, endi biz Kubernetes klasterimizda bu image ni ishlatishimiz mumkin.
-Biz <docker push> bajarganimizda quidagi ma'lumotlarni ko'ramiz:
+Biz <docker push> bajarganimizda quyidagi ma'lumotlarni ko'ramiz:
 ```bash
 PS D:\project AI\k8s\Custom_obrazlar_yaratish\k8s-web-hello> docker push mrpocker88/k8s:ver1
 The push refers to repository [docker.io/<dockerhub_username>/k8s-web-hello]

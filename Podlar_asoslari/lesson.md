@@ -84,5 +84,5 @@ my-nginx-pod   1/1     Running   0          5m
 ``` 
 Bu buyruq orqali barcha podlarni ko'rish mumkin. `READY` ustuni konteynerlarning tayyorligini ko'rsatadi, `STATUS` esa podning hozirgi holatini bildiradi.
 
-![alt text](image.png)
+![kubectl describe pod my-nginx-pod chiqishi: Namespace default, Node minikube/192.168.49.2, Status Running va Pod IP 10.244.0.3](image.png)
 

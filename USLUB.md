@@ -209,7 +209,7 @@ Shuningdek: `tasharidan`→`tashqaridan`, `faqrini`→`farqini`, `bu yesda`→`b
 `xaulasa`→`xulosa`, `yaratsih`→`yaratish`, `mashtablash`→`masshtablash`,
 `Dicker Desktop`→`Docker Desktop`, `NideJS`→`NodeJS`.
 
-Bu ro'yxat CI'da avtomatik tekshiriladi — [`skriptlar/imlo-tekshir.sh`](skriptlar/imlo-tekshir.sh).
+Bu ro'yxat CI'da avtomatik tekshiriladi — [`skriptlar/imlo-qora-royxat.txt`](skriptlar/imlo-qora-royxat.txt).
 
 ### Rus tili
 
@@ -239,7 +239,7 @@ Uchinchi savolda ReplicaSet'ning vazifasini eslang.
 
 </details>
 
-📁 To'liq yechim: [`amaliyot/yechimlar/vazifa-1.md`](amaliyot/yechimlar/vazifa-1.md)
+📁 To'liq yechim: `amaliyot/<dars-nomi>/YECHIM.md`
 ````
 
 Qoidalar:
@@ -290,7 +290,7 @@ Manifestni darsga to'liq nusxalash **shart emas** — muhim qismini ko'rsating,
 to'lig'iga havola bering:
 
 ````markdown
-> 📁 **Tayyor fayl:** [`amaliyot/01-nginx-deployment.yaml`](amaliyot/01-nginx-deployment.yaml)
+> 📁 **Tayyor fayl:** `amaliyot/create_deployment/01-nginx-deployment.yaml`
 
 ```yaml
 spec:
@@ -438,12 +438,12 @@ kubernetes.io va CNCF ham sxemalarini shunday tarqatadi.
 Skrinshot — sxemaning o'rnini bosmaydi. U faqat "ekranda aynan shunday
 ko'rinadi" degan joyda kerak.
 
-**Alt-matn har doim mazmunli bo'lsin.** `![alt text](image.png)` — VS Code
-avtomatik qo'yadigan bo'sh qolip, uni tuzating:
+**Alt-matn har doim mazmunli bo'lsin.** `![alt text](...)` — VS Code rasmni
+qo'yganda avtomatik yozadigan bo'sh qolip. Uni albatta almashtiring:
 
 | ❌ | ✅ |
 |---|---|
-| `![alt text](image.png)` | `![kubectl get pods chiqishi: 3 ta pod Running holatida](image.png)` |
+| `![alt text](rasm.png)` — bo'sh qolip | `![kubectl get pods chiqishi: 3 ta pod Running holatida](rasm.png)` |
 
 ---
 

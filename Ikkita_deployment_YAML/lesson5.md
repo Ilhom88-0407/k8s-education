@@ -1,4 +1,4 @@
-# Yaratgan servisimizdan foydalanish uchun DNS nomidan foydalanishimiz mumkin. Bizning servisimizning nomi nginx va u default namespace’da joylashgan, shuning uchun biz unga nginx deb murojaat qilishimiz mumkin.
+# Yaratgan servisimizdan foydalanish uchun DNS nomidan foydalanishimiz mumkin. Bizning servisimizning nomi nginx va u default namespace'da joylashgan, shuning uchun biz unga nginx deb murojaat qilishimiz mumkin.
 ```bash
 kubectl get svc nginx
 ```

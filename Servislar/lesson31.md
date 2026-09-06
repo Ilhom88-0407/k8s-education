@@ -13,7 +13,7 @@ Kubernetesda servislarning 4 turi mavjud: ClusterIP, NodePort, LoadBalancer va E
 - ExternalName: Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali   kirish imkonini beradi, lekin bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun DNS nomini belgilaydi. Bu servis turi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun DNS nomini belgilaydi va bu DNS nomi, klaster ichidagi podlarga tashqi dunyo orqali kirish uchun ishlatiladi.
 Bu yerda har bir servis turining ko'rinishini ko'rishingiz mumkin:
 
-![alt text](image-5.png)
+![To'rt xil Service turining yonma-yon sxemasi: ClusterIP faqat klaster ichida, NodePort node portlari orqali, LoadBalancer tashqi balanslovchi orqali, ExternalName esa tashqi domen nomiga yo'naltiradi](image-5.png)
 
 LoadBalancer turdagi servisni yaratishdan oldin, NodePort turidagi servisni o'chirib tashlaymiz va yangi servis yaratamiz. Buning uchun quyidagi buyruqni ishlatamiz:
 ```
@@ -39,7 +39,7 @@ kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          132
 nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   2s
 ```
 Bu yerda `nginx-deploy` servisi LoadBalancer turida yaratilganligini va tashqi dunyo orqali 8080 porti orqali kirish mumkinligini ko'rishingiz mumkin. Masalan, nginx serverini tashqi dunyo bilan aloqa qilish uchun ishlatamiz.
-`nginx-deploy` xaqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
+`nginx-deploy` haqida to'liqroq ma'lumotlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
 ```
 root@test-server-k8s-1:~# kubectl get service
 NAME           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
@@ -47,11 +47,11 @@ kubernetes     ClusterIP      10.96.0.1       <none>        443/TCP          3h2
 nginx-deploy   LoadBalancer   10.104.145.96   <pending>     8080:31377/TCP   49m
 
 ```
-bu yesda siz <nginx-deploy> ning EXTERNAL-IP si <pending> ekanlogini ko'rishingiz mumkin. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. EXTERNAL-IP IP o'rniga tashqi IP manzili turishi kerak edi. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. Ikki yechim bor:
+bu yerda siz <nginx-deploy> ning EXTERNAL-IP si <pending> ekanlogini ko'rishingiz mumkin. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. EXTERNAL-IP IP o'rniga tashqi IP manzili turishi kerak edi. Buning sababi, odatiy Kubernetes bare-metal LoadBalancer'ni qo'llab-quvvatlamaydi. Ikki yechim bor:
 - MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
 - Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 31377)
 Agar bizda EXTERNAL-IP bo'ganida brouzer orqali 45.71.15.25:8080 manziliga kirganimizda nginx serverining xush kelibsiz sahifasini ko'rishimiz mumkin bo'lardi. 
-![alt text](image-9.png)
+![kubectl expose deploy --type=LoadBalancer --port=9999 buyrug'i va keyingi kubectl get svc chiqishi: my-nginx-deploy servisi LoadBalancer turida, CLUSTER-IP 10.99.163.168, EXTERNAL-IP 127.0.0.1, PORT 9999:31323/TCP](image-9.png)
 
 ![alt text](kubectl_expose_loadbalancer_flow-1.svg)
 
@@ -73,9 +73,9 @@ Muhim eslatma sizning klasteringiz uchun: Siz bare-metal serverda (cloud provide
 MetalLB o'rnating — u IP pool'dan tashqi IP ajratib beradi va ARP/BGP orqali e'lon qiladi
 Yoki <HAR-QANDAY-NODE-IP>:<NODE-PORT> orqali kiring — NodePort har holda yaratiladi (kubectl get svc nginx-deploy da NodePort qiymatini ko'rishingiz mumkin, masalan 30080)
 
-### Dicker Desktop Mac/Windows foydalanuvchilari uchun tunel qilish tavfsiya etiladi.
+### Docker Desktop Mac/Windows foydalanuvchilari uchun tunel qilish tavfsiya etiladi.
 
 ```
 minikube tunnel  ### ushbu komanda ishga tushiriladi local kompyuterdan tekshirish uchun
 ```
-![alt text](image-8.png)
+![minikube tunnel buyrug'ining chiqishi: "Tunnel successfully started" va "Starting tunnel for service my-nginx-deploy" — terminal ochiq turishi kerakligi haqida ogohlantirish bilan](image-8.png)

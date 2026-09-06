@@ -117,6 +117,32 @@ def fence_qatorlari(matn: str) -> list[tuple[int, int, str]]:
     return natija
 
 
+def kodsiz(matn: str) -> str:
+    """Kod bloklari va `inline kod` ichini bo'shliqqa almashtiradi.
+
+    Qator raqamlari saqlanadi. Havola va alt-matn tekshiruvlari uchun kerak:
+    kod ichida yozilgan `![alt](rasm.png)` — bu namuna, haqiqiy havola emas.
+    """
+    qatorlar = matn.splitlines()
+    ichi = set()
+    boshi = None
+    for qator_no, _teg, ochilish in ochiq_bloklar(matn):
+        if qator_no == -1:
+            continue
+        if ochilish:
+            boshi = qator_no
+        elif boshi is not None:
+            ichi.update(range(boshi, qator_no + 1))
+            boshi = None
+    natija = []
+    for i, q in enumerate(qatorlar, 1):
+        if i in ichi:
+            natija.append("")
+        else:
+            natija.append(re.sub(r"`[^`]*`", lambda m: " " * len(m.group(0)), q))
+    return "\n".join(natija)
+
+
 def ochiq_bloklar(matn: str):
     """Fence larni stek bilan yuradi, (qator, teg, ochilishmi) beradi."""
     stek: list[int] = []
@@ -169,21 +195,41 @@ def f003_imlo(h: Hisobot, nomlar: set[str]) -> None:
     Haqiqiy fayl nomlari (masalan `deploymant3.md`) chetlab o'tiladi —
     ular qayta nomlanmagan, shuning uchun ularga havola qonuniy.
     """
-    qora: list[tuple[str, str]] = []
+    # (xato, to'g'ri, faqat_kod_blokida)
+    qora: list[tuple[str, str, bool]] = []
     royxat = ILDIZ / "skriptlar" / "imlo-qora-royxat.txt"
     for qator in royxat.read_text(encoding="utf-8").splitlines():
         qator = qator.strip()
         if not qator or qator.startswith("#") or "\t" not in qator:
             continue
-        xato, togri = qator.split("\t", 1)
-        qora.append((xato.strip(), togri.strip()))
+        qismlar = qator.split("\t")
+        faqat_kod = qismlar[0] == "KOD"
+        if faqat_kod:
+            qismlar = qismlar[1:]
+        if len(qismlar) < 2:
+            continue
+        qora.append((qismlar[0].strip(), qismlar[1].strip(), faqat_kod))
 
     for p in md_fayllar():
         if str(nisbiy(p)) in IMLO_OZOD:
             continue
-        for i, qator in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        matn = p.read_text(encoding="utf-8", errors="replace")
+        # Qaysi qatorlar kod bloki ichida ekanini oldindan hisoblaymiz
+        kod_ichi: set[int] = set()
+        boshi = None
+        for qator_no, _teg, ochilish in ochiq_bloklar(matn):
+            if qator_no == -1:
+                continue
+            if ochilish:
+                boshi = qator_no
+            elif boshi is not None:
+                kod_ichi.update(range(boshi, qator_no + 1))
+                boshi = None
+        for i, qator in enumerate(matn.splitlines(), 1):
             past = qator.lower()
-            for xato, togri in qora:
+            for xato, togri, faqat_kod in qora:
+                if faqat_kod and i not in kod_ichi:
+                    continue
                 boshi = 0
                 while (j := past.find(xato.lower(), boshi)) != -1:
                     boshi = j + 1
@@ -262,7 +308,7 @@ def f006_havolalar(h: Hisobot) -> None:
     """F006 — ichki havolalar va rasmlar diskda mavjud bo'lsin."""
     naqsh = re.compile(r"!?\[[^\]]*\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
     for p in md_fayllar():
-        for i, qator in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        for i, qator in enumerate(kodsiz(p.read_text(encoding="utf-8", errors="replace")).splitlines(), 1):
             for manzil in naqsh.findall(qator):
                 if re.match(r"^(https?:|mailto:|#|data:)", manzil):
                     continue
@@ -280,7 +326,7 @@ def f007_yetim_rasmlar(h: Hisobot) -> None:
     ishlatilgan: set[Path] = set()
     naqsh = re.compile(r"!?\[[^\]]*\]\(([^)\s]+)\)")
     for p in md_fayllar():
-        for manzil in naqsh.findall(p.read_text(encoding="utf-8", errors="replace")):
+        for manzil in naqsh.findall(kodsiz(p.read_text(encoding="utf-8", errors="replace"))):
             if re.match(r"^(https?:|mailto:|#|data:)", manzil):
                 continue
             from urllib.parse import unquote
@@ -414,7 +460,7 @@ def f013_alt_matn(h: Hisobot) -> None:
     for p in md_fayllar():
         if str(nisbiy(p)) in IMLO_OZOD:
             continue
-        for i, qator in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        for i, qator in enumerate(kodsiz(p.read_text(encoding="utf-8", errors="replace")).splitlines(), 1):
             for alt, manzil in naqsh.findall(qator):
                 if alt.strip().lower() in yomon:
                     h.xato("F013", nisbiy(p), i,
@@ -444,7 +490,11 @@ def main() -> int:
     argv = p.parse_args()
 
     h = Hisobot()
-    nomlar = {f.name for f in ILDIZ.rglob("*") if f.is_file()}
+    # Haqiqiy fayl VA papka nomlari — imlo tekshiruvi ularga tegmaydi.
+    # Masalan `Custom_obrazlar_yaratish` papkasi "obraz" so'zini saqlaydi,
+    # lekin u qayta nomlanmagan, shuning uchun unga havolalar qonuniy.
+    nomlar = {f.name for f in ILDIZ.rglob("*")}
+    nomlar |= {f.stem for f in ILDIZ.rglob("*.md")}
 
     if argv.kod:
         kod = argv.kod.upper()

@@ -40,7 +40,7 @@ Endi `kubectl get pods` desak, avtomatik alpha'dagi pod'lar ko'rinadi. Har yangi
 
 ---
 
-## ### Masala 1 (alpha) — Service nomi noto'g'ri
+## Masala 1 (alpha) — Service nomi noto'g'ri
 
 **Muammo:** ilova sahifasi ochiladi, lekin qizil xato: `Can't connect to MySQL server on 'mysql-service:3306' — Name does not resolve`. Ya'ni web-ilova `mysql-service` degan nomni DNS orqali topa olmayapti.
 
@@ -67,7 +67,7 @@ kubectl describe deploy webapp-mysql
 kubectl edit svc mysql          # nomni mysql-service ga o'zgartiramiz, saqlaganda rad etiladi,
                                 # lekin /tmp/kubectl-edit-xxxx.yaml fayl qoladi
 kubectl delete svc mysql
-kubectl create -f /tmp/kubectl-edit-xxxx.yaml
+kubectl apply -f /tmp/kubectl-edit-xxxx.yaml
 ```
 
 **Tekshirish:**
@@ -80,7 +80,7 @@ Sahifani yangilaymiz — **Success**, yashil sahifa. ✅
 
 ---
 
-## ### Masala 2 (beta) — Servisda targetPort noto'g'ri
+## Masala 2 (beta) — Servisda targetPort noto'g'ri
 
 **Muammo:** xuddi shu ilova beta namespace'da, xato: `Can't connect to MySQL server on 'mysql-service:3306' — Connection refused`. Bu safar nom topilgan (DNS ishlayapti), lekin ulanish rad etilyapti.
 
@@ -126,7 +126,7 @@ Sahifa yangilanadi — **Success**. ✅
 
 ---
 
-## ### Masala 3 (gamma) — MySQL servis selektori noto'g'ri
+## Masala 3 (gamma) — MySQL servis selektori noto'g'ri
 
 **Muammo:** bu safar sahifa umuman ochilmayapti — aylanib turadi va oxiri timeout bo'ladi. Demak, muammo "old tomonda"dek tuyuladi.
 
@@ -182,7 +182,7 @@ Sahifa — **Success**. ✅
 
 ---
 
-## ### Masala 4 (delta) — Deployment'da DB foydalanuvchisi noto'g'ri
+## Masala 4 (delta) — Deployment'da DB foydalanuvchisi noto'g'ri
 
 **Muammo:** xato xabari: `Access denied for user 'sqluser'@'10.42.0.16' (using password: YES)`. Demak, ulanish bor, lekin **login/parol** rad etilyapti.
 
@@ -217,7 +217,7 @@ Sahifa yangilanadi — **Success**. ✅
 
 ---
 
-## ### Masala 5 (epsilon) — Ham user, ham MySQL root paroli noto'g'ri
+## Masala 5 (epsilon) — Ham user, ham MySQL root paroli noto'g'ri
 
 **Muammo:** yana `Access denied for user 'sqluser'` xatosi — avvalgi masaladagidek ko'rinadi.
 
@@ -259,7 +259,7 @@ Sahifa yangilanadi (pod endi ko'tarilayotganda bir lahza `Connection refused` ch
 
 ---
 
-## ### Masala 6 (zeta) — NodePort noto'g'ri + user + parol (3 ta xato birdan)
+## Masala 6 (zeta) — NodePort noto'g'ri + user + parol (3 ta xato birdan)
 
 **Muammo:** sahifa umuman ochilmaydi — darhol `Bad Gateway`. Demak, web-servisga yetib ham bora olmayapmiz. Tepadan boshlaymiz.
 
