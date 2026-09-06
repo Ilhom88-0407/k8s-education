@@ -1,0 +1,18 @@
+# Yuqoridagi Deployment uchun ClusterIP servis.
+#
+# selector Deployment'ning template labellariga mos keladi — Service
+# Pod'larni aynan shu bo'yicha topadi.
+#
+# Qo'llash: kubectl apply -f 02-nginx-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-namuna
+  ports:
+    - name: http
+      port: 80          # Service'ning porti
+      targetPort: 80    # Pod ichidagi konteyner porti

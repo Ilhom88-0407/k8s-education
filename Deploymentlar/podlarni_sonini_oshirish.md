@@ -1,74 +1,227 @@
-### Deployment orqali podlarni sonini oshirish
-Bu bo'limda biz deployment orqali podlarni sonini oshirishni ko'rib chiqamiz. Deployment, Kubernetesda podlarni boshqarish uchun ishlatiladigan resurs turi bo'lib, u podlarni yaratish, yangilash va o'chirishni avtomatik ravishda boshqaradi. Deployment yordamida siz podlarni sonini oshirish yoki kamaytirish orqali ilovangizning yukini boshqarishingiz mumkin.
-### Deploymentdagi podalrni sonini ko'paytirish uchun quyidagi buyruqni ishlatamiz:
-```
-kubectl get deployments -n <namespace>
+# Pod'lar sonini o'zgartirish — masshtablash
 
-yoki aniq bir deployment'ni ko'rish uchun:
+> 🎯 **Bu darsda nimani o'rganamiz:**
+> - `kubectl scale` bilan Pod'lar sonini oshirish va kamaytirish
+> - `READY`, `UP-TO-DATE` va `AVAILABLE` ustunlari orasidagi farq
+> - Manifest orqali masshtablash va nima uchun u afzalroq
+> - Avtomatik masshtablash (HPA) haqida qisqacha
 
-kubectl get deployment nginx-deploy -n default
+## 💡 Hayotiy o'xshatish: kassalar soni
+
+Do'konda odam kam bo'lganda ikkita kassa yetadi. Bayram oldidan navbat
+uzayganda menejer yana uchtasini ochadi. Kechqurun oqim pasayganda ortiqchasi
+yopiladi.
+
+Kassa **qurilmaydi** — u tayyor turadi, faqat ochiladi yoki yopiladi. Pod
+ham shunday: image allaqachon node'da bo'lsa, yangi Pod bir necha soniyada
+ko'tariladi.
+
+## Joriy holatni ko'rish
+
+```bash
+kubectl get deployments
+kubectl get deployment nginx-deploy
 ```
-ichida quidaki ma'lumotlarni ko'rishingiz mumkin:
-```
+
+```text
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deploy   1/1     1            1           10m
+nginx-deploy   3/3     3            3           10m
 ```
 
-### Podlarni sonini oshirish uchun quyidagi buyruqni ishlatamiz:
-``` 
-kubectl scale deployment <deployment-name> --replicas=<soni> -n <namespace>
+| Ustun | Ma'nosi | Qachon farq qiladi |
+|---|---|---|
+| **READY** | `tayyor / kerakli` | Yangi Pod ko'tarilayotganda: `3/5` |
+| **UP-TO-DATE** | Nechtasi oxirgi shablonga mos | Yangilanish vaqtida ortda qoladi |
+| **AVAILABLE** | Nechtasi trafik olishga tayyor | `minReadySeconds` tufayli kechikadi |
 
-ushbu komanda yordamida nginx-deploy podlar sonini 5 taga oshiramiz:
+## `kubectl scale` bilan masshtablash
 
-server001:> kubectl scale deployment nginx-deploy --replicas=5 -n default
+```bash
+kubectl scale deployment nginx-deploy --replicas=5
 ```
-Bu buyruq yordamida siz `nginx-deploy` deploymentidagi podlar sonini 5 taga oshirishingiz mumkin. Bu, masalan, ilovangizning yukini boshqarish yoki ko'proq foydalanuvchilarni qo'llab-quvvatlash uchun foydalidir.
-### Podlarni sonini oshirgandan so'ng, deployment'ning hozirgi holatini tekshirish uchun quyidagi buyruqni ishlatishingiz mumkin:
+
+```text
+deployment.apps/nginx-deploy scaled
 ```
-kubectl get deployment nginx-deploy -n default
-_____________________________________________________________________________
+
+Natijani tekshiramiz:
+
+```bash
+kubectl get deployment nginx-deploy
+```
+
+```text
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
 nginx-deploy   5/5     5            5           15m
 ```
-Bu yerda `READY` ustunida 5/5 ko'rsatilgan, bu deploymentdagi barcha 5 podning ishga tushganligini va mavjudligini bildiradi. Bu, masalan, deployment'ning hozirgi holatini tekshirish yoki uning yangilangan konfiguratsiyasini ko'rish uchun foydalidir.
-### Podlarni sonini oshirgandan so'ng, deployment'ning ichidagi podlarni ko'rish uchun quyidagi buyruqni ishlatishingiz mumkin:
-```
-root@test-server-k8s-1:~# kubectl get pods -n default -o wide
-NAME                            READY   STATUS    RESTARTS   AGE   IP               NODE                NOMINATED NODE   READINESS GATES
-nginx-deploy-75c8b7c74b-5ckvw   1/1     Running   0          10s   172.16.91.66     test-server-k8s-3   <none>           <none>
-nginx-deploy-75c8b7c74b-9svsz   1/1     Running   0          23s   172.16.78.129    test-server-k8s-2   <none>           <none>
-nginx-deploy-75c8b7c74b-db9j9   1/1     Running   0          25s   172.16.91.65     test-server-k8s-3   <none>           <none>
-nginx-deploy-75c8b7c74b-kf7zk   1/1     Running   0          25s   172.16.138.221   test-server-k8s-1   <none>           <none>
-nginx-deploy-75c8b7c74b-srbxn   1/1     Running   0          25s   172.16.78.130    test-server-k8s-2   <none>           <none>
 
-``` 
-Bu yerda `nginx-deploy-5c689d4b9f-5l6j8`, `nginx-deploy-5c689d4b9f-6h8j9` va `nginx-deploy-5c689d4b9f-7k9l0` nomli 3 ta podning ishga tushganligini ko'rishingiz mumkin. Bu, masalan, deployment'ning hozirgi holatini tekshirish yoki uning ichida nechta podlar ishga tushganligini ko'rish mumkin. 
-### Deployment'ni debug qilish uchun quyidagi buyruqni ishlatishingiz mumkin:
+Kamaytirish ham xuddi shu buyruq bilan:
+
+```bash
+kubectl scale deployment nginx-deploy --replicas=2
 ```
-kubectl describe deployment <deployment-name> -n <namespace>
-"Misol uchun:"
-server001:> kubectl describe deployment nginx-deploy -n default
-____________________________________________________________________________
-NaME:                   nginx-deploy
-Namespace:              default
-CreationTimestamp:      2024-06-01T12:00:00Z
-Labels:                app=nginx
-Annotations:           deployment.kubernetes.io/revision: 1
-Selector:              app=nginx
-Replicas:              5 desired | 5 updated | 5 total | 5 available | 0 unavailable
-StrategyType:          RollingUpdate
-Conditions:
-  Type           Status  Reason                   Message
-  ----           ------  ------                   -------
-  Available      True    MinimumReplicasAvailable   Deployment has minimum availability.
-  Progressing    True    NewReplicaSetAvailable     ReplicaSet "nginx-deploy-5c689d4b9f" has successfully progressed.
-OldReplicaSet:  nginx-deploy-5c689d4b9f (1/1 replicas created)
-NewReplicaSet:  nginx-deploy-5c689d4b9f (5/5 replicas created)
+
+Kamaytirilganda Kubernetes qaysi Pod'ni o'chirishni o'zi tanlaydi: avval
+`Pending` va tayyor bo'lmaganlarini, keyin eng yoshlarini.
+
+### Shartli masshtablash
+
+Joriy soni ma'lum bo'lgandagina o'zgartirish (parallel ishlarda foydali):
+
+```bash
+kubectl scale deployment nginx-deploy --current-replicas=3 --replicas=5
+```
+
+Joriy soni 3 bo'lmasa, buyruq hech nima qilmaydi.
+
+## Manifest orqali masshtablash
+
+`kubectl scale` **tez**, lekin uning bir kamchiligi bor: manifest faylingizda
+hamon eski son turadi. Keyingi `kubectl apply -f` masshtablashni **orqaga
+qaytarib yuboradi**.
+
+Shuning uchun ishlab chiqarishda manifest tahrirlanadi:
+
+```yaml
+spec:
+  replicas: 5    # 3 dan 5 ga o'zgartirildi
+```
+
+```bash
+kubectl apply -f amaliyot/create_deployment/01-nginx-deployment.yaml
+```
+
+> 📁 **Tayyor fayl:** [`amaliyot/create_deployment/01-nginx-deployment.yaml`](amaliyot/create_deployment/01-nginx-deployment.yaml)
+
+## Nima bo'layotganini kuzatish
+
+```bash
+kubectl get pods -l app=nginx-namuna --watch
+```
+
+Yangi Pod'lar `Pending` → `ContainerCreating` → `Running` bosqichlaridan
+o'tadi. Image allaqachon node'da bo'lsa, bu bir necha soniya oladi.
+
+Kim nima qilganini ko'rish:
+
+```bash
+kubectl describe deployment nginx-deploy | tail -10
+```
+
+```text
 Events:
   Type    Reason             Age   From                   Message
   ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  2m    deployment-controller  Scaled up replica set nginx-deploy-5c689d4b9f to 1
-  Normal  ScalingReplicaSet  2m    deployment-controller  Scaled up replica set nginx-deploy-5c689d4b9f to 4 from 1
-  Normal  ScalingReplicaSet  2m    deployment-controller  Scaled up replica set nginx-deploy-5c689d4b9f to 5 from 4
+  Normal  ScalingReplicaSet  30s   deployment-controller  Scaled up replica set nginx-deploy-5c689d4b9f to 5 from 3
 ```
-Bu buyruq yordamida siz deployment'ning detallarini ko'rishingiz mumkin. Bu, masalan, deployment'ning hozirgi holatini tekshirish yoki uning konfiguratsiyasini ko'rish uchun foydalidir. Bu yerda siz deployment'ning nomi, namespace, yaratilgan vaqti, label va annotationlari, selector, replicas soni, strategiyasi, shartlari va hodisalarini ko'rishingiz mumkin. Bu ma'lumotlar yordamida siz deployment'ning hozirgi holatini tahlil qilishingiz yoki uning yangilanish tarixini ko'rishingiz mumkin.
+
+## Avtomatik masshtablash — HPA
+
+Yukni qo'lda kuzatib o'tirish shart emas. **HorizontalPodAutoscaler**
+CPU yoki xotira ko'rsatkichiga qarab Pod sonini o'zi o'zgartiradi:
+
+```bash
+kubectl autoscale deployment nginx-deploy --min=2 --max=10 --cpu-percent=70
+kubectl get hpa
+```
+
+⚠️ HPA ishlashi uchun klasterda **metrics-server** bo'lishi shart.
+minikube'da: `minikube addons enable metrics-server`.
+
+HPA'ni ishlatganda manifestdagi `replicas:` ni **olib tashlang** — aks holda
+har `apply` HPA qo'ygan sonni buzadi.
+
+## 🧪 Mustaqil topshiriqlar
+
+> Taxminiy vaqt: 15 daqiqa.
+
+**1-topshiriq · oson.** `nginx-deploy` ni 4 replikaga masshtablang va
+`kubectl get deploy` bilan tasdiqlang.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deployment nginx-deploy -o jsonpath='{.status.readyReplicas}{"\n"}'
+# 4 chiqishi kerak
+```
+</details>
+
+**2-topshiriq · o'rta.** Bir terminalda `kubectl get pods --watch` ni
+ishga tushiring, ikkinchisida 1 replikaga kamaytiring. Qaysi Pod'lar
+o'chirilishini kuzating.
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get pods -l app=nginx-namuna
+# Bitta Pod qoladi — eng katta AGE ga ega bo'lgani
+```
+</details>
+
+**3-topshiriq · qiyin.** `kubectl scale` bilan 6 replikaga o'ting, keyin
+manifestni **o'zgartirmasdan** `kubectl apply -f` qiling. **Avval ayting:**
+nechta Pod qoladi va nima uchun?
+
+<details><summary>O'zingizni tekshiring</summary>
+
+```bash
+kubectl get deployment nginx-deploy
+# READY 3/3 ga qaytadi — manifestdagi replicas: 3 g'olib chiqadi
+```
+</details>
+
+📁 To'liq yechimlar: [`amaliyot/create_deployment/YECHIM.md`](amaliyot/create_deployment/YECHIM.md)
+
+## ❓ Savol-Javob
+
+**Savol:** `replicas: 0` qilsam bo'ladimi?
+**Javob:** Ha. Barcha Pod'lar o'chadi, lekin Deployment qoladi. Ilovani
+vaqtincha to'xtatishning eng oson yo'li — keyin `--replicas=3` bilan
+qaytariladi.
+
+**Savol:** Masshtablashda yangi Pod'lar qaysi node'ga tushadi?
+**Javob:** Buni scheduler hal qiladi: node'lardagi bo'sh resurs, taint/toleration,
+affinity qoidalari va Pod'lar taqsimotiga qarab.
+
+**Savol:** `kubectl scale` va manifest — qaysi biri kuchliroq?
+**Javob:** Oxirgi qo'llangan g'olib. `apply` dan keyin manifestdagi son
+o'rnatiladi. Shuning uchun ishlab chiqarishda faqat manifest orqali ishlang.
+
+**Savol:** Kamaytirilganda qaysi Pod o'chadi?
+**Javob:** Kubernetes tartibi bor: avval tayyor bo'lmaganlar, keyin
+`pod-deletion-cost` annotatsiyasi pastroqlari, keyin eng yoshlari.
+
+## 📌 CKA imtihon uchun maslahat
+
+Masshtablash masalalarida eng tez yo'l — `kubectl scale`:
+
+```bash
+kubectl scale deployment <nom> --replicas=<son>
+kubectl scale --replicas=3 -f manifest.yaml
+```
+
+Deployment'dan tashqari ReplicaSet, StatefulSet va ReplicationController
+ham masshtablanadi.
+
+Vazifada "manifest orqali" deb aytilgan bo'lsa, `kubectl edit deployment <nom>`
+ishlating — u tahrirlagandan keyin darrov qo'llaydi.
+
+## 📖 Asosiy atamalar
+
+| Atama | Ma'nosi |
+|---|---|
+| **Masshtablash (scaling)** | Pod nusxalari sonini o'zgartirish |
+| **`replicas`** | Nechta Pod ishlashi kerakligi |
+| **UP-TO-DATE** | Nechta Pod eng oxirgi shablonga mos kelishi |
+| **AVAILABLE** | Nechta Pod trafik qabul qilishga tayyorligi |
+| **HPA** | HorizontalPodAutoscaler — yukka qarab Pod sonini o'zgartiruvchi obyekt |
+| **metrics-server** | CPU va xotira ko'rsatkichlarini yig'uvchi komponent |
+
+## 🔗 Manbalar
+
+- [Scaling a Deployment — kubernetes.io](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
+- [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+- [kubectl scale](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#scale)
+
+---
+⬅️ [Oldingi dars](create_deployment.md) · [Bo'lim indeksi](README.md) · ➡️ [depl_mashtablash.md](depl_mashtablash.md)
