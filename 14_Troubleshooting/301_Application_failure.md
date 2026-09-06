@@ -6,6 +6,8 @@
 > - Service selektorlari va portlarini tekshirish
 > - Pod status, events va loglarni o'qish (`-f` va `--previous` bilan)
 
+![Nosozlikni qidirish tartibi: avval ilova qatlami, keyin worker node, keyin control plane, oxirida tarmoq. Har qatlam uchun birinchi beriladigan buyruq ko'rsatilgan](rasmlar/qaror_daraxti.svg)
+
 ## Hayotiy o'xshatish: shifokor tashxisi
 
 Ilovadagi muammoni izlash — shifokor ishiga o'xshaydi. Bemor "boshim og'riyapti" desa, yaxshi shifokor darrov dori yozib bermaydi: avval haroratni o'lchaydi, qon bosimini tekshiradi, tahlil topshirtiradi — ya'ni **belgilardan sababga qarab qadam-baqadam boradi**. Kubernetesda ham xuddi shunday: foydalanuvchi "sayt ochilmayapti" desa, biz ilova xaritasidagi har bir bo'g'inni birma-bir tekshirib chiqamiz, toki asl sabab (root cause) topilguncha.

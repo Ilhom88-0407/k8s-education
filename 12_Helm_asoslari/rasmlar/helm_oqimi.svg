@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Helm: chart, values va release</title>
+  <desc id="izoh">Chart — bu qolip. values.yaml qolipga qo&#x27;yiladigan qiymatlar. helm install ikkalasini birlashtirib klasterga yuboradi va natijani release deb ataydi. Har bir upgrade yangi revision yaratadi, shuning uchun helm rollback bilan orqaga qaytish mumkin.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="420" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">Chart + values = release</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">Har upgrade yangi revision yaratadi — shuning uchun rollback ishlaydi</text>
+  <rect x="28" y="96" width="200" height="104" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="128" y="132" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Chart</text>
+  <text x="128" y="149" text-anchor="middle" font-size="11" fill="#5C5A55">templates/*.yaml</text>
+  <text x="128" y="164" text-anchor="middle" font-size="11" fill="#5C5A55">Chart.yaml</text>
+  <text x="128" y="179" text-anchor="middle" font-size="11" fill="#5C5A55">Qolip — o&#x27;zgarmaydi</text>
+  <rect x="28" y="216" width="200" height="104" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="128" y="252" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">values.yaml</text>
+  <text x="128" y="269" text-anchor="middle" font-size="11" fill="#5C5A55">replicaCount: 3</text>
+  <text x="128" y="284" text-anchor="middle" font-size="11" fill="#5C5A55">image.tag: 1.2.0</text>
+  <text x="128" y="299" text-anchor="middle" font-size="11" fill="#5C5A55">Qiymatlar — muhitga qarab</text>
+  <path d="M 228 148 L 288 190" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <path d="M 228 268 L 288 226" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="292" y="168" width="176" height="80" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="380" y="207" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">helm install</text>
+  <text x="380" y="224" text-anchor="middle" font-size="11" fill="#5C5A55">qolip + qiymat</text>
+  <path d="M 468 208 L 528 208" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="532" y="96" width="320" height="112" rx="8" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="692" y="144" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Release: my-app</text>
+  <text x="692" y="161" text-anchor="middle" font-size="11" fill="#5C5A55">Klasterdagi tirik obyektlar</text>
+  <text x="692" y="176" text-anchor="middle" font-size="11" fill="#5C5A55">Deployment, Service, ConfigMap ...</text>
+  <text x="532" y="244" font-size="12.5" font-weight="600" fill="#1A1A18">Revision tarixi:</text>
+  <rect x="532" y="256" width="100" height="56" rx="6" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="582" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A18">rev 1</text>
+  <text x="582" y="300" text-anchor="middle" font-size="11" fill="#5C5A55">1.2.0</text>
+  <rect x="642" y="256" width="100" height="56" rx="6" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="692" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A18">rev 2</text>
+  <text x="692" y="300" text-anchor="middle" font-size="11" fill="#5C5A55">1.3.0</text>
+  <rect x="752" y="256" width="100" height="56" rx="6" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="802" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A18">rev 3</text>
+  <text x="802" y="300" text-anchor="middle" font-size="11" fill="#5C5A55">1.4.0 (joriy)</text>
+  <path d="M 632 284 L 642 284" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <path d="M 742 284 L 752 284" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="28" y="336" width="824" height="62" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="440" y="366" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">helm rollback my-app 2</text>
+  <text x="440" y="383" text-anchor="middle" font-size="11" fill="#5C5A55">Har revision saqlanadi, shuning uchun oldingi holatga qaytish bitta buyruq. kubectl bilan qo&#x27;lda qaytarishda esa qaysi fayl qanday edi — o&#x27;zingiz eslashingiz kerak.</text>
+</svg>

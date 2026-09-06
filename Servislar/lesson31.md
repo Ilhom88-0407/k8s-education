@@ -53,7 +53,7 @@ bu yerda siz <nginx-deploy> ning EXTERNAL-IP si <pending> ekanlogini ko'rishingi
 Agar bizda EXTERNAL-IP bo'ganida brouzer orqali 45.71.15.25:8080 manziliga kirganimizda nginx serverining xush kelibsiz sahifasini ko'rishimiz mumkin bo'lardi. 
 ![kubectl expose deploy --type=LoadBalancer --port=9999 buyrug'i va keyingi kubectl get svc chiqishi: my-nginx-deploy servisi LoadBalancer turida, CLUSTER-IP 10.99.163.168, EXTERNAL-IP 127.0.0.1, PORT 9999:31323/TCP](image-9.png)
 
-![alt text](kubectl_expose_loadbalancer_flow-1.svg)
+![kubectl expose --type=LoadBalancer sxemasi: LoadBalancer NodePort'ni, NodePort esa ClusterIP'ni o'z ichiga oladi; trafik selector app=web bo'yicha podlarga taqsimlanadi](rasmlar/expose_loadbalancer.svg)
 
 Endi qadamma-qadam tushuntirib beraman:
 1-qadam — kubectl komandasining o'zi: kubectl bu shunchaki client dasturi. U sizning kompyuteringizda (yoki master nodaga SSH orqali kirgan bo'lsangiz, master nodada) ishga tushadi. Komanda ~/.kube/config faylini o'qib, master node manzilini topadi va o'sha yerga HTTPS REST so'rov yuboradi.

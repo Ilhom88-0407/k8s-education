@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">O&#x27;z ilovangiz klasterga qanday yetib boradi</title>
+  <desc id="izoh">Kod Dockerfile bilan image&#x27;ga aylanadi, image registry&#x27;ga yuklanadi, Deployment esa registry&#x27;dan tortib olib Pod ichida ishga tushiradi. Yangi versiya chiqarish shu aylananing takrorlanishi: yangi teg bilan build, push, keyin kubectl set image.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="400" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">Kod → image → registry → klaster</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">Yangi versiya chiqarish shu aylananing takrorlanishi</text>
+  <rect x="28" y="110" width="148" height="96" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="102" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">1. Kod</text>
+  <text x="102" y="166" text-anchor="middle" font-size="11" fill="#5C5A55">index.mjs</text>
+  <text x="102" y="182" text-anchor="middle" font-size="11" fill="#5C5A55">package.json</text>
+  <rect x="204" y="110" width="148" height="96" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="278" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">2. Dockerfile</text>
+  <text x="278" y="166" text-anchor="middle" font-size="11" fill="#5C5A55">FROM node:22-alpine</text>
+  <text x="278" y="182" text-anchor="middle" font-size="11" fill="#5C5A55">COPY . .</text>
+  <path d="M 352 158 L 380 158" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <text x="366" y="132" text-anchor="middle" font-size="10" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5C5A55">docker build</text>
+  <rect x="380" y="110" width="148" height="96" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="454" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">3. Image</text>
+  <text x="454" y="166" text-anchor="middle" font-size="11" fill="#5C5A55">mrpocker88/app:1.0.2</text>
+  <text x="454" y="182" text-anchor="middle" font-size="11" fill="#5C5A55">lokal mashinada</text>
+  <path d="M 528 158 L 556 158" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <text x="542" y="132" text-anchor="middle" font-size="10" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5C5A55">docker push</text>
+  <rect x="556" y="110" width="148" height="96" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="630" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">4. Registry</text>
+  <text x="630" y="166" text-anchor="middle" font-size="11" fill="#5C5A55">Docker Hub</text>
+  <text x="630" y="182" text-anchor="middle" font-size="11" fill="#5C5A55">yoki xususiy registry</text>
+  <path d="M 704 158 L 732 158" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <text x="718" y="132" text-anchor="middle" font-size="10" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5C5A55">kubectl apply</text>
+  <rect x="732" y="110" width="148" height="96" rx="8" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="806" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">5. Pod</text>
+  <text x="806" y="166" text-anchor="middle" font-size="11" fill="#5C5A55">Klaster image&#x27;ni</text>
+  <text x="806" y="182" text-anchor="middle" font-size="11" fill="#5C5A55">tortib oladi va ishga tushiradi</text>
+  <path d="M 800 210 C 800 262, 470 262, 470 262" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <path d="M 470 262 C 140 262, 102 262, 102 214" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <text x="440" y="282" text-anchor="middle" font-size="11.5" fill="#5C5A55">Kod o&#x27;zgardi -&gt; yangi TEG bilan qaytadan build va push</text>
+  <rect x="28" y="300" width="824" height="76" rx="8" fill="#F8DFDF" stroke="#B33A3A" stroke-width="1.5"/>
+  <text x="440" y="330" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">Nima uchun har safar YANGI teg kerak</text>
+  <text x="440" y="346" text-anchor="middle" font-size="11" fill="#5C5A55">Bir xil teg bilan qayta push qilsangiz, klaster image o&#x27;zgarganini bilmaydi —</text>
+  <text x="440" y="362" text-anchor="middle" font-size="11" fill="#5C5A55">u kesh&#x27;dagi eskisini ishlatib yuboradi. `latest` tegi ham shu sababli xavfli.</text>
+</svg>

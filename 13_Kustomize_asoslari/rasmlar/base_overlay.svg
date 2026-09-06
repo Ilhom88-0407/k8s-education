@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Kustomize: base va overlay qanday birlashadi</title>
+  <desc id="izoh">base katalogda barcha muhitlar uchun umumiy manifestlar turadi. Har bir overlay base&#x27;ni resources orqali import qiladi va faqat o&#x27;ziga kerakli farqni patch sifatida yozadi. kubectl apply -k ishga tushganda Kustomize ikkalasini birlashtirib, yakuniy manifestni hosil qiladi.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="440" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">base + overlay = yakuniy manifest</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">base o&#x27;zgarmaydi, farq esa overlay&#x27;da yoziladi</text>
+  <rect x="28" y="96" width="236" height="128" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="146" y="137" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">base/</text>
+  <text x="146" y="154" text-anchor="middle" font-size="11" fill="#5C5A55">kustomization.yaml</text>
+  <text x="146" y="169" text-anchor="middle" font-size="11" fill="#5C5A55">nginx-depl.yaml (replicas: 1)</text>
+  <text x="146" y="184" text-anchor="middle" font-size="11" fill="#5C5A55">service.yaml</text>
+  <text x="146" y="199" text-anchor="middle" font-size="11" fill="#5C5A55">Barcha muhitlar uchun umumiy</text>
+  <rect x="336" y="96" width="250" height="88" rx="8" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="461" y="131" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">overlays/dev/</text>
+  <text x="461" y="148" text-anchor="middle" font-size="11" fill="#5C5A55">resources: ../../base</text>
+  <text x="461" y="163" text-anchor="middle" font-size="11" fill="#5C5A55">replicas: 2</text>
+  <path d="M 264 160 C 300 160, 300 140, 332 140" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <path d="M 586 140 L 626 140" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="630" y="96" width="222" height="88" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="741" y="139" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Yakuniy manifest</text>
+  <text x="741" y="156" text-anchor="middle" font-size="11" fill="#5C5A55">base + shu overlay&#x27;ning patchi</text>
+  <rect x="336" y="204" width="250" height="88" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="461" y="239" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">overlays/staging/</text>
+  <text x="461" y="256" text-anchor="middle" font-size="11" fill="#5C5A55">resources: ../../base</text>
+  <text x="461" y="271" text-anchor="middle" font-size="11" fill="#5C5A55">replicas: 3</text>
+  <path d="M 264 160 C 300 160, 300 248, 332 248" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <path d="M 586 248 L 626 248" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="630" y="204" width="222" height="88" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="741" y="247" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Yakuniy manifest</text>
+  <text x="741" y="264" text-anchor="middle" font-size="11" fill="#5C5A55">base + shu overlay&#x27;ning patchi</text>
+  <rect x="336" y="312" width="250" height="88" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="461" y="347" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">overlays/production/</text>
+  <text x="461" y="364" text-anchor="middle" font-size="11" fill="#5C5A55">resources: ../../base</text>
+  <text x="461" y="379" text-anchor="middle" font-size="11" fill="#5C5A55">replicas: 10 + grafana</text>
+  <path d="M 264 160 C 300 160, 300 356, 332 356" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <path d="M 586 356 L 626 356" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="630" y="312" width="222" height="88" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="741" y="355" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Yakuniy manifest</text>
+  <text x="741" y="372" text-anchor="middle" font-size="11" fill="#5C5A55">base + shu overlay&#x27;ning patchi</text>
+  <rect x="28" y="250" width="280" height="150" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="168" y="294" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">Nima uchun shunday</text>
+  <text x="168" y="311" text-anchor="middle" font-size="11" fill="#5C5A55">base&#x27;dagi bitta o&#x27;zgarish uchala</text>
+  <text x="168" y="326" text-anchor="middle" font-size="11" fill="#5C5A55">muhitga birdan yetib boradi.</text>
+  <text x="168" y="341" text-anchor="middle" font-size="11" fill="#5C5A55">Muhitga xos farq esa faqat o&#x27;sha</text>
+  <text x="168" y="356" text-anchor="middle" font-size="11" fill="#5C5A55">overlay&#x27;da qoladi —</text>
+  <text x="168" y="371" text-anchor="middle" font-size="11" fill="#5C5A55">nusxa ko&#x27;chirish kerak emas.</text>
+  <rect x="28" y="412" width="824" height="24" rx="6" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="440" y="430" text-anchor="middle" font-size="11.5" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1A1A18">kubectl apply -k overlays/dev   ·   kubectl kustomize overlays/dev (klasterga tegmasdan ko&#x27;rish)</text>
+</svg>

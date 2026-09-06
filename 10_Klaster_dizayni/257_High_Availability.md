@@ -7,6 +7,8 @@
 > - Scheduler va Controller Manager'da leader election (active-standby rejim)
 > - etcd'ning ikki topologiyasi: stacked va external
 
+![Chapda bitta control plane node: u yiqilsa klasterni boshqarib bo'lmaydi. O'ngda uchta node: bittasi yiqilganda qolgan ikkitasi etcd uchun kvorum hosil qiladi va klaster ishlashda davom etadi](rasmlar/ha_control_plane.svg)
+
 ## ✈️ Hayotiy o'xshatish
 
 HA — samolyotdagi ikki uchuvchiga o'xshaydi. Samolyotni bitta uchuvchi ham boshqara oladi, lekin doim ikkinchisi ham o'tiradi. Asosiy uchuvchi (leader) boshqaradi, ikkinchisi (standby) kuzatib turadi — asosiysiga bir gap bo'lsa, darhol boshqaruvni oladi. Kubernetes'da ham: bitta master yo'qolsa, ilovalaringiz hali "uchishda" davom etadi, lekin boshqaradigan hech kim qolmaydi. Shuning uchun production'da bir nechta master bo'lishi shart.

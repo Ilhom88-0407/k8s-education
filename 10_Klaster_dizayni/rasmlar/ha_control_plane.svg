@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 450" width="880"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Yuqori mavjudlik (HA): nega uchta control plane kerak</title>
+  <desc id="izoh">Bitta control plane node yiqilsa, klasterni boshqarish to&#x27;xtaydi. Uchta node bo&#x27;lsa, bittasi yiqilganda qolgan ikkitasi etcd uchun kvorum (2 dan 3) hosil qiladi va klaster ishlashda davom etadi. Shuning uchun control plane nodelar soni doim toq bo&#x27;lishi kerak.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="450" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">Nega control plane nodelar soni TOQ bo&#x27;ladi</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">etcd qaror qabul qilishi uchun ko&#x27;pchilik ovoz kerak</text>
+  <rect x="28" y="84" width="396" height="340" rx="12" fill="#FCF1F1" stroke="#B33A3A" stroke-width="1.5"/>
+  <text x="44" y="108" font-size="13.5" font-weight="600" fill="#B33A3A">BITTA NODE — xavfli</text>
+  <rect x="52" y="128" width="348" height="76" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="226" y="165" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">control plane 1</text>
+  <text x="226" y="182" text-anchor="middle" font-size="11" fill="#5C5A55">apiserver + etcd + scheduler</text>
+  <rect x="52" y="224" width="348" height="76" rx="8" fill="#F8DFDF" stroke="#B33A3A" stroke-width="1.5"/>
+  <text x="226" y="261" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Node yiqildi</text>
+  <text x="226" y="278" text-anchor="middle" font-size="11" fill="#5C5A55">❌ klasterni boshqarib bo&#x27;lmaydi</text>
+  <text x="226" y="336" text-anchor="middle" font-size="11.5" fill="#5C5A55">Ishlab turgan podlar yashaydi,</text>
+  <text x="226" y="354" text-anchor="middle" font-size="11.5" fill="#5C5A55">lekin yangi pod yaratib bo&#x27;lmaydi,</text>
+  <text x="226" y="372" text-anchor="middle" font-size="11.5" fill="#5C5A55">o&#x27;lganini ham hech kim tiklamaydi.</text>
+  <text x="226" y="400" text-anchor="middle" font-size="11.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#B33A3A">kubectl javob bermaydi</text>
+  <rect x="456" y="84" width="396" height="340" rx="12" fill="#F0F8F3" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="472" y="108" font-size="13.5" font-weight="600" fill="#2A7D53">UCHTA NODE — HA</text>
+  <rect x="480" y="128" width="348" height="60" rx="6" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="654" y="157" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">control plane 1</text>
+  <text x="654" y="174" text-anchor="middle" font-size="11" fill="#5C5A55">etcd a&#x27;zosi</text>
+  <rect x="480" y="200" width="348" height="60" rx="6" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="654" y="229" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">control plane 2</text>
+  <text x="654" y="246" text-anchor="middle" font-size="11" fill="#5C5A55">etcd a&#x27;zosi</text>
+  <rect x="480" y="272" width="348" height="60" rx="6" fill="#F8DFDF" stroke="#B33A3A" stroke-width="1.5"/>
+  <text x="654" y="301" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">control plane 3  ❌ yiqildi</text>
+  <text x="654" y="318" text-anchor="middle" font-size="11" fill="#5C5A55">etcd a&#x27;zosi — ovoz bermaydi</text>
+  <rect x="480" y="344" width="348" height="60" rx="6" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="654" y="373" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Kvorum: 3 dan 2 ta tirik ✅</text>
+  <text x="654" y="390" text-anchor="middle" font-size="11" fill="#5C5A55">Klaster normal ishlashda davom etadi</text>
+</svg>

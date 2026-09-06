@@ -5,6 +5,8 @@
 > - Helm nima va nima uchun uni "Kubernetes uchun package manager" deb atashadi
 > - Helm bizga qanday yordam beradi: install, sozlash, upgrade, rollback, uninstall
 
+![Chart (qolip) va values.yaml (qiymatlar) helm install orqali birlashib klasterda release hosil qiladi; har upgrade yangi revision yaratadi, shuning uchun helm rollback bilan orqaga qaytish mumkin](rasmlar/helm_oqimi.svg)
+
 ## Muammo: Kubernetes ilovasi — bu bitta narsa emas, o'nlab bo'laklar
 
 Kubernetes murakkab infratuzilmalarni boshqarishda juda zo'r. Lekin biz — odamlar — murakkablik bilan ishlashda qiynalamiz. Klasterga joylashtiradigan ilovalarimiz juda ko'p obyektlardan tashkil topadi va bu obyektlar bir-biri bilan bog'lanib ishlashi kerak.

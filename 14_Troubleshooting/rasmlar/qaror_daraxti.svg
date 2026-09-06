@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Nosozlikni qidirish tartibi</title>
+  <desc id="izoh">Muammo paydo bo&#x27;lganda qaysi qatlamdan boshlash kerakligini ko&#x27;rsatuvchi qaror daraxti: avval ilovaning o&#x27;zi, keyin node, keyin control plane, oxirida tarmoq. Har qatlam uchun birinchi beriladigan buyruq ham ko&#x27;rsatilgan.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="500" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">Nosozlikni qaysi qatlamdan qidirish kerak</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">Yuqoridan pastga: eng ko&#x27;p uchraydiganidan boshlanadi</text>
+  <rect x="330" y="84" width="220" height="52" rx="8" fill="#F8DFDF" stroke="#B33A3A" stroke-width="1.5"/>
+  <text x="440" y="109" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">Muammo bor</text>
+  <text x="440" y="126" text-anchor="middle" font-size="11" fill="#5C5A55">foydalanuvchi shikoyati</text>
+  <path d="M 440 136 L 440 158" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="28" y="166" width="380" height="66" rx="8" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="218" y="198" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">1. Ilova (eng ko&#x27;p uchraydi)</text>
+  <text x="218" y="215" text-anchor="middle" font-size="11" fill="#5C5A55">Pod Pending / CrashLoopBackOff / ImagePullBackOff</text>
+  <path d="M 408 199 L 444 199" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="448" y="166" width="404" height="66" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="650" y="197" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1A1A18">Birinchi buyruq</text>
+  <text x="650" y="214" text-anchor="middle" font-size="11.5" fill="#5C5A55">kubectl get pods · describe pod · logs</text>
+  <text x="218" y="242" text-anchor="middle" font-size="10" fill="#5C5A55">topilmadi ↓</text>
+  <rect x="28" y="244" width="380" height="66" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="218" y="276" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">2. Worker node</text>
+  <text x="218" y="293" text-anchor="middle" font-size="11" fill="#5C5A55">Node NotReady, kubelet to&#x27;xtagan yoki sertifikat eskirgan</text>
+  <path d="M 408 277 L 444 277" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="448" y="244" width="404" height="66" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="650" y="275" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1A1A18">Birinchi buyruq</text>
+  <text x="650" y="292" text-anchor="middle" font-size="11.5" fill="#5C5A55">kubectl get nodes · systemctl status kubelet</text>
+  <text x="218" y="320" text-anchor="middle" font-size="10" fill="#5C5A55">topilmadi ↓</text>
+  <rect x="28" y="322" width="380" height="66" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="218" y="354" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">3. Control plane</text>
+  <text x="218" y="371" text-anchor="middle" font-size="11" fill="#5C5A55">scheduler yoki controller-manager podi ko&#x27;tarilmayapti</text>
+  <path d="M 408 355 L 444 355" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="448" y="322" width="404" height="66" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="650" y="353" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1A1A18">Birinchi buyruq</text>
+  <text x="650" y="370" text-anchor="middle" font-size="11.5" fill="#5C5A55">kubectl -n kube-system get pods · crictl ps</text>
+  <text x="218" y="398" text-anchor="middle" font-size="10" fill="#5C5A55">topilmadi ↓</text>
+  <rect x="28" y="400" width="380" height="66" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="218" y="432" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A18">4. Tarmoq</text>
+  <text x="218" y="449" text-anchor="middle" font-size="11" fill="#5C5A55">Service Endpoints bo&#x27;sh, DNS ishlamayapti, CNI o&#x27;rnatilmagan</text>
+  <path d="M 408 433 L 444 433" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="448" y="400" width="404" height="66" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="650" y="431" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1A1A18">Birinchi buyruq</text>
+  <text x="650" y="448" text-anchor="middle" font-size="11.5" fill="#5C5A55">kubectl get svc,endpoints · nslookup</text>
+</svg>

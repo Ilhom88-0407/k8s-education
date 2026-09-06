@@ -6,6 +6,8 @@
 > - `resources:` orqali base konfiglarni import qilish va patch berish
 > - Overlay'da yangi (base'da yo'q) resurslar qo'shish
 
+![base katalogdagi umumiy manifestlar uchta overlay (dev, staging, production) tomonidan import qilinadi; har overlay faqat o'z farqini patch sifatida qo'shadi va natijada uchta boshqa-boshqa yakuniy manifest hosil bo'ladi](rasmlar/base_overlay.svg)
+
 ## Hayotiy o'xshatish
 
 Palov retseptini tasavvur qiling. **Asosiy retsept** (base) hamma uchun bir xil: guruch, sabzi, go'sht. Lekin har bir oshpaz o'ziga moslaydi: dietaga tushgan odam uchun kam yog' (dev — kam resurs), to'y uchun 3 barobar ko'p masalliq (production — ko'p replica). Retseptni har safar boshidan yozmaysiz — asosiy retseptni olib, faqat **farqlarni** yozasiz. Overlay — aynan shu "farqlar varag'i".

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 552" width="800"
+     role="img" aria-labelledby="sarlavha izoh" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <title id="sarlavha">Kubernetes manifestining tuzilishi</title>
+  <desc id="izoh">Har qanday Kubernetes manifesti to&#x27;rt qismdan iborat: apiVersion qaysi API guruhi ekanini, kind qanday obyekt ekanini, metadata obyektning nomi va labellarini, spec esa kerakli holatni belgilaydi. Klaster status maydonini o&#x27;zi to&#x27;ldiradi — uni siz yozmaysiz.</desc>
+  <defs>
+    <marker id="ok1A1A18" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A18"/>
+    </marker>
+    <marker id="ok2A7D53" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A7D53"/>
+    </marker>
+    <marker id="ok2C6FB5" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C6FB5"/>
+    </marker>
+    <marker id="ok5B4FBE" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4FBE"/>
+    </marker>
+    <marker id="ok5C5A55" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C5A55"/>
+    </marker>
+    <marker id="okB33A3A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B33A3A"/>
+    </marker>
+    <marker id="okB5761A" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5761A"/>
+    </marker>
+    <marker id="okD8D6D1" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D8D6D1"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="552" rx="14" fill="#FBFBFA" stroke="#D8D6D1" stroke-width="1"/>
+  <text x="28" y="36" font-size="20" font-weight="600" fill="#1A1A18">Manifest anatomiyasi</text>
+  <text x="28" y="59" font-size="12.5" fill="#5C5A55">To&#x27;rtta majburiy qism — hammasi shu</text>
+  <rect x="28" y="84" width="330" height="76" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="193" y="129" text-anchor="middle" font-size="14" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1A1A18">apiVersion: apps/v1</text>
+  <path d="M 358 122 L 396 122" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="400" y="84" width="372" height="76" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="586" y="121" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Qaysi API guruhi va versiyasi</text>
+  <text x="586" y="138" text-anchor="middle" font-size="11" fill="#5C5A55">Deployment uchun apps/v1, Pod va Service uchun v1</text>
+  <rect x="28" y="174" width="330" height="76" rx="8" fill="#DCE9F7" stroke="#2C6FB5" stroke-width="1.5"/>
+  <text x="193" y="219" text-anchor="middle" font-size="14" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1A1A18">kind: Deployment</text>
+  <path d="M 358 212 L 396 212" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="400" y="174" width="372" height="76" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="586" y="211" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Qanday obyekt yaratilyapti</text>
+  <text x="586" y="228" text-anchor="middle" font-size="11" fill="#5C5A55">Pod, Deployment, Service, ConfigMap ...</text>
+  <rect x="28" y="264" width="330" height="76" rx="8" fill="#E5E2F7" stroke="#5B4FBE" stroke-width="1.5"/>
+  <text x="193" y="309" text-anchor="middle" font-size="14" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1A1A18">metadata:</text>
+  <path d="M 358 302 L 396 302" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="400" y="264" width="372" height="76" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="586" y="301" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">Obyektning kimligi</text>
+  <text x="586" y="318" text-anchor="middle" font-size="11" fill="#5C5A55">name, namespace, labels, annotations</text>
+  <rect x="28" y="354" width="330" height="76" rx="8" fill="#DDF0E5" stroke="#2A7D53" stroke-width="1.5"/>
+  <text x="193" y="399" text-anchor="middle" font-size="14" font-weight="600" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1A1A18">spec:</text>
+  <path d="M 358 392 L 396 392" stroke="#5C5A55" stroke-width="2" fill="none" marker-end="url(#ok5C5A55)"/>
+  <rect x="400" y="354" width="372" height="76" rx="8" fill="#FFFFFF" stroke="#D8D6D1" stroke-width="1.5"/>
+  <text x="586" y="391" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1A1A18">KERAKLI holat — siz nimani xohlaysiz</text>
+  <text x="586" y="408" text-anchor="middle" font-size="11" fill="#5C5A55">replicas, template, selector, containers ...</text>
+  <rect x="28" y="444" width="744" height="76" rx="8" fill="#FBEBD2" stroke="#B5761A" stroke-width="1.5"/>
+  <text x="400" y="474" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A1A18">status:</text>
+  <text x="400" y="491" text-anchor="middle" font-size="11" fill="#5C5A55">Bu qismni SIZ yozmaysiz — klaster o&#x27;zi to&#x27;ldiradi va doim yangilab turadi.</text>
+  <text x="400" y="506" text-anchor="middle" font-size="11" fill="#5C5A55">`kubectl get -o yaml` da ko&#x27;rinadi: nechta pod tayyor, oxirgi shart qanday.</text>
+</svg>
